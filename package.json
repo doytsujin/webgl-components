@@ -95,6 +95,7 @@
     }
   },
   "dependencies": {
+    "@storybook/addon-storysource": "^5.3.18",
     "three": "^0.115.0"
   }
 }
