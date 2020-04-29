@@ -60,7 +60,8 @@
     "jest": "24.1.0",
     "lint-staged": "8.1.4",
     "prettier": "1.16.4",
-    "standard-version": "^7.1.0"
+    "standard-version": "^7.1.0",
+    "storybook-dark-mode": "^0.4.1"
   },
   "bundlesize": [
     {
@@ -94,5 +95,8 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "@storybook/addon-storysource": "^5.3.18",
+    "three": "^0.115.0"
+  }
 }
