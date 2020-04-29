@@ -7,10 +7,6 @@ export default { title: 'Simplex' };
 
 function setup(options) {
   const root = document.getElementById('root');
-
-  const clock = new Clock();
-  const scene = new Scene();
-  const camera = new PerspectiveCamera(65, 1, 0.1, 100);
   const renderer = new WebGLRenderer({
     antialias: true,
     powerPreference: 'high-performance',
@@ -18,6 +14,9 @@ function setup(options) {
   });
 
   if (root == null) return { renderer };
+  const clock = new Clock();
+  const scene = new Scene();
+  const camera = new PerspectiveCamera(65, 1, 0.1, 100);
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.setSize(root.offsetWidth, root.offsetHeight);
@@ -37,7 +36,7 @@ function setup(options) {
 
   function resize() {
     camera.aspect = root.offsetWidth / root.offsetHeight;
-    camera.updateMatrixWorld();
+    camera.updateProjectionMatrix();
     renderer.setSize(root.offsetWidth, root.offsetHeight);
   }
 
