@@ -99,6 +99,7 @@ export const lambert = () => {
       uniforms: `
         varying vec3 vNormal;
       `,
+      functions: ``,
       preFragColor: `
         vec3 normal = normalize(vNormal);
         normal.b = 1.0;
@@ -130,7 +131,8 @@ export const phong = () => {
         transformed = normal * noise;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position + transformed, 1.0);
       `
-    }
+    },
+    fragmentShader: {}
   };
 
   const material = new MeshPhongMaterial({ color: 0xff69b4 });
@@ -156,7 +158,8 @@ export const standard = () => {
         transformed = normal * noise;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position + transformed, 1.0);
       `
-    }
+    },
+    fragmentShader: {}
   };
 
   const material = new MeshStandardMaterial({ color: 0xff69b4, roughness: 0.1, metalness: 0.7 });

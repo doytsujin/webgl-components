@@ -1,5 +1,19 @@
 import { UniformsUtils } from 'three';
 
+export type MaterialHooks = {
+  [key: string]: string
+};
+
+export type MaterialConfig = {
+  uniforms: {
+    [key: string]: {
+      value: mixed
+    }
+  },
+  vertexShader: MaterialHooks,
+  fragmentShader: MaterialHooks
+};
+
 const hooks = {
   vertex: {
     preTransform: 'before:#include <begin_vertex>\n',
@@ -14,7 +28,7 @@ const hooks = {
   }
 };
 
-function replace(shader: string, hooks: Object, config: Object) {
+function replace(shader: string, hooks: Object, config: MaterialHooks) {
   Object.keys(hooks).forEach((hook: string) => {
     if (config[hook]) {
       const parts = hooks[hook].split(':');
@@ -52,15 +66,20 @@ function replace(shader: string, hooks: Object, config: Object) {
  * @param {Object} config
  * @returns
  */
-export default function materialModifier(shader: Object, config: Object) {
-  config = Object.assign(
-    {
-      uniforms: {},
-      vertexShader: {},
-      fragmentShader: {}
+export default function materialModifier(shader: Object, config: MaterialConfig) {
+  const defaults: MaterialConfig = {
+    uniforms: {},
+    vertexShader: {
+      uniforms: '',
+      functions: ''
     },
-    config
-  );
+    fragmentShader: {
+      uniforms: '',
+      functions: ''
+    }
+  };
+
+  config = Object.assign({}, defaults, config);
 
   shader.uniforms = UniformsUtils.merge([shader.uniforms, config.uniforms]);
 
