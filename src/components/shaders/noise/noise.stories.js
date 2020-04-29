@@ -16,6 +16,9 @@ function setup(options) {
     powerPreference: 'high-performance',
     stencil: false
   });
+
+  if (root == null) return { renderer };
+
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.setSize(root.offsetWidth, root.offsetHeight);
 
