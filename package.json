@@ -1,7 +1,7 @@
 {
   "name": "intern-webgl-components",
   "version": "0.0.1",
-  "description": "Modular components used for WebGL based projects",
+  "description": "Modular components and utilities used for WebGL based projects",
   "keywords": [
     "webgl",
     "threejs",
@@ -11,12 +11,16 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest --watch",
-    "test-ci": "jest --ci && npm run linters && npm run size && npm run audit",
+    "test-ci": "#jest --ci && npm run linters && npm run size && npm run audit",
     "size": "bundlesize",
-    "linters": "eslint './src/**/*.js'",
+    "js-lint": "eslint './src/**/*.js' -c ./.eslintrc --quiet --ignore-pattern .gitignore",
+    "flow": "flow",
+    "flow-typed": "flow-typed install",
+    "linters": "npm-run-all flow js-lint",
     "audit": "audit-ci --high",
     "release": "standard-version",
-    "storybook": "start-storybook"
+    "storybook": "start-storybook",
+    "postinstall": "npm run flow-typed"
   },
   "author": {
     "name": "Amelie Maia Rosser",
@@ -61,7 +65,13 @@
     "lint-staged": "8.1.4",
     "prettier": "1.16.4",
     "standard-version": "^7.1.0",
-    "storybook-dark-mode": "^0.4.1"
+    "storybook-dark-mode": "^0.4.1",
+    "@babel/preset-flow": "^7.9.0",
+    "@storybook/addon-storysource": "^5.3.18",
+    "@babel/preset-react": "^7.9.4",
+    "npm-run-all": "^4.1.5",
+    "flow-bin": "^0.118.0",
+    "flow-typed": "^2.6.2"
   },
   "bundlesize": [
     {
@@ -96,7 +106,6 @@
     }
   },
   "dependencies": {
-    "@storybook/addon-storysource": "^5.3.18",
     "three": "^0.115.0"
   }
 }
