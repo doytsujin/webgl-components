@@ -16,7 +16,7 @@ import {
 } from 'three';
 import materialModifier from './material-modifier';
 import { simplexNoise3D } from '../shaders/noise/simplex.glsl';
-import { createOrbitControls } from '../cameras/controls';
+import { createOrbitControls } from '../cameras/cameras';
 
 export default { title: 'Material Modifier' };
 

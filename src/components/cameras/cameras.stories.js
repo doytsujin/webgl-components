@@ -1,7 +1,7 @@
 import '../../style.css';
-import { Vector3, Scene, PerspectiveCamera, WebGLRenderer, GridHelper, AxesHelper } from 'three';
+import { Vector3, Scene, WebGLRenderer, GridHelper, AxesHelper } from 'three';
 
-import { createOrbitControls } from './controls';
+import { createOrbitControls, createPerspectiveCamera, positionCamera } from './cameras';
 
 export default { title: 'Cameras' };
 
@@ -18,7 +18,7 @@ function setup() {
 
   scene.add(new GridHelper(), new AxesHelper());
 
-  const camera = new PerspectiveCamera(65, 1, 0.1, 100);
+  const camera = createPerspectiveCamera(root.offsetWidth / root.offsetHeight);
   camera.position.set(10, 6, 10);
   camera.lookAt(new Vector3());
 
@@ -46,6 +46,13 @@ function setup() {
 
 export const orbitControls = () => {
   const { camera, renderer } = setup();
+  createOrbitControls(camera, renderer);
+  return renderer.domElement;
+};
+
+export const cameraPosition = () => {
+  const { camera, renderer } = setup();
+  positionCamera(camera, 10, new Vector3(0, 0.5, 1));
   createOrbitControls(camera, renderer);
   return renderer.domElement;
 };
