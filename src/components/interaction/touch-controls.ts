@@ -33,7 +33,7 @@ export default class TouchControls extends EventEmitter {
   };
   isDown: boolean = false;
 
-  constructor(element: HTMLElement, options: TouchControlsOptions) {
+  constructor(element: HTMLElement, options: TouchControlsOptions = {}) {
     super();
     this.element = element;
     this.options = Object.assign(this.options, options);
