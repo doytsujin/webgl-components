@@ -38,6 +38,7 @@
     "@storybook/html": "^6.3.12",
     "@types/three": "^0.133.1",
     "babel-loader": "^8.2.3",
+    "prettier": "^2.2.1",
     "typescript": "^3.8.3"
   },
   "dependencies": {
