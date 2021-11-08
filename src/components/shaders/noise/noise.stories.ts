@@ -1,11 +1,13 @@
 import '../../../style.css';
 
 import { Scene, WebGLRenderer, PerspectiveCamera, Mesh, PlaneBufferGeometry, ShaderMaterial, Clock } from 'three';
-import { simplexNoise2D, simplexNoise3D, simplexNoise4D } from '../noise/simplex.glsl';
+import { simplexNoise2D, simplexNoise3D, simplexNoise4D } from './simplex.glsl';
 
 export default { title: 'Simplex' };
 
-function setup(options) {
+
+
+function setup(options: {vertexShader: string, fragmentShader: string}) {
   const root = document.getElementById('root');
   const renderer = new WebGLRenderer({
     antialias: true,
@@ -35,9 +37,11 @@ function setup(options) {
   scene.add(mesh);
 
   function resize() {
-    camera.aspect = root.offsetWidth / root.offsetHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(root.offsetWidth, root.offsetHeight);
+    if (root instanceof HTMLElement) {
+      camera.aspect = root.offsetWidth / root.offsetHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(root.offsetWidth, root.offsetHeight);
+    }
   }
 
   window.addEventListener('resize', resize);
