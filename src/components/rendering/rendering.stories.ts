@@ -65,20 +65,25 @@ export const resizeElements = () => {
     backgroundColor: 'rgba(255, 0, 0, 0.25)',
     position: 'absolute',
     top: '0',
-    left: '0',
+    left: '0'
   });
   Object.assign(resizedElement.style, {
     backgroundColor: 'rgba(0, 0, 255, 0.25)',
     position: 'absolute',
     top: '0',
-    left: '0',
+    left: '0'
   });
 
   function resize() {
     if (root instanceof HTMLElement) {
       baseElement.style.width = `${maxResolution.x}px`;
       baseElement.style.height = `${maxResolution.y}px`;
-      const {width, height} = resizeWithConstraint(root.offsetWidth, root.offsetHeight, maxResolution.x, maxResolution.y);    
+      const { width, height } = resizeWithConstraint(
+        root.offsetWidth,
+        root.offsetHeight,
+        maxResolution.x,
+        maxResolution.y
+      );
       resizedElement.style.width = `${width}px`;
       resizedElement.style.height = `${height}px`;
     }

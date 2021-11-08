@@ -5,9 +5,7 @@ import { simplexNoise2D, simplexNoise3D, simplexNoise4D } from './simplex.glsl';
 
 export default { title: 'Simplex' };
 
-
-
-function setup(options: {vertexShader: string, fragmentShader: string}) {
+function setup(options: { vertexShader: string; fragmentShader: string }) {
   const root = document.getElementById('root');
   const renderer = new WebGLRenderer({
     antialias: true,
