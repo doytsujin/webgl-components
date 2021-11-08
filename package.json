@@ -14,7 +14,15 @@
     "storybook": "start-storybook -p 6006",
     "prebuild": "rimraf build",
     "build": "tsc --module commonjs && rollup -c rollup.config.js",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "lint-staged": "lint-staged"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "echo \"Pre-commit checks...\" && lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "echo \"Pre-push checks...\" && npm run linters"
+    }
   },
   "author": {
     "name": "Amelie Maia",
@@ -36,12 +44,18 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
+    "@rollup/plugin-typescript": "^8.3.0",
     "@storybook/addon-actions": "^6.3.12",
     "@storybook/addon-essentials": "^6.3.12",
     "@storybook/addon-links": "^6.3.12",
+    "@storybook/addon-storysource": "^6.3.12",
+    "@storybook/addons": "^6.3.12",
     "@storybook/html": "^6.3.12",
+    "@storybook/theming": "^6.3.12",
     "@types/three": "^0.133.1",
     "babel-loader": "^8.2.3",
+    "husky": "^7.0.4",
+    "lint-staged": "^11.2.6",
     "lodash.camelcase": "^4.3.0",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
@@ -51,11 +65,7 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sourcemaps": "^0.6.3",
     "rollup-plugin-typescript2": "^0.30.0",
-    "typescript": "^3.9.10",
-    "@rollup/plugin-typescript": "^8.3.0",
-    "@storybook/addon-storysource": "^6.3.12",
-    "@storybook/addons": "^6.3.12",
-    "@storybook/theming": "^6.3.12"
+    "typescript": "^3.9.10"
   },
   "dependencies": {
     "three": "^0.134.0"
