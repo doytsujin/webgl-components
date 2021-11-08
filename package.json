@@ -8,8 +8,12 @@
     "components",
     "best practices"
   ],
+  "main": "build/webgl-components.umd.js",
+  "module": "build/webgl-components.js",
   "scripts": {
     "storybook": "start-storybook -p 6006",
+    "prebuild": "rimraf build",
+    "build": "tsc --module commonjs && rollup -c rollup.config.js",
     "build-storybook": "build-storybook"
   },
   "author": {
@@ -38,13 +42,22 @@
     "@storybook/html": "^6.3.12",
     "@types/three": "^0.133.1",
     "babel-loader": "^8.2.3",
+    "lodash.camelcase": "^4.3.0",
     "prettier": "^2.2.1",
-    "typescript": "^3.8.3"
-  },
-  "dependencies": {
+    "rimraf": "^3.0.2",
+    "rollup": "^2.59.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sourcemaps": "^0.6.3",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "typescript": "^3.9.10",
+    "@rollup/plugin-typescript": "^8.3.0",
     "@storybook/addon-storysource": "^6.3.12",
     "@storybook/addons": "^6.3.12",
-    "@storybook/theming": "^6.3.12",
+    "@storybook/theming": "^6.3.12"
+  },
+  "dependencies": {
     "three": "^0.134.0"
   }
 }
