@@ -1,4 +1,4 @@
-const GUI = require('lil-gui').default;
+const GUICls = require('lil-gui').default;
 
 class GUIWrapper {
   add() {
@@ -45,6 +45,7 @@ class GUIWrapper {
   }
 }
 
-export function create(debug: boolean) {
-  return debug ? GUI : GUIWrapper;
+export default function GUI(debug: boolean) {
+  const Cls = debug ? GUICls : GUIWrapper;
+  return new Cls();
 }
