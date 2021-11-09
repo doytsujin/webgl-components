@@ -14,46 +14,9 @@ import {
 } from 'three';
 import { setRendererSize, resizeWithConstraint } from './resize';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import webglScene from '../../stories/webgl-scene';
 
 export default { title: 'Rendering' };
-
-function setup() {
-  const root = document.getElementById('root');
-  const renderer = new WebGLRenderer({
-    antialias: true,
-    powerPreference: 'high-performance',
-    stencil: false
-  });
-
-  const camera = new PerspectiveCamera(65, 1, 0.1, 100);
-  camera.position.set(0, 2, 7);
-  camera.lookAt(new Vector3());
-
-  if (root == null) return { renderer, camera };
-  const scene = new Scene();
-
-  const controls = new OrbitControls(camera, renderer.domElement);
-
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  renderer.setSize(root.offsetWidth, root.offsetHeight);
-
-  const ambient = new AmbientLight();
-  const directional = new DirectionalLight();
-  directional.position.set(1, 1, 1);
-  scene.add(ambient, directional);
-
-  const mesh = new Mesh(new SphereBufferGeometry(2, 64, 64), new MeshNormalMaterial());
-  scene.add(mesh);
-
-  function update() {
-    requestAnimationFrame(update);
-    renderer.render(scene, camera);
-  }
-
-  update();
-
-  return { renderer, camera, root };
-}
 
 export const resizeElements = () => {
   const maxResolution = new Vector2(1280, 720);
@@ -99,21 +62,23 @@ export const resizeElements = () => {
 };
 
 export const resizeWebGL = () => {
-  const { renderer, camera, root } = setup();
+  const { renderer, camera, scene, root } = webglScene();
   const maxResolution = new Vector2(1280, 720);
 
   function resize() {
     if (root instanceof HTMLElement) {
-      const width = root.offsetWidth;
-      const height = root.offsetHeight;
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      setRendererSize(renderer, width, height, maxResolution.x, maxResolution.y);
+      setRendererSize(renderer, root.offsetWidth, root.offsetHeight, maxResolution.x, maxResolution.y);
     }
   }
   resize();
 
   window.addEventListener('resize', resize);
+
+  function update() {
+    requestAnimationFrame(update);
+    renderer.render(scene, camera);
+  }
+  update();
 
   return renderer.domElement;
 };

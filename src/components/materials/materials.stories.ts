@@ -18,59 +18,26 @@ import {
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import materialModifier, { ShaderConfig } from './material-modifier';
 import { simplexNoise3D } from '../shaders/noise/simplex.glsl';
+import webglScene from '../../stories/webgl-scene';
 
-
-export default { title: 'Material Modifier' };
+export default { title: 'Materials' };
 
 function setup(shaderConfig: ShaderConfig, material: MeshLambertMaterial | MeshPhongMaterial | MeshStandardMaterial) {
-  const root = document.getElementById('root');
-  const renderer = new WebGLRenderer({
-    antialias: true,
-    powerPreference: 'high-performance',
-    stencil: false
-  });
-
-  if (root == null) return { renderer };
-  const clock = new Clock();
-  const scene = new Scene();
-  const camera = new PerspectiveCamera(65, 1, 0.1, 100);
-  camera.position.set(0, 2, 7);
-  camera.lookAt(new Vector3());
-
-  const controls = new OrbitControls(camera, renderer.domElement);
-
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  renderer.setSize(root.offsetWidth, root.offsetHeight);
-
-  const ambient = new AmbientLight();
-  const directional = new DirectionalLight();
-  directional.position.set(1, 1, 1);
-  scene.add(ambient, directional);
+  const { scene, camera, renderer, root, clock } = webglScene();
 
   // Extend the material
   let customShader: Shader | null = null;
   material.onBeforeCompile = (shader: Shader) => {
-    customShader = materialModifier(shader, shaderConfig);    
+    customShader = materialModifier(shader, shaderConfig);
   };
 
   const mesh = new Mesh(new SphereBufferGeometry(2, 64, 64), material);
   scene.add(mesh);
 
-  function resize() {
-    if (root instanceof HTMLElement) {
-      camera.aspect = root.offsetWidth / root.offsetHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(root.offsetWidth, root.offsetHeight);
-    }
-  }
-  resize();
-
-  window.addEventListener('resize', resize);
-
-  function update() {    
+  function update() {
     if (customShader != null) {
       customShader.uniforms.time.value += clock.getDelta();
-    }    
+    }
     requestAnimationFrame(update);
     renderer.render(scene, camera);
   }
@@ -80,7 +47,7 @@ function setup(shaderConfig: ShaderConfig, material: MeshLambertMaterial | MeshP
   return { renderer };
 }
 
-export const lambert = () => {
+export const modifiedLambert = () => {
   const shaderConfig = {
     uniforms: {
       time: { value: 0 }
@@ -123,7 +90,7 @@ export const lambert = () => {
   return renderer.domElement;
 };
 
-export const phong = () => {
+export const modifiedPhong = () => {
   const shaderConfig = {
     uniforms: {
       time: { value: 0 }
@@ -153,12 +120,12 @@ export const phong = () => {
   return renderer.domElement;
 };
 
-export const standard = () => {
+export const modifiedStandard = () => {
   const shaderConfig = {
-      uniforms: {
-        time: { value: 0 }
-      },
-      vertexShader: {
+    uniforms: {
+      time: { value: 0 }
+    },
+    vertexShader: {
       uniforms: `
         uniform float time;
       `,

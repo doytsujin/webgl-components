@@ -69,9 +69,11 @@
   },
   "dependencies": {
     "@jam3/detect": "^2.0.5",
+    "@types/stats": "^0.16.30",
     "detect-gpu": "^3.1.25",
     "eventemitter3": "^4.0.7",
     "lil-gui": "^0.11.0",
+    "query-string": "^7.0.1",
     "three": "^0.134.0"
   }
 }

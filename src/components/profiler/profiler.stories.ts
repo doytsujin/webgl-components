@@ -14,49 +14,13 @@ import {
   MathUtils
 } from 'three';
 import { setRendererSize, resizeWithConstraint } from '../rendering/resize';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import profiler, { GRAPHICS_HIGH, GRAPHICS_NORMAL } from './profiler';
+import webglScene from '../../stories/webgl-scene';
 
 export default { title: 'Profiler' };
 
-function setup() {
-  const root = document.getElementById('root');
-  const renderer = new WebGLRenderer({
-    antialias: true,
-    powerPreference: 'high-performance',
-    stencil: false
-  });
-
-  const camera = new PerspectiveCamera(65, 1, 0.1, 100);
-  camera.position.set(0, 2, 7);
-  camera.lookAt(new Vector3());
-
-  const scene = new Scene();
-
-  if (root == null) return { renderer, camera, scene };
-
-  const controls = new OrbitControls(camera, renderer.domElement);
-
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  renderer.setSize(root.offsetWidth, root.offsetHeight);
-
-  const ambient = new AmbientLight();
-  const directional = new DirectionalLight();
-  directional.position.set(1, 1, 1);
-  scene.add(ambient, directional);
-
-  function update() {
-    requestAnimationFrame(update);
-    renderer.render(scene, camera);
-  }
-
-  update();
-
-  return { renderer, camera, root, scene };
-}
-
 export const profileGPU = () => {
-  const { renderer, camera, root, scene } = setup();
+  const { renderer, camera, root, scene } = webglScene();
 
   function config(mode: string) {
     switch (mode) {
@@ -96,6 +60,12 @@ export const profileGPU = () => {
   resize();
 
   window.addEventListener('resize', resize);
+
+  function update() {
+    requestAnimationFrame(update);
+    renderer.render(scene, camera);
+  }
+  update();
 
   return renderer.domElement;
 };

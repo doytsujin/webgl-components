@@ -2,24 +2,12 @@ import '../../../style.css';
 
 import { Scene, WebGLRenderer, PerspectiveCamera, Mesh, PlaneBufferGeometry, ShaderMaterial, Clock } from 'three';
 import { simplexNoise2D, simplexNoise3D, simplexNoise4D } from './simplex.glsl';
+import webglScene from '../../../stories/webgl-scene';
 
-export default { title: 'Simplex' };
+export default { title: 'Shaders/Noise' };
 
 function setup(options: { vertexShader: string; fragmentShader: string }) {
-  const root = document.getElementById('root');
-  const renderer = new WebGLRenderer({
-    antialias: true,
-    powerPreference: 'high-performance',
-    stencil: false
-  });
-
-  if (root == null) return { renderer };
-  const clock = new Clock();
-  const scene = new Scene();
-  const camera = new PerspectiveCamera(65, 1, 0.1, 100);
-
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  renderer.setSize(root.offsetWidth, root.offsetHeight);
+  const { renderer, camera, root, scene, clock } = webglScene();
 
   const mesh = new Mesh(
     new PlaneBufferGeometry(2, 2),
@@ -31,23 +19,11 @@ function setup(options: { vertexShader: string; fragmentShader: string }) {
       fragmentShader: options.fragmentShader
     })
   );
-
   scene.add(mesh);
-
-  function resize() {
-    if (root instanceof HTMLElement) {
-      camera.aspect = root.offsetWidth / root.offsetHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(root.offsetWidth, root.offsetHeight);
-    }
-  }
-
-  window.addEventListener('resize', resize);
 
   function update() {
     mesh.material.uniforms.time.value += clock.getDelta();
     requestAnimationFrame(update);
-    renderer.render(scene, camera);
   }
 
   update();
