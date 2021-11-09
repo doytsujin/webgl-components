@@ -1,9 +1,9 @@
 import '../../style.css';
 import createCanvas from './canvas';
 
-export default { title: 'Canvas' };
+export default { title: 'Utils/Canvas' };
 
-export const create = () => {
+export const canvas = () => {
   const { canvas, ctx } = createCanvas(512, 512);
   if (ctx instanceof CanvasRenderingContext2D) {
     ctx.fillStyle = '#ffffff';
