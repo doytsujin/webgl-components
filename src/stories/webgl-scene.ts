@@ -9,6 +9,7 @@ import {
   Vector3,
   WebGLRenderer
 } from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 export default function webglScene() {
   const root = document.getElementById('root');
@@ -27,7 +28,7 @@ export default function webglScene() {
   const clock = new Clock(true);
 
   const camera = new PerspectiveCamera(65, aspect);
-  camera.position.set(10, 6, 10);
+  camera.position.set(0, 6, 20);
   camera.lookAt(new Vector3());
 
   if (root == null) return { scene, camera, renderer, root, clock };
@@ -36,6 +37,7 @@ export default function webglScene() {
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.setSize(root.offsetWidth, root.offsetHeight);
+  const controls = new OrbitControls(camera, renderer.domElement);
 
   const ambient = new AmbientLight();
   const directional = new DirectionalLight();

@@ -11,7 +11,7 @@
   "main": "build/webgl-components.umd.js",
   "module": "build/webgl-components.js",
   "scripts": {
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -s ./public -p 6006",
     "prebuild": "rimraf build",
     "build": "tsc --module commonjs && rollup -c rollup.config.js",
     "build-storybook": "build-storybook",
