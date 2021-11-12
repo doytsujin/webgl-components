@@ -7,7 +7,16 @@
   "types": "dist/jam3-intern-webgl-components.cjs.d.ts",
   "preconstruct": {
     "entrypoints": [
-      "index.ts"
+      "index.ts",
+      "cameras/index.ts",
+      "interaction/index.ts",
+      "loading/index.ts",
+      "materials/index.ts",
+      "math/index.ts",
+      "profiler/index.ts",
+      "rendering/index.ts",
+      "shaders/index.ts",
+      "utils/index.ts"
     ]
   },
   "dependencies": {
