@@ -1,4 +1,4 @@
-import '../../style.css';
+import '../style.css';
 
 import { Mesh, SphereBufferGeometry, Vector2, MeshNormalMaterial, MathUtils } from 'three';
 import { setRendererSize } from '../rendering/resize';

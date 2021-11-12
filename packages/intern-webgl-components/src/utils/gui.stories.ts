@@ -1,21 +1,6 @@
-import { configure, addDecorator } from '@storybook/html';
-
-import webglScene from '../../stories/webgl-scene';
-import '../../style.css';
+import '../style.css';
 import createCanvas from './canvas';
 import GUI from './gui';
-import RenderStats, { RenderStatsPosition } from './stats';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import {
-  CanvasTexture,
-  IcosahedronBufferGeometry,
-  Mesh,
-  MeshBasicMaterial,
-  MeshNormalMaterial,
-  SphereGeometry
-} from 'three';
-import disposeObjects from './dispose-objects';
-import { getQueryFromParams, setQuery } from './query-params';
 
 export default { title: 'Utils' };
 

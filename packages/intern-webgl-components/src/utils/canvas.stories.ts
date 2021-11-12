@@ -1,4 +1,4 @@
-import '../../style.css';
+import '../style.css';
 import createCanvas from './canvas';
 
 export default { title: 'Utils/Canvas' };

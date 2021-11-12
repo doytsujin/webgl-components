@@ -1,4 +1,4 @@
-import '../../style.css';
+import '../style.css';
 
 import webglScene from '..//webgl-scene';
 import GroupLoader from './group-loader';

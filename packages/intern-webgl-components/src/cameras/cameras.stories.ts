@@ -1,4 +1,4 @@
-import '../../style.css';
+import '../style.css';
 import { Vector3 } from 'three';
 import { positionCamera } from '.';
 import webglScene from '..//webgl-scene';

@@ -1,5 +1,5 @@
 import webglScene from '..//webgl-scene';
-import '../../style.css';
+import '../style.css';
 import createCanvas from './canvas';
 import RenderStats, { RenderStatsPosition } from './stats';
 import { CanvasTexture, Mesh, MeshBasicMaterial, SphereGeometry } from 'three';

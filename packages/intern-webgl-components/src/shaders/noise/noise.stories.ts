@@ -1,13 +1,13 @@
-import '../../../style.css';
+import '../../style.css';
 
-import { Scene, WebGLRenderer, PerspectiveCamera, Mesh, PlaneBufferGeometry, ShaderMaterial, Clock } from 'three';
+import { Mesh, PlaneBufferGeometry, ShaderMaterial } from 'three';
 import { simplexNoise2D, simplexNoise3D, simplexNoise4D } from './simplex.glsl';
-import webglScene from '../../../stories/webgl-scene';
+import webglScene from '../../webgl-scene';
 
 export default { title: 'Shaders/Noise' };
 
 function setup(options: { vertexShader: string; fragmentShader: string }) {
-  const { renderer, camera, root, scene, clock } = webglScene();
+  const { renderer, scene, clock } = webglScene();
 
   const mesh = new Mesh(
     new PlaneBufferGeometry(2, 2),
@@ -33,14 +33,14 @@ function setup(options: { vertexShader: string; fragmentShader: string }) {
 
 export const simplex2D = () => {
   const { renderer } = setup({
-    vertexShader: `
+    vertexShader: /* glsl */ `
       varying vec2 vUv;
       void main() {
         vUv = uv;
         gl_Position = vec4(position, 1.0);
       }
     `,
-    fragmentShader: `
+    fragmentShader: /* glsl */ `
       varying vec2 vUv;
       ${simplexNoise2D}
       void main() {
@@ -55,14 +55,14 @@ export const simplex2D = () => {
 
 export const simplex3D = () => {
   const { renderer } = setup({
-    vertexShader: `
+    vertexShader: /* glsl */ `
       varying vec3 vPosition;
       void main() {
         vPosition = position;
         gl_Position = vec4(position, 1.0);
       }
     `,
-    fragmentShader: `
+    fragmentShader: /* glsl */ `
       uniform float time;
       varying vec3 vPosition;
       ${simplexNoise3D}
@@ -78,14 +78,14 @@ export const simplex3D = () => {
 
 export const simplex4D = () => {
   const { renderer } = setup({
-    vertexShader: `
+    vertexShader: /* glsl */ `
       varying vec3 vPosition;
       void main() {
         vPosition = position;
         gl_Position = vec4(position, 1.0);
       }
     `,
-    fragmentShader: `
+    fragmentShader: /* glsl */ `
       uniform float time;
       varying vec3 vPosition;
       ${simplexNoise4D}

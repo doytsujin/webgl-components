@@ -1,27 +1,12 @@
-import { configure, addDecorator } from '@storybook/html';
-
-import webglScene from '../../stories/webgl-scene';
-import '../../style.css';
-import createCanvas from './canvas';
-import GUI from './gui';
+import webglScene from '..//webgl-scene';
+import '../style.css';
 import RenderStats, { RenderStatsPosition } from './stats';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import {
-  CanvasTexture,
-  IcosahedronBufferGeometry,
-  Mesh,
-  MeshBasicMaterial,
-  MeshNormalMaterial,
-  SphereGeometry
-} from 'three';
-import disposeObjects from './dispose-objects';
-import { getQueryFromParams, setQuery } from './query-params';
+import { IcosahedronBufferGeometry, Mesh, MeshNormalMaterial } from 'three';
 
 export default { title: 'Utils' };
 
 export const renderStats = () => {
-  const { scene, camera, renderer, root } = webglScene();
-  const controls = new OrbitControls(camera, renderer.domElement);
+  const { scene, camera, renderer } = webglScene();
 
   const mesh = new Mesh(new IcosahedronBufferGeometry(2, 3), new MeshNormalMaterial());
   scene.add(mesh);

@@ -1,20 +1,8 @@
-import '../../style.css';
+import '../style.css';
 
-import {
-  Scene,
-  WebGLRenderer,
-  PerspectiveCamera,
-  Mesh,
-  SphereBufferGeometry,
-  AmbientLight,
-  DirectionalLight,
-  Vector3,
-  Vector2,
-  MeshNormalMaterial
-} from 'three';
+import { Vector2 } from 'three';
 import { setRendererSize, resizeWithConstraint } from './resize';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import webglScene from '../../stories/webgl-scene';
+import webglScene from '../webgl-scene';
 
 export default { title: 'Rendering' };
 

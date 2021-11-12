@@ -1,4 +1,4 @@
-import '../../style.css';
+import '../style.css';
 import createCanvas from './canvas';
 import GUI from './gui';
 import { getQueryFromParams, setQuery } from './query-params';

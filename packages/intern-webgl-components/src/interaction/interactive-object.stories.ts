@@ -1,4 +1,4 @@
-import '../../style.css';
+import '../style.css';
 
 import { Mesh, SphereBufferGeometry, MeshLambertMaterial } from 'three';
 import InteractiveObject from './interactive-object';
