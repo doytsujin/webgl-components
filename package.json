@@ -1,7 +1,8 @@
 {
-  "name": "intern-webgl-components",
+  "name": "@jam3/intern-webgl-components",
   "version": "0.0.1",
   "description": "Modular components and utilities used for WebGL based projects",
+  "private": "true",
   "keywords": [
     "webgl",
     "threejs",
@@ -9,13 +10,14 @@
     "best practices"
   ],
   "scripts": {
-    "storybook": "start-storybook -s ./public -p 6006",
-    "build-storybook": "build-storybook",
     "lint-staged": "lint-staged",
     "build": "preconstruct build",
     "watch": "preconstruct watch",
     "dev": "preconstruct dev",
-    "validate": "preconstruct validate"
+    "validate": "preconstruct validate",
+    "storybook": "start-storybook -s ./public -p 6006",
+    "build-storybook": "build-storybook",
+    "release": "npm build && npm publish"
   },
   "husky": {
     "hooks": {

@@ -1,5 +1,4 @@
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { PerspectiveCamera, WebGLRenderer, Vector3 } from 'three';
+import { PerspectiveCamera, Vector3 } from 'three';
 import { VECTOR_ZERO, VECTOR_ONE } from '../math/math';
 
 /**

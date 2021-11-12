@@ -1,10 +1,10 @@
 {
-  "name": "intern-webgl-components",
-  "version": "",
+  "name": "@jam3/intern-webgl-components",
+  "version": "0.0.1",
   "license": "MIT",
-  "main": "dist/intern-webgl-components.cjs.js",
-  "module": "dist/intern-webgl-components.esm.js",
-  "types": "dist/intern-webgl-components.cjs.d.ts",
+  "main": "dist/jam3-intern-webgl-components.cjs.js",
+  "module": "dist/jam3-intern-webgl-components.esm.js",
+  "types": "dist/jam3-intern-webgl-components.cjs.d.ts",
   "preconstruct": {
     "entrypoints": [
       "index.ts"
