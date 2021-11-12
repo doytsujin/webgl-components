@@ -3,7 +3,7 @@ import '../style.css';
 import webglScene from '..//webgl-scene';
 import GroupLoader from './group-loader';
 import Asset, { AssetType } from './asset';
-import assetManager from './asset-manager';
+import AssetManager from './asset-manager';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { Mesh, MeshNormalMaterial, Object3D, Scene } from 'three';
 
@@ -39,6 +39,8 @@ export const loadAssets = () => {
       type: AssetType.GLTF
     })
   ];
+
+  const assetManager = new AssetManager();
 
   // Use the draco loader for gltf if the glb file is compressed with draco
   const dracoLoader = new DRACOLoader();

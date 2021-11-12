@@ -37,7 +37,7 @@ export default function webglScene() {
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.setSize(root.offsetWidth, root.offsetHeight);
-  const controls = new OrbitControls(camera, renderer.domElement);
+  new OrbitControls(camera, renderer.domElement);
 
   const ambient = new AmbientLight();
   const directional = new DirectionalLight();

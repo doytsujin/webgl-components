@@ -7,7 +7,7 @@ import webglScene from '../../webgl-scene';
 export default { title: 'Shaders/Noise' };
 
 function setup(options: { vertexShader: string; fragmentShader: string }) {
-  const { renderer, scene, clock } = webglScene();
+  const { renderer, scene, clock, camera } = webglScene();
 
   const mesh = new Mesh(
     new PlaneBufferGeometry(2, 2),
@@ -24,6 +24,7 @@ function setup(options: { vertexShader: string; fragmentShader: string }) {
   function update() {
     mesh.material.uniforms.time.value += clock.getDelta();
     requestAnimationFrame(update);
+    renderer.render(scene, camera);
   }
 
   update();
