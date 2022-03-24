@@ -40,11 +40,7 @@ export const guiControls = () => {
   gui.add(controller, 'myNumber');   // Number Field
 
   // Add sliders to number fields by passing min and max
-  let number = gui.add(controller, 'myNumber', 0, 1);
-
-  console.log("$children", number.$children);
-  console.log(number)
-
+  gui.add(controller, 'myNumber', 0, 1);
   gui.add(controller, 'myNumber', 0, 100, 2); // snap to even numbers
 
   // Create dropdowns by passing an array or object of named values

@@ -15,7 +15,7 @@ class Folder {
   destroy() {
     return this;
   }
-  addColor(_arg1?: Object, _arg2?: Object) {
+  addColor(_arg0?: Object, _arg1?: Object) {
     return this;
   }
   listen(_arg?: Object) {
@@ -45,7 +45,7 @@ class Folder {
 }
 
 class GUIWrapper {
-  add(_arg1?: Object, _arg2?: Object, _arg3?: Object, _arg4?: Object, _arg5?: Object) {
+  add(_arg0?: Object, _arg1?: Object, _arg2?: Object, _arg3?: Object, _arg4?: Object) {
     return this;
   }
   addFolder(_name: String) {
@@ -59,7 +59,7 @@ class GUIWrapper {
   destroy() {
     return this;
   }
-  addColor(_arg1?: Object, _arg2?: Object) {
+  addColor(_arg0?: Object, _arg1?: Object) {
     return this;
   }
   listen(_arg?: Object) {
