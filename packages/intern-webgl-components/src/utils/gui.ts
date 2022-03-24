@@ -1,46 +1,89 @@
 const GUICls = require('lil-gui').default;
 
-class GUIWrapper {
-  add() {
+class Folder {
+  add(_arg0?: Object, _arg1?: Object, _arg2?: Object, _arg3?: Object, _arg4?: Object) {
     return this;
   }
-  addColor() {
+  addFolder(_name: String) {
+    return new Folder();
+  }
+
+  removeFolder(_name?: Object) {
+    return new Folder();
+  }
+
+  destroy() {
     return this;
   }
-  addFolder() {
-    return new GUIWrapper();
-  }
-  load() {
+  addColor(_arg0?: Object, _arg1?: Object) {
     return this;
   }
-  save() {
+  listen(_arg?: Object) {
     return this;
   }
-  open() {
+  name(_arg?: String) {
     return this;
   }
   close() {
     return this;
   }
-  openAnimated() {
+  step() {
     return this;
   }
-  title() {
+  onChange(_arg?: Object) {
     return this;
   }
-  reset() {
+  setValue(_arg?: Object) {
     return this;
   }
-  onChange() {
+  remove() {
     return this;
   }
+  open() {
+    return this;
+  }
+}
+
+class GUIWrapper {
+  add(_arg0?: Object, _arg1?: Object, _arg2?: Object, _arg3?: Object, _arg4?: Object) {
+    return this;
+  }
+  addFolder(_name: String) {
+    return new Folder();
+  }
+
+  removeFolder(_name?: Object) {
+    return new Folder();
+  }
+
   destroy() {
     return this;
   }
-  controllersRecursive() {
+  addColor(_arg0?: Object, _arg1?: Object) {
     return this;
   }
-  foldersRecursive() {
+  listen(_arg?: Object) {
+    return this;
+  }
+  name(_arg?: String) {
+    return this;
+  }
+  close() {
+    return this;
+  }
+  step() {
+    return this;
+  }
+  onChange(_arg?: Object) {
+    return this;
+  }
+  setValue(_arg?: Object) {
+    return this;
+  }
+  remove() {
+    return this;
+  }
+  open() {
     return this;
   }
 }
