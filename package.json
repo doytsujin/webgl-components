@@ -15,7 +15,7 @@
     "watch": "preconstruct watch",
     "dev": "preconstruct dev",
     "validate": "preconstruct validate",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook",
     "release": "npm build && npm publish"
   },

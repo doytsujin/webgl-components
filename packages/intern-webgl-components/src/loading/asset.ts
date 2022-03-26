@@ -3,7 +3,8 @@ export enum AssetType {
   Image,
   FBX,
   GLTF,
-  Texture
+  Texture,
+  EnviroementMap,
 }
 
 export interface AssetConfig {

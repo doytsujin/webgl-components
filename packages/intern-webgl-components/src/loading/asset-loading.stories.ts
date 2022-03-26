@@ -5,7 +5,7 @@ import GroupLoader from './group-loader';
 import Asset, { AssetType } from './asset';
 import AssetManager from './asset-manager';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-import { Mesh, MeshNormalMaterial, Object3D, Scene } from 'three';
+import { Color, Mesh, MeshStandardMaterial, Object3D, Scene, Texture } from 'three';
 
 export default { title: 'Loader' };
 
@@ -35,8 +35,13 @@ export const loadAssets = () => {
     }),
     new Asset({
       id: 'jam3-logo',
-      src: '/assets/jam3.glb',
+      src: '/assets/jam3-high.glb',
       type: AssetType.GLTF
+    }),
+    new Asset({
+      id: 'enviroment-map',
+      src: '/assets/env-map.hdr',
+      type: AssetType.EnviroementMap
     })
   ];
 
@@ -57,6 +62,8 @@ export const loadAssets = () => {
   loader.once('loaded', (response: Asset[]) => {
     assetManager.addAssets('example', response);
     const asset = assetManager.get('example', 'jam3-logo');
+    const enviromentMap = (assetManager.get('example', 'enviroment-map') as Asset).data as Texture;
+
     if (asset instanceof Asset) {
       if (asset.data) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -64,7 +71,14 @@ export const loadAssets = () => {
         const group = modelScene.children[0].clone();
         group.scale.set(100, 100, 100);
         scene.add(group);
-        const material = new MeshNormalMaterial();
+
+        const material = new MeshStandardMaterial({
+          color: 0x000000,
+          envMap: enviromentMap,
+          roughness: 0.1,
+          metalness: 0.8,
+        });
+
         group.children[0].children.forEach((child: Object3D) => {
           if (child instanceof Mesh) {
             child.material = material;
@@ -80,6 +94,8 @@ export const loadAssets = () => {
 
   loader.load(assets);
 
+
+  renderer.setClearColor(new Color(0x222222));
   function update() {
     requestAnimationFrame(update);
     renderer.render(scene, camera);
