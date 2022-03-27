@@ -1,5 +1,7 @@
 const GUICls = require('lil-gui').default;
 
+import { Vector2Controller, Vector3Controller, Vector4Controller } from "./gui-ext/gui-vec";
+
 class GUIWrapper {
   add() {
     return this;
@@ -45,7 +47,21 @@ class GUIWrapper {
   }
 }
 
+
 export default function GUI(debug: boolean) {
+
+  GUICls.prototype.addVector2 = function (object: any, property: any, min: number, max: number, step: number) {
+    return new Vector2Controller(this, object, property, min, max, step);
+  };
+
+  GUICls.prototype.addVector3 = function (object: any, property: any, min: number, max: number, step: number) {
+    return new Vector3Controller(this, object, property, min, max, step);
+  };
+
+  GUICls.prototype.addVector4 = function (object: any, property: any, min: number, max: number, step: number) {
+    return new Vector4Controller(this, object, property, min, max, step);
+  };
+
   const Cls = debug ? GUICls : GUIWrapper;
   return new Cls();
 }
