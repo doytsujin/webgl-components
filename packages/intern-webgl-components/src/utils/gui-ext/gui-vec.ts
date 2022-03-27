@@ -1,13 +1,5 @@
 import { Controller } from 'lil-gui'
 
-
-/*
-	TODO:
-		- cleanup
-		- create base component that accepts multiple props,
-		- create child component, specialized for vec2, vec3, vec4, 
-*/
-
 interface VectorInterface {
 	[key: string]: number;
 	x: number;
@@ -46,15 +38,7 @@ class VectorController extends Controller {
 
 		const stepExplicit = step !== undefined;
 		this.step(stepExplicit ? step : this._getImplicitStep(), stepExplicit);
-
-		//Initialize HTML elements
-		this.$inputs = []; // [document.createElement('input'), document.createElement('input')];
-		// this._initInput(this.$inputs[0], "x");
-		// this._initInput(this.$inputs[1], "y");
-		// for (let _ of this.$inputs) {
-		// 	
-		// }
-
+		this.$inputs = [];
 	}
 
 	min(min: number) {
@@ -214,7 +198,6 @@ class VectorController extends Controller {
 		const onMouseUp = () => {
 			this._setDraggingStyle(false, 'vertical');
 			this._callOnFinishChange();
-			console.log("DONE");
 			window.removeEventListener('mousemove', onMouseMove);
 			window.removeEventListener('mouseup', onMouseUp);
 		};

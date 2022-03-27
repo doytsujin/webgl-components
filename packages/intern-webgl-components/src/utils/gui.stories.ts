@@ -2,8 +2,6 @@ import '../style.css';
 import createCanvas from './canvas';
 import GUI from './gui';
 
-
-
 export default { title: 'Utils' };
 
 export const guiControls = () => {
@@ -49,28 +47,23 @@ export const guiControls = () => {
   }
   draw();
 
-  // gui.add(controller, 'myBoolean');  // Checkbox
-  // gui.add(controller, 'myFunction'); // Button
-  // gui.add(controller, 'myString');   // Text Field
-  // gui.add(controller, 'myNumber');   // Number Field
+  gui.add(controller, 'myBoolean');  // Checkbox
+  gui.add(controller, 'myFunction'); // Button
+  gui.add(controller, 'myString');   // Text Field
+  gui.add(controller, 'myNumber');   // Number Field
 
+  // Add sliders to number fields by passing min and max
+  gui.add(controller, 'myNumber', 0, 1);
+  gui.add(controller, 'myNumber', 0, 100, 2); // snap to even numbers
 
-  gui.addVector2(controller, 'offset2d').step(0.1).onChange(() => { draw(); });
-  gui.addVector3(controller, 'offset3d').step(0.1);
-  gui.addVector4(controller, 'offset4d').step(0.1);
+  // Create dropdowns by passing an array or object of named values
+  gui.add(controller, 'myNumber', [0, 1, 2]);
+  gui.add(controller, 'myNumber', { Label1: 0, Label2: 1, Label3: 2 });
 
-
-  // // Add sliders to number fields by passing min and max
-  // gui.add(controller, 'myNumber', 0, 1);
-  // gui.add(controller, 'myNumber', 0, 100, 2); // snap to even numbers
-
-  // // Create dropdowns by passing an array or object of named values
-  // gui.add(controller, 'myNumber', [0, 1, 2]);
-  // gui.add(controller, 'myNumber', { Label1: 0, Label2: 1, Label3: 2 });
-
-  // const offsetFolder = gui.addFolder('Position');
-  // offsetFolder.add(controller.offset, 'x').onChange(() => { draw(); });
-  // offsetFolder.add(controller.offset, 'y').onChange(() => { draw(); });
+  const offsetFolder = gui.addFolder('Position');
+  offsetFolder.addVector2(controller, 'offset2d').step(0.1).onChange(() => { draw(); });
+  offsetFolder.addVector3(controller, 'offset3d').step(0.1);
+  offsetFolder.addVector4(controller, 'offset4d').step(0.1);
 
   // Create color pickers for multiple color formats
   const colorFormats = {
@@ -80,8 +73,8 @@ export const guiControls = () => {
     array: [1, 1, 1]
   };
 
-  // gui.addColor(colorFormats, 'string');
-  // gui.addColor(controller, 'color').onChange(draw);
+  gui.addColor(colorFormats, 'string');
+  gui.addColor(controller, 'color').onChange(draw);
 
   return canvas;
 };
