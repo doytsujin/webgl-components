@@ -8,7 +8,7 @@ import Loader from './loader';
  * @class ThreeTextureLoader
  * @extends {Loader}
  */
-export default class ThreeEnviromentMapLoader extends Loader {
+export default class ThreeEnvironmentMapLoader extends Loader {
     load = () => {
         const loader = new RGBELoader();
         const onLoaded = (texture: Texture) => {
