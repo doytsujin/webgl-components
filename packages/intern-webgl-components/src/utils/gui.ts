@@ -1,5 +1,5 @@
 const GUICls = require('lil-gui').default;
-import { Vector2Controller, Vector3Controller, Vector4Controller } from "./gui-ext/gui-vec"
+import { Vector2Controller, Vector3Controller, Vector4Controller } from "./gui-extensions/gui-vector"
 
 class Folder {
   add(_arg0?: Object, _arg1?: Object, _arg2?: Object, _arg3?: Object, _arg4?: Object) {
