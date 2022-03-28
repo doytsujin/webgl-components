@@ -12,6 +12,8 @@ interface ParentInterface {
 	[key: string]: VectorInterface;
 }
 
+// Vector controller implements the basic functionality for a gui widget for objects like Threejs Vector2, Vector3 and Vecto4, it's basically a number controller with multiple inputs
+// Based on https://github.com/georgealways/lil-gui/blob/master/src/NumberController.js
 
 class VectorController extends Controller {
 
@@ -25,8 +27,8 @@ class VectorController extends Controller {
 
 	$inputs: HTMLInputElement[] = [];
 
-	_vecProps: string[] = [];
-	_currentProp: string = "";
+	_vecProps: string[] = []; // the props keys inside the Vector class (x,y,z,w...) we use to access each value 
+	_currentProp: string = ""; //this is used to bypass the setValue logic, since it's inherit from it's parent class we cannot pass the current Vector prop as an argument
 
 
 	constructor(parent: ParentInterface, object: VectorInterface, property: any, min: number, max: number, step: number) {
