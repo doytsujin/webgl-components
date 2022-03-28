@@ -14,9 +14,22 @@ export const guiControls = () => {
     myString: 'lil-gui',
     myNumber: 1,
     color: '#ff69b4',
-    offset: {
+    offset2d: {
       x: 0.0,
       y: 0.0,
+    },
+
+    offset3d: {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+    },
+
+    offset4d: {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+      w: 0.0,
     }
   };
 
@@ -27,7 +40,7 @@ export const guiControls = () => {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.beginPath();
       ctx.fillStyle = controller.color;
-      ctx.arc(canvas.width / 2 + controller.offset.x, canvas.height / 2 + controller.offset.y, 50, 0, Math.PI * 2);
+      ctx.arc(canvas.width / 2 + controller.offset2d.x, canvas.height / 2 + controller.offset2d.y, 50, 0, Math.PI * 2);
       ctx.fill();
       ctx.closePath();
     }
@@ -48,8 +61,9 @@ export const guiControls = () => {
   gui.add(controller, 'myNumber', { Label1: 0, Label2: 1, Label3: 2 });
 
   const offsetFolder = gui.addFolder('Position');
-  offsetFolder.add(controller.offset, 'x').onChange(() => { draw(); });
-  offsetFolder.add(controller.offset, 'y').onChange(() => { draw(); });
+  offsetFolder.addVector2(controller, 'offset2d').step(0.1).onChange(() => { draw(); });
+  offsetFolder.addVector3(controller, 'offset3d').step(0.1);
+  offsetFolder.addVector4(controller, 'offset4d').step(0.1);
 
   // Create color pickers for multiple color formats
   const colorFormats = {
