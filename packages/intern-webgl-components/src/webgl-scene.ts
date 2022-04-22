@@ -11,7 +11,7 @@ import {
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-export default function webglScene() {
+export default function webglScene(addLights = true) {
   const root = document.getElementById('root');
   const renderer = new WebGLRenderer({
     antialias: true,
@@ -39,10 +39,12 @@ export default function webglScene() {
   renderer.setSize(root.offsetWidth, root.offsetHeight);
   new OrbitControls(camera, renderer.domElement);
 
-  const ambient = new AmbientLight();
-  const directional = new DirectionalLight();
-  directional.position.set(1, 1, 1);
-  scene.add(ambient, directional);
+  if (addLights) {
+    const ambient = new AmbientLight();
+    const directional = new DirectionalLight();
+    directional.position.set(1, 1, 1);
+    scene.add(ambient, directional);
+  }
 
   function resize() {
     if (root instanceof HTMLElement) {
