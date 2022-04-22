@@ -5,11 +5,12 @@ import {
     MeshBasicMaterial,
     Vector2,
     Scene,
-    BoxBufferGeometry
+    BoxBufferGeometry,
+    SphereBufferGeometry
 } from 'three';
 import webglScene from '../webgl-scene';
 
-import { IScene } from './post-processing/passes/transition-pass/transition-pass';
+import { SceneInterface } from './post-processing/passes/transition-pass/transition-pass';
 import SceneTransitionPostEffect, { GraphicsConfig } from './post-processing/post-processing';
 import GUI from '../utils/gui';
 
@@ -22,7 +23,7 @@ export const postProcessing = () => {
     let resolution = new Vector2();
     renderer.getSize(resolution);
 
-    let sceneA: IScene = {
+    let sceneA: SceneInterface = {
         scene: scene,
         clearColor: 0x000000,
         cameras: {
@@ -31,7 +32,7 @@ export const postProcessing = () => {
         },
         update: () => { },
     }
-    let sceneB: IScene = {
+    let sceneB: SceneInterface = {
         scene: new Scene(),
         clearColor: 0x000000,
         cameras: {
@@ -45,7 +46,7 @@ export const postProcessing = () => {
     sceneTransition.setScenes(sceneA, sceneB);
 
     // add the two different scenes in the transition post effect 
-    // sceneA.scene.add(new Mesh(new SphereBufferGeometry(2, 64, 64), new MeshBasicMaterial({ color: 'salmon' })));
+    sceneA.scene.add(new Mesh(new SphereBufferGeometry(2, 64, 64), new MeshBasicMaterial({ color: 'salmon' })));
     sceneB.scene.add(new Mesh(new BoxBufferGeometry(2, 2, 2), new MeshBasicMaterial({ color: 'blue' })));
 
     function update() {

@@ -3,12 +3,10 @@ import { FullScreenQuad, Pass } from 'three/examples/jsm/postprocessing/Pass';
 import gsap from 'gsap';
 import { vertexShader, fragmentShader } from './shader.glsl'
 import { createRenderTarget } from '../../../render-target'
-//import { getRenderBufferSize } from '@/webgl-app/rendering/resize';
-//import { WebGLScene } from '@/webgl-app/scenes/base-scene/base-scene';
-//import settings from '@/webgl-app/settings';
+
 const GUI = require('lil-gui');
 
-export interface IScene {
+export interface SceneInterface {
   cameras: { main: Camera, debug: Camera | null };
   scene: Scene,
   clearColor: 0x000000;
@@ -27,8 +25,8 @@ export default class TransitionPass extends Pass {
   material: ShaderMaterial;
   renderTargetA: WebGLRenderTarget;
   renderTargetB: WebGLRenderTarget;
-  sceneA!: IScene;
-  sceneB!: IScene;
+  sceneA!: SceneInterface;
+  sceneB!: SceneInterface;
   gui!: typeof GUI;
   skipTransitions: boolean;
 
@@ -132,11 +130,11 @@ export default class TransitionPass extends Pass {
   /**
    * Set the scenes
    *
-   * @param {IScene} sceneA
-   * @param {IScene} sceneB
+   * @param {SceneInterface} sceneA
+   * @param {SceneInterface} sceneB
    * @memberof TransitionPass
    */
-  setScenes(sceneA: IScene, sceneB: IScene) {
+  setScenes(sceneA: SceneInterface, sceneB: SceneInterface) {
     this.sceneA = sceneA;
     this.sceneB = sceneB;
   }
