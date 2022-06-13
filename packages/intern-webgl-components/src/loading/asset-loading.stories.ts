@@ -5,7 +5,7 @@ import GroupLoader from './group-loader';
 import Asset, { AssetType } from './asset';
 import AssetManager from './asset-manager';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-import { Color, Mesh, MeshStandardMaterial, Object3D, Scene, Texture } from 'three';
+import { Color, EquirectangularReflectionMapping, Mesh, MeshStandardMaterial, Object3D, Scene, Texture } from 'three';
 
 export default { title: 'Loader' };
 
@@ -41,7 +41,7 @@ export const loadAssets = () => {
     new Asset({
       id: 'enviroment-map',
       src: '/assets/env-map.hdr',
-      type: AssetType.EnviroementMap
+      type: AssetType.RgbeTexture
     })
   ];
 
@@ -66,6 +66,8 @@ export const loadAssets = () => {
 
     if (asset instanceof Asset) {
       if (asset.data) {
+        enviromentMap.mapping = EquirectangularReflectionMapping;
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const modelScene: Scene = (asset.data as any).scene;
         const group = modelScene.children[0].clone();
@@ -76,7 +78,7 @@ export const loadAssets = () => {
           color: 0x000000,
           envMap: enviromentMap,
           roughness: 0.1,
-          metalness: 0.8,
+          metalness: 0.8
         });
 
         group.children[0].children.forEach((child: Object3D) => {
@@ -93,7 +95,6 @@ export const loadAssets = () => {
   });
 
   loader.load(assets);
-
 
   renderer.setClearColor(new Color(0x222222));
   function update() {

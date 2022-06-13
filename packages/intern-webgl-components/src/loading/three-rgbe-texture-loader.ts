@@ -1,19 +1,19 @@
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+import { Texture } from 'three';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 import Loader from './loader';
 
 /**
- * Threejs FBX Loader
+ * Threejs rgbe texture loader
  *
  * @export
- * @class ThreeFBXLoader
+ * @class ThreeRgbeTextureLoader
  * @extends {Loader}
  */
-export default class ThreeFBXLoader extends Loader {
+export default class ThreeRgbeTextureLoader extends Loader {
   load = () => {
-    const loader = new FBXLoader();
-
-    const onLoaded = (data: Object) => {
-      this.asset.data = data;
+    const loader = new RGBELoader();
+    const onLoaded = (texture: Texture) => {
+      this.asset.data = texture;
       this.emit('loaded', this.asset);
     };
 

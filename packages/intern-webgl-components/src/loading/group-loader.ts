@@ -6,10 +6,9 @@ import JsonLoader from './json-loader';
 import ThreeTextureLoader from './three-texture-loader';
 import ThreeFBXLoader from './three-fbx-loader';
 import ThreeGLTFLoader from './three-gltf-loader';
-import ThreeEnvironmentMapLoader from './three-environment-map-loader';
+import ThreeRgbeTexureLoader from './three-rgbe-texture-loader';
 import Asset, { AssetType } from './asset';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-
 
 const LOADERS = {
   [AssetType.Image]: ImageLoader,
@@ -17,7 +16,7 @@ const LOADERS = {
   [AssetType.Texture]: ThreeTextureLoader,
   [AssetType.FBX]: ThreeFBXLoader,
   [AssetType.GLTF]: ThreeGLTFLoader,
-  [AssetType.EnvironmentMap]: ThreeEnvironmentMapLoader,
+  [AssetType.RgbeTexture]: ThreeRgbeTexureLoader
 };
 
 export type LoaderSettings = {

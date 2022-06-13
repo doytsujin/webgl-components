@@ -29,8 +29,8 @@ export default class ThreeGLTFLoader extends Loader {
 
     const onProgress = () => {};
 
-    const onError = () => {
-      this.emit('error', `Failed to load ${this.asset.src}`);
+    const onError = (error: ErrorEvent) => {
+      this.emit('error', `Failed to load ${this.asset.src}`, error);
     };
 
     loader.load(this.asset.src, onLoaded, onProgress, onError);
