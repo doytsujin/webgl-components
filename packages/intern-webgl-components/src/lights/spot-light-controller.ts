@@ -52,7 +52,6 @@ export class SpotLightController implements LightController {
   addGUI(guiParent: typeof GUI) {
     this.guiParent = guiParent;
     this.gui = guiParent.addFolder('spot');
-    const range = 100;
     this.gui.addColor(this.settings, 'color').onChange(this.onChange);
     this.gui.add(this.light, 'intensity', 0, 10);
     this.gui.add(this.light, 'distance', 0, 100);
@@ -60,9 +59,7 @@ export class SpotLightController implements LightController {
     this.gui.add(this.light, 'angle', 0, 1);
     this.gui.add(this.light, 'penumbra', 0, 1);
     this.gui.add(this.light, 'power', 0, 2);
-    this.gui.add(this.light.position, 'x', -range, range).name('position x');
-    this.gui.add(this.light.position, 'y', -range, range).name('position y');
-    this.gui.add(this.light.position, 'z', -range, range).name('position z');
+    this.gui.addVector3(this.light, 'position', -50, 50, 0.1);
   }
 
   onChange = () => {
