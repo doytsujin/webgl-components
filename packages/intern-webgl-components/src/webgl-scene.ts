@@ -35,7 +35,7 @@ export default function webglScene(addLights = true) {
 
   scene.add(new GridHelper(), new AxesHelper());
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(root.offsetWidth, root.offsetHeight);
   new OrbitControls(camera, renderer.domElement);
 

@@ -1,59 +1,69 @@
 import '../style.css';
 
 import {
-    Mesh,
-    MeshBasicMaterial,
-    Vector2,
-    Scene,
-    BoxBufferGeometry,
-    SphereBufferGeometry
+  Mesh,
+  MeshBasicMaterial,
+  Scene,
+  BoxBufferGeometry,
+  SphereBufferGeometry,
+  MeshNormalMaterial,
+  Vector2
 } from 'three';
 import webglScene from '../webgl-scene';
 
 import { SceneInterface } from './post-processing/passes/transition-pass/transition-pass';
-import SceneTransitionPostEffect, { GraphicsConfig } from './post-processing/post-processing';
 import GUI from '../utils/gui';
+import PostProcessing from './post-processing/post-processing';
+import config from './graphics/config';
+import { getRenderBufferSize } from './resize';
 
 export default { title: 'Rendering' };
 export const postProcessing = () => {
+  const gui = GUI(true);
 
-    const gui = GUI(true);
+  const { scene, camera, renderer } = webglScene();
+  const renderSize = new Vector2();
 
-    const { scene, camera, renderer } = webglScene();
-    let resolution = new Vector2();
-    renderer.getSize(resolution);
+  const sceneA: SceneInterface = {
+    scene: scene,
+    clearColor: 0x000000,
+    cameras: {
+      main: camera,
+      debug: null
+    },
+    update: () => {}
+  };
+  const sceneB: SceneInterface = {
+    scene: new Scene(),
+    clearColor: 0x000000,
+    cameras: {
+      main: camera,
+      debug: null
+    },
+    update: () => {}
+  };
 
-    let sceneA: SceneInterface = {
-        scene: scene,
-        clearColor: 0x000000,
-        cameras: {
-            main: camera,
-            debug: null,
-        },
-        update: () => { },
-    }
-    let sceneB: SceneInterface = {
-        scene: new Scene(),
-        clearColor: 0x000000,
-        cameras: {
-            main: camera,
-            debug: null,
-        },
-        update: () => { },
-    }
+  const postProcessing = new PostProcessing(renderer, config.high, gui);
+  postProcessing.setScenes(sceneA, sceneB);
+  postProcessing.resize(renderSize.x, renderSize.y);
 
-    let sceneTransition = new SceneTransitionPostEffect(renderer, new GraphicsConfig(), gui);
-    sceneTransition.setScenes(sceneA, sceneB);
+  // add the two different scenes in the transition post effect
+  sceneA.scene.add(new Mesh(new SphereBufferGeometry(2, 64, 64), new MeshNormalMaterial({})));
+  sceneB.scene.add(new Mesh(new BoxBufferGeometry(2, 2, 2), new MeshBasicMaterial({ wireframe: true })));
 
-    // add the two different scenes in the transition post effect 
-    sceneA.scene.add(new Mesh(new SphereBufferGeometry(2, 64, 64), new MeshBasicMaterial({ color: 'salmon' })));
-    sceneB.scene.add(new Mesh(new BoxBufferGeometry(2, 2, 2), new MeshBasicMaterial({ color: 'blue' })));
+  function update() {
+    requestAnimationFrame(update);
+    postProcessing.render(0);
+  }
 
-    function update() {
-        requestAnimationFrame(update);
-        sceneTransition.render(0);
-    }
+  function resize() {
+    const { width, height } = getRenderBufferSize(renderer);
+    postProcessing.resize(width, height);
+  }
 
-    update();
-    return renderer.domElement;
-}
+  window.addEventListener('resize', resize);
+
+  resize();
+  update();
+  return renderer.domElement;
+};
