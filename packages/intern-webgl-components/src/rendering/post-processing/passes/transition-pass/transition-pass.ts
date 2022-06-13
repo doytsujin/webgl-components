@@ -1,14 +1,14 @@
 import { Camera, Scene, ShaderMaterial, Vector2, WebGLRenderer, WebGLRenderTarget } from 'three';
 import { FullScreenQuad, Pass } from 'three/examples/jsm/postprocessing/Pass';
 import gsap from 'gsap';
-import { vertexShader, fragmentShader } from './shader.glsl'
-import { createRenderTarget } from '../../../render-target'
+import { vertexShader, fragmentShader } from './shader.glsl';
+import { createRenderTarget } from '../../../render-target';
 
 const GUI = require('lil-gui');
 
 export interface SceneInterface {
-  cameras: { main: Camera, debug: Camera | null };
-  scene: Scene,
+  cameras: { main: Camera; debug: Camera | null };
+  scene: Scene;
   clearColor: 0x000000;
   update(delta: number): any;
 }
@@ -50,7 +50,7 @@ export default class TransitionPass extends Pass {
       fragmentShader
     });
     this.fsQuad = new FullScreenQuad(this.material);
-    const { width, height } = renderBufferSize;
+    const { x: width, y: height } = renderBufferSize;
     this.renderTargetA = createRenderTarget(width, height);
     this.renderTargetB = createRenderTarget(width, height);
 

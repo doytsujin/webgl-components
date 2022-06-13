@@ -14,8 +14,8 @@ import webglScene from '../webgl-scene';
 import { SceneInterface } from './post-processing/passes/transition-pass/transition-pass';
 import GUI from '../utils/gui';
 import PostProcessing from './post-processing/post-processing';
-import config from './graphics/config';
 import { getRenderBufferSize } from './resize';
+import graphics from '../graphics';
 
 export default { title: 'Rendering' };
 export const postProcessing = () => {
@@ -43,7 +43,7 @@ export const postProcessing = () => {
     update: () => {}
   };
 
-  const postProcessing = new PostProcessing(renderer, config.high, gui);
+  const postProcessing = new PostProcessing(renderer, graphics.getQualitySettings(), gui);
   postProcessing.setScenes(sceneA, sceneB);
   postProcessing.resize(renderSize.x, renderSize.y);
 
