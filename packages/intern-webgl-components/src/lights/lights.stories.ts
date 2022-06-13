@@ -44,7 +44,7 @@ export const LightController = () => {
   directional.light.shadow.mapSize.height = 1024;
   scene.add(directional.light);
 
-  let spotLight = new SpotLightController();
+  const spotLight = new SpotLightController();
   spotLight.addGUI(gui);
   spotLight.light.intensity = 1.0;
   spotLight.light.position.set(15, 40, 35);
@@ -62,22 +62,22 @@ export const LightController = () => {
   scene.add(spotLight.light);
 
   //Add the meshes to the scene
-  let material = new MeshStandardMaterial({ color: 0x808080, dithering: true });
-  let geometry = new PlaneGeometry(200, 200);
+  const material = new MeshStandardMaterial({ color: 0x808080, dithering: true });
+  const geometry = new PlaneGeometry(200, 200);
 
-  let mesh = new Mesh(geometry, material);
+  const mesh = new Mesh(geometry, material);
   mesh.position.set(0, -1, 0);
   mesh.rotation.x = -Math.PI * 0.5;
   mesh.receiveShadow = true; //!IMPORTANT, We need to set this flag in order to the floor to receive the shadows from the other meshes
   scene.add(mesh);
 
-  let circleGeometry = new CylinderGeometry(5, 5, 2, 32, 1, false);
-  let cmesh = new Mesh(circleGeometry, material);
+  const circleGeometry = new CylinderGeometry(5, 5, 2, 32, 1, false);
+  const cmesh = new Mesh(circleGeometry, material);
   cmesh.position.set(0, 5, 0);
   cmesh.castShadow = true; //!IMPORTANT, We need to set this flag in order for the object to 'emmit' a shadow
   scene.add(cmesh);
 
-  let sphereMesh = new Mesh(new SphereBufferGeometry(5), material);
+  const sphereMesh = new Mesh(new SphereBufferGeometry(5), material);
   sphereMesh.position.set(12, 3, 0);
   sphereMesh.castShadow = true; //!IMPORTANT, We need to set this flag in order for the object to 'emmit' a shadow
   scene.add(sphereMesh);
