@@ -1,7 +1,7 @@
 import '../style.css';
 import { Vector3 } from 'three';
 import { positionCamera } from '.';
-import webglScene from '..//webgl-scene';
+import webglScene from '../webgl-scene';
 
 export default { title: 'Cameras' };
 
