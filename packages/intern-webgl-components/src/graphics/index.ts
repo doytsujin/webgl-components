@@ -1,16 +1,17 @@
 import { getGPUTier, TierResult } from 'detect-gpu';
-import { getQueryFromParams } from '../../utils/query-params';
+import qualitySettings from './quality-settings';
+import { getQueryFromParams } from '../utils/query-params';
 
 export enum Quality {
-  Normal = 0,
-  Medium = 1,
-  High = 2
+  Normal = 'Normal',
+  Medium = 'Medium',
+  High = 'High'
 }
 
 export const QUALITY_MODES = [Quality.Normal, Quality.Medium, Quality.High];
 
 /**
- * Profile the device GPU
+ * Graphics manager
  *
  * @class Graphics
  */
@@ -24,12 +25,11 @@ class Graphics {
 
     // If the graphics query parameter is set, use it over the current gpu tier
     const qualityMode = getQueryFromParams('quality', window.parent);
-    console.log('qualityMode', qualityMode);
 
     if (typeof qualityMode === 'string' && QUALITY_MODES.includes(qualityMode)) {
       this.quality = qualityMode;
     } else {
-      this.quality = this.getGraphics();
+      this.quality = this.tiers[this.gpuTier.tier];
     }
   }
 
@@ -37,12 +37,8 @@ class Graphics {
     return quality === this.quality;
   }
 
-  setTier(tiers: Array<Quality>) {
-    this.tiers = tiers;
-  }
-
-  getGraphics() {
-    return this.tiers[this.gpuTier.tier];
+  getQualitySettings() {
+    return qualitySettings.get(this.quality);
   }
 }
 

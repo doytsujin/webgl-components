@@ -2,7 +2,7 @@ import { WebGLRenderer } from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
 import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader';
-import { GraphicsConfig } from '../graphics/config';
+import { GraphicsSettings } from '../../graphics/quality-settings';
 import TransitionPass, { SceneInterface } from './passes/transition-pass/transition-pass';
 
 const GUI = require('lil-gui');
@@ -21,15 +21,15 @@ export default class PostProcessing {
   sceneA!: SceneInterface;
   sceneB!: SceneInterface;
 
-  constructor(renderer: WebGLRenderer, config: GraphicsConfig, gui: typeof GUI | null) {
+  constructor(renderer: WebGLRenderer, graphicsSettings: GraphicsSettings, gui: typeof GUI | null) {
     this.gui = gui.addFolder('post processing');
     this.gui.open();
 
-    const { pixelRatio } = config;
+    const { pixelRatio } = graphicsSettings;
     this.composer = new EffectComposer(renderer);
     this.composer.setPixelRatio(pixelRatio);
 
-    this.transitionPass = new TransitionPass(config.maxFrameBufferSize, false, this.gui);
+    this.transitionPass = new TransitionPass(graphicsSettings.resolution, false, this.gui);
     this.fxaaPass = new ShaderPass(FXAAShader);
 
     this.composer.addPass(this.transitionPass);
