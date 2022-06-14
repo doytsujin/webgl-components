@@ -1,6 +1,5 @@
 import { getGPUTier, TierResult } from 'detect-gpu';
 import qualitySettings from './quality-settings';
-import { getQueryFromParams } from '../utils/query-params';
 
 export enum Quality {
   Normal = 'Normal',
@@ -20,11 +19,8 @@ class Graphics {
   gpuTier: TierResult = { type: 'BENCHMARK', tier: 0 };
   tiers: Array<Quality> = [Quality.Normal, Quality.Medium, Quality.High];
 
-  async profile() {
+  async profile(qualityMode: Quality | void) {
     this.gpuTier = await getGPUTier();
-
-    // If the graphics query parameter is set, use it over the current gpu tier
-    const qualityMode = getQueryFromParams('quality', window.parent);
 
     if (typeof qualityMode === 'string' && QUALITY_MODES.includes(qualityMode)) {
       this.quality = qualityMode;
