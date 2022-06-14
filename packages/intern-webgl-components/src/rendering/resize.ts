@@ -1,4 +1,4 @@
-import { WebGLRenderer } from 'three';
+import { Vector2, WebGLRenderer } from 'three';
 
 /**
  * Compute the new width and height based on the squared maximum pixel resolution
@@ -56,4 +56,14 @@ export function setRendererSize(
   renderer.setSize(width, height);
   renderer.domElement.style.width = `${windowWidth}px`;
   renderer.domElement.style.height = `${windowHeight}px`;
+}
+
+const renderSize = new Vector2();
+export function getRenderBufferSize(renderer: WebGLRenderer): { width: number; height: number } {
+  const pixelRatio = renderer.getPixelRatio();
+  renderer.getSize(renderSize);
+  return {
+    width: renderSize.x * pixelRatio,
+    height: renderSize.y * pixelRatio
+  };
 }
