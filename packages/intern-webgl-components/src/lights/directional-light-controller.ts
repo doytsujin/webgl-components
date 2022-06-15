@@ -35,7 +35,9 @@ export default class DirectionalLightController implements LightController {
     this.gui = guiParent.addFolder('directional');
     this.gui.addColor(this.settings, 'color').onChange(this.onChange);
     this.gui.add(this.light, 'intensity', 0, 1);
-    this.gui.addVector3(this.light, 'position', -1, 1, 0.01);
+    this.gui.add(this.light.position, 'x', -1, 1, 0.01);
+    this.gui.add(this.light.position, 'y', -1, 1, 0.01);
+    this.gui.add(this.light.position, 'z', -1, 1, 0.01);
   }
 
   onChange = () => {

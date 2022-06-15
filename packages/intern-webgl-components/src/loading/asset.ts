@@ -1,10 +1,10 @@
-export enum AssetType {
-  Json,
-  Image,
-  FBX,
-  GLTF,
-  Texture,
-  RgbeTexture
+export class AssetType {
+  static Json: string = 'Json';
+  static Image: string = 'Image';
+  static FBX: string = 'FBX';
+  static GLTF: string = 'GLTF';
+  static Texture: string = 'Texture';
+  static RgbeTexture: string = 'RgbeTexture';
 }
 
 export interface AssetConfig {

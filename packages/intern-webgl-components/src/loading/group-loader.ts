@@ -69,8 +69,8 @@ export default class GroupLoader extends EventEmitter {
     this.loaders = [];
     manifest.forEach((asset, i) => {
       if (asset.args === undefined) asset.args = {};
-      if (LOADERS[asset.type] !== undefined) {
-        const loader = new LOADERS[asset.type](asset);
+      if (LOADERS[asset.type as string] !== undefined) {
+        const loader = new LOADERS[asset.type as string](asset);
         this.loaders.push(loader);
         if (loader instanceof ThreeGLTFLoader && this.dracoLoader) {
           loader.setDracoLoader(this.dracoLoader);

@@ -60,7 +60,7 @@ export const loadAssets = () => {
   });
 
   loader.once('loaded', (response: Asset[]) => {
-    assetManager.addAssets('example', response);
+    assetManager.add('example', response);
     const asset = assetManager.get('example', 'jam3-logo');
     const enviromentMap = (assetManager.get('example', 'enviroment-map') as Asset).data as Texture;
 

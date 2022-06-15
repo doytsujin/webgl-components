@@ -29,7 +29,7 @@ const defaultSettings: SpotLightSettings = {
  * @class SpotLightController
  * @implements {LightController}
  */
-export class SpotLightController implements LightController {
+export default class SpotLightController implements LightController {
   settings: SpotLightSettings = defaultSettings;
   light: SpotLight;
   gui: typeof GUI;
@@ -51,6 +51,7 @@ export class SpotLightController implements LightController {
 
   addGUI(guiParent: typeof GUI) {
     this.guiParent = guiParent;
+    const range = 50;
     this.gui = guiParent.addFolder('spot');
     this.gui.addColor(this.settings, 'color').onChange(this.onChange);
     this.gui.add(this.light, 'intensity', 0, 10);
@@ -59,7 +60,9 @@ export class SpotLightController implements LightController {
     this.gui.add(this.light, 'angle', 0, 1);
     this.gui.add(this.light, 'penumbra', 0, 1);
     this.gui.add(this.light, 'power', 0, 2);
-    this.gui.addVector3(this.light, 'position', -50, 50, 0.1);
+    this.gui.add(this.light.position, 'x', -range, range, 0.01);
+    this.gui.add(this.light.position, 'y', -range, range, 0.01);
+    this.gui.add(this.light.position, 'z', -range, range, 0.01);
   }
 
   onChange = () => {

@@ -1,10 +1,10 @@
 import { getGPUTier, TierResult } from 'detect-gpu';
 import qualitySettings from './quality-settings';
 
-export enum Quality {
-  Normal = 'Normal',
-  Medium = 'Medium',
-  High = 'High'
+export class Quality {
+  static Normal = 'Normal';
+  static Medium = 'Medium';
+  static High = 'High';
 }
 
 export const QUALITY_MODES = [Quality.Normal, Quality.Medium, Quality.High];

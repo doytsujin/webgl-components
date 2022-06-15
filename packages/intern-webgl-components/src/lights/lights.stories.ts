@@ -12,7 +12,7 @@ import webglScene from '../webgl-scene';
 import GUI from '../utils/gui';
 import AmbientLightController from './ambient-light-controller';
 import DirectionalLightController from './directional-light-controller';
-import { SpotLightController } from './spot-light-controller';
+import SpotLightController from './spot-light-controller';
 
 export default { title: 'Lights' };
 

@@ -17,7 +17,7 @@ export default class JsonLoader extends Loader {
         this.asset.data = JSON.parse(req.responseText);
         this.emit('loaded', this.asset);
       } else {
-        this.emit('error', `Failed to load ${this.asset.src}`);
+        this.emit('error', req.status, `Failed to load ${this.asset.src}`);
       }
     };
 

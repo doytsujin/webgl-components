@@ -18,7 +18,8 @@ export default class ThreeGLTFLoader extends Loader {
 
   load = () => {
     const loader = new GLTFLoader();
-    if (this.dracoLoader instanceof DRACOLoader) {
+
+    if (this.dracoLoader != null) {
       loader.setDRACOLoader(this.dracoLoader);
     }
 
@@ -30,7 +31,7 @@ export default class ThreeGLTFLoader extends Loader {
     const onProgress = () => {};
 
     const onError = (error: ErrorEvent) => {
-      this.emit('error', `Failed to load ${this.asset.src}`, error);
+      this.emit('error', error, `Failed to load ${this.asset.src}`);
     };
 
     loader.load(this.asset.src, onLoaded, onProgress, onError);

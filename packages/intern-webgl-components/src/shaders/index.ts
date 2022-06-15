@@ -1,3 +1,3 @@
-import * as noise from './noise/simplex.glsl';
+import { simplexNoise2D, simplexNoise3D, simplexNoise4D } from './noise/simplex.glsl';
 
-export default { noise };
+export { simplexNoise2D, simplexNoise3D, simplexNoise4D };

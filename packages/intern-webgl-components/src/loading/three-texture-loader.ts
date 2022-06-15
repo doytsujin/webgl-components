@@ -20,7 +20,7 @@ export default class ThreeTextureLoader extends Loader {
     const onProgress = () => {};
 
     const onError = (error: ErrorEvent) => {
-      this.emit('error', `Failed to load ${this.asset.src}`, error);
+      this.emit('error', error, `Failed to load ${this.asset.src}`);
     };
 
     loader.load(this.asset.src, onLoaded, onProgress, onError);

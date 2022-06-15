@@ -30,7 +30,6 @@ export const profileGPU = () => {
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       const graphics = config(profiler.graphics);
-      console.log(profiler.graphics);
       setRendererSize(renderer, width, height, graphics.resolution.x, graphics.resolution.y);
     }
   }

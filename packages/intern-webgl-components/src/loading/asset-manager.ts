@@ -20,7 +20,7 @@ class AssetManager {
    * @param {Asset[]} assets
    * @memberof AssetManager
    */
-  addAssets(group: string, assets: Asset[]) {
+  add(group: string, assets: Asset[]) {
     this.assets[group] = this.assets[group] || [];
     this.assets[group].push(...assets);
   }
