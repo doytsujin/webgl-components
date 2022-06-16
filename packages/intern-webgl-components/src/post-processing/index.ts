@@ -1,9 +1,9 @@
-import { WebGLRenderer } from 'three';
+import { Camera, Scene, WebGLRenderer } from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
 import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader';
-import { GraphicsSettings } from '../../graphics/quality-settings';
-import TransitionPass, { SceneInterface } from './passes/transition-pass/transition-pass';
+import { GraphicsSettings } from '../graphics/quality-settings';
+import TransitionPass, { SceneInterface } from './passes/transition-pass';
 
 const GUI = require('lil-gui');
 
@@ -34,6 +34,26 @@ export default class PostProcessing {
 
     this.composer.addPass(this.transitionPass);
     this.composer.addPass(this.fxaaPass);
+
+    const sceneA = {
+      scene: new Scene(),
+      clearColor: 0x000000,
+      cameras: {
+        main: new Camera(),
+        debug: null
+      },
+      update: () => {}
+    };
+    const sceneB = {
+      scene: new Scene(),
+      clearColor: 0x000000,
+      cameras: {
+        main: new Camera(),
+        debug: null
+      },
+      update: () => {}
+    };
+    this.setScenes(sceneA, sceneB);
 
     this.gui.add(this.fxaaPass, 'enabled').name('fxaa');
   }

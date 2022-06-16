@@ -7,16 +7,22 @@
   "types": "dist/jam3-intern-webgl-components.cjs.d.ts",
   "preconstruct": {
     "entrypoints": [
-      "index.ts",
       "cameras/index.ts",
-      "interaction/index.ts",
+      "graphics/graphics-profiler.ts",
+      "graphics/quality-settings.ts",
+      "interaction/interactive-object.ts",
+      "interaction/touch-controls.ts",
       "lights/index.ts",
       "loading/index.ts",
-      "materials/index.ts",
+      "materials/material-modifier.ts",
       "math/index.ts",
-      "profiler/index.ts",
+      "post-processing/index.ts",
+      "post-processing/passes/transition-pass/index.ts",
       "rendering/index.ts",
-      "shaders/index.ts",
+      "rendering/index.ts",
+      "rendering/render-target.ts",
+      "rendering/preload-gpu.ts",
+      "shaders/noise/simplex.glsl.ts",
       "utils/index.ts"
     ]
   },
@@ -27,7 +33,8 @@
     "eventemitter3": "^4.0.7",
     "lil-gui": "^0.16.1",
     "query-string": "^7.0.1",
-    "three": "^0.139.0"
+    "three": "^0.139.0",
+    "gsap": "^3.10.3"
   },
   "devDependencies": {
     "@types/three": "^0.133.1"

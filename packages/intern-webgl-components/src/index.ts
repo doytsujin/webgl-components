@@ -1,9 +1,0 @@
-export * as cameras from './cameras';
-export * as interaction from './interaction';
-export * as loading from './loading';
-export * as materials from './materials';
-export * as math from './math';
-export * as profiler from './profiler';
-export * as rendering from './rendering';
-export * as shaders from './shaders';
-export * as utils from './utils';

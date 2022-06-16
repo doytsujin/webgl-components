@@ -1,11 +1,5 @@
 import { getGPUTier, TierResult } from 'detect-gpu';
-import qualitySettings from './quality-settings';
-
-export class Quality {
-  static Normal = 'Normal';
-  static Medium = 'Medium';
-  static High = 'High';
-}
+import qualitySettings, { Quality } from './quality-settings';
 
 export const QUALITY_MODES = [Quality.Normal, Quality.Medium, Quality.High];
 
@@ -14,12 +8,12 @@ export const QUALITY_MODES = [Quality.Normal, Quality.Medium, Quality.High];
  *
  * @class Graphics
  */
-class Graphics {
+class GraphicsProfiler {
   quality: Quality = Quality.Normal;
   gpuTier: TierResult = { type: 'BENCHMARK', tier: 0 };
   tiers: Array<Quality> = [Quality.Normal, Quality.Medium, Quality.High];
 
-  async profile(qualityMode: Quality | void) {
+  async run(qualityMode: Quality | void) {
     this.gpuTier = await getGPUTier();
 
     if (typeof qualityMode === 'string' && QUALITY_MODES.includes(qualityMode)) {
@@ -38,6 +32,6 @@ class Graphics {
   }
 }
 
-const graphics: Graphics = new Graphics();
+const graphicsProfiler: GraphicsProfiler = new GraphicsProfiler();
 
-export default graphics;
+export default graphicsProfiler;

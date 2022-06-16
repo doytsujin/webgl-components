@@ -1,8 +1,9 @@
 import '../style.css';
 
 import { Mesh, SphereBufferGeometry, MeshNormalMaterial } from 'three';
-import { setRendererSize } from '../rendering/resize';
-import graphics, { Quality } from '.';
+import { setRendererSize } from '../rendering';
+import graphicsProfiler from './graphics-profiler';
+import { Quality } from './quality-settings';
 import webglScene from '../webgl-scene';
 import { getQueryFromParams } from '../utils/query-params';
 
@@ -17,7 +18,7 @@ export const profileGPU = () => {
       const height = root.offsetHeight;
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      const settings = graphics.getQualitySettings();
+      const settings = graphicsProfiler.getQualitySettings();
       setRendererSize(renderer, width, height, settings.resolution.x, settings.resolution.y);
     }
   }
@@ -25,9 +26,9 @@ export const profileGPU = () => {
   // If the graphics query parameter is set, use it over the current gpu tier
   const qualityMode = getQueryFromParams('quality', window.parent);
 
-  graphics.profile(qualityMode).then(() => {
+  graphicsProfiler.run(qualityMode).then(() => {
     // Optimise geometry based on gpu performance
-    const divisions = graphics.equals(Quality.High) ? 64 : 32;
+    const divisions = graphicsProfiler.equals(Quality.High) ? 64 : 32;
     const mesh = new Mesh(
       new SphereBufferGeometry(2, divisions, divisions),
       new MeshNormalMaterial({ wireframe: true })

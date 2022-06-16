@@ -1,4 +1,4 @@
-export const vertexShader = `
+export const vertexShader = /* glsl */ `
   varying vec2 vUv;
   void main() {
     vUv = uv;
@@ -6,7 +6,7 @@ export const vertexShader = `
   }
 `;
 
-export const fragmentShader = `
+export const fragmentShader = /* glsl */ `
   uniform sampler2D texture0;
   uniform sampler2D texture1;
   uniform float transition;

@@ -1,5 +1,4 @@
 import { Vector2, MathUtils } from 'three';
-import { Quality } from '.';
 
 export type GraphicsSettings = {
   antialias: boolean;
@@ -7,7 +6,13 @@ export type GraphicsSettings = {
   resolution: Vector2;
 };
 
-class QualitySettings {
+export class Quality {
+  static Normal = 'Normal';
+  static Medium = 'Medium';
+  static High = 'High';
+}
+
+export class QualitySettings {
   high: GraphicsSettings = {
     antialias: true,
     pixelRatio: MathUtils.clamp(window.devicePixelRatio, 1, 2),

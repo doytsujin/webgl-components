@@ -2,16 +2,16 @@ import { Camera, Scene, ShaderMaterial, Vector2, WebGLRenderer, WebGLRenderTarge
 import { FullScreenQuad, Pass } from 'three/examples/jsm/postprocessing/Pass';
 import gsap from 'gsap';
 import { vertexShader, fragmentShader } from './shader.glsl';
-import { createRenderTarget } from '../../../render-target';
+import { createRenderTarget } from '../../../rendering/render-target';
 
 const GUI = require('lil-gui');
 
-export interface SceneInterface {
+export type SceneInterface = {
   cameras: { main: Camera; debug: Camera | null };
   scene: Scene;
   clearColor: 0x000000;
   update(delta: number): any;
-}
+};
 
 /**
  * Transition pass handles transitioning between two scenes

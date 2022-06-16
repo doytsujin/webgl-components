@@ -1,7 +1,7 @@
 import '../style.css';
 
 import { Vector2 } from 'three';
-import { setRendererSize, resizeWithConstraint } from './resize';
+import { setRendererSize, resizeWithConstraint } from '.';
 import webglScene from '../webgl-scene';
 
 export default { title: 'Rendering' };
