@@ -23,7 +23,11 @@
       "rendering/render-target.ts",
       "rendering/preload-gpu.ts",
       "shaders/noise/simplex.glsl.ts",
-      "utils/index.ts"
+      "utils/canvas.ts",
+      "utils/gui.ts",
+      "utils/memory.ts",
+      "utils/query-params.ts",
+      "utils/stats.ts"
     ]
   },
   "dependencies": {

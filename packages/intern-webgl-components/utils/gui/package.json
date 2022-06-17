@@ -1,0 +1,4 @@
+{
+  "main": "dist/jam3-intern-webgl-components-utils-gui.cjs.js",
+  "module": "dist/jam3-intern-webgl-components-utils-gui.esm.js"
+}

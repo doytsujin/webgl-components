@@ -1,4 +1,4 @@
-export const simplexNoise2D = `
+export const simplexNoise2D = /* glsl */ `
   //
   // Description : Array and textureless GLSL 2D simplex noise function.
   //      Author : Ian McEwan, Ashima Arts.
@@ -70,7 +70,7 @@ export const simplexNoise2D = `
   }
 `;
 
-export const simplexNoise3D = `
+export const simplexNoise3D = /* glsl */ `
   //
   // Description : Array and textureless GLSL 2D/3D/4D simplex
   //               noise functions.
@@ -173,7 +173,7 @@ export const simplexNoise3D = `
   }
 `;
 
-export const simplexNoise4D = `
+export const simplexNoise4D = /* glsl */ `
   //
   // Description : Array and textureless GLSL 2D/3D/4D simplex
   //               noise functions.

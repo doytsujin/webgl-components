@@ -8,7 +8,7 @@ import { Mesh, Object3D, Scene } from 'three';
  * @param {(Scene | Object3D | null)} parent
  * @return {*}  {void}
  */
-export default function disposeObjects(object: Scene | Object3D, parent: Scene | Object3D | null): void {
+export function disposeObjects(object: Scene | Object3D, parent: Scene | Object3D | null): void {
   if (object === null || object === undefined) return;
   if (parent) parent.remove(object);
 

@@ -29,13 +29,14 @@ const defaultSettings: SpotLightSettings = {
  * @class SpotLightController
  * @implements {LightController}
  */
-export default class SpotLightController implements LightController {
+export default class SpotLightController extends LightController {
   settings: SpotLightSettings = defaultSettings;
   light: SpotLight;
   gui: typeof GUI;
   guiParent: typeof GUI;
 
   constructor(settings: SpotLightSettings = defaultSettings) {
+    super();
     this.settings = Object.assign(this.settings, settings);
     this.light = new SpotLight(
       this.settings.color,

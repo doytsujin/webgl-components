@@ -16,7 +16,7 @@ const defaultSettings: DirectioalLightSettings = { color: 0xd4d4d4, intensity: 0
  * @class DirectionalLightController
  * @implements {LightController}
  */
-export default class DirectionalLightController implements LightController {
+export default class DirectionalLightController extends LightController {
   settings: DirectioalLightSettings = defaultSettings;
   light: DirectionalLight;
   gui: typeof GUI;
@@ -24,6 +24,7 @@ export default class DirectionalLightController implements LightController {
   helper: DirectionalLightHelper;
 
   constructor(settings: DirectioalLightSettings = defaultSettings) {
+    super();
     this.settings = Object.assign(this.settings, settings);
     this.light = new DirectionalLight(this.settings.color, this.settings.intensity);
     this.light.position.set(1, 1, 1);

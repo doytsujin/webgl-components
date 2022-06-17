@@ -23,13 +23,14 @@ const defaultSettings: PointLightSettings = {
  * @class PointLightController
  * @implements {LightController}
  */
-export default class PointLightController implements LightController {
+export default class PointLightController extends LightController {
   settings: PointLightSettings = defaultSettings;
   light: PointLight;
   gui: typeof GUI;
   guiParent: typeof GUI;
 
   constructor(settings: PointLightSettings = defaultSettings) {
+    super();
     this.settings = Object.assign(this.settings, settings);
     this.light = new PointLight(
       this.settings.color,

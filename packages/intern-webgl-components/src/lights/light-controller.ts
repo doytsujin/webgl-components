@@ -1,9 +1,7 @@
 import { Light } from 'three';
 const GUI = require('lil-gui');
 
-interface LightController {
-  light: Light;
-  addGUI(gui: typeof GUI): void;
+export default class LightController {
+  light: Light = new Light();
+  addGUI(gui: typeof GUI) {}
 }
-
-export default LightController;

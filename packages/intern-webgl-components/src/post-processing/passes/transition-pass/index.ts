@@ -9,7 +9,7 @@ const GUI = require('lil-gui');
 export type SceneInterface = {
   cameras: { main: Camera; debug: Camera | null };
   scene: Scene;
-  clearColor: 0x000000;
+  clearColor: number;
   update(delta: number): any;
 };
 

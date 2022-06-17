@@ -16,13 +16,14 @@ const defaultSettings: AmbientLightSettings = { color: 0xd4d4d4, intensity: 0.6 
  * @class AmbientLightController
  * @implements {LightController}
  */
-export default class AmbientLightController implements LightController {
+export default class AmbientLightController extends LightController {
   light: AmbientLight;
   settings: AmbientLightSettings = defaultSettings;
   gui: typeof GUI;
   guiParent: typeof GUI;
 
   constructor(settings: AmbientLightSettings = defaultSettings) {
+    super();
     this.settings = Object.assign(this.settings, settings);
     this.light = new AmbientLight(this.settings.color, this.settings.intensity);
   }

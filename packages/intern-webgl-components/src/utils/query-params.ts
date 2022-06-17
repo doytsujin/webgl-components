@@ -6,12 +6,12 @@ const querystring = require('query-string');
  * @export
  * @param {string} prop
  * @param {Window} $window
- * @return {*}  {void}
+ * @return {*}  {(void | string | boolean)}
  */
-export function getQueryFromParams(prop: string, $window: Window): void {
+export function getQueryFromParams(prop: string, $window: Window): void | string | boolean {
   if (typeof $window !== 'undefined') {
     const params = querystring.parse($window.location.search);
-    return params[prop] !== undefined ? params[prop] : false;
+    return params[prop] != null ? params[prop] : false;
   }
 }
 
