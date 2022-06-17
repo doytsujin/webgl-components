@@ -67,7 +67,7 @@ export default class GroupLoader extends EventEmitter {
    */
   load = (manifest: Asset[]) => {
     this.loaders = [];
-    manifest.forEach((asset, i) => {
+    manifest.forEach((asset) => {
       if (asset.args === undefined) asset.args = {};
       if (LOADERS[asset.type as string] !== undefined) {
         const loader = new LOADERS[asset.type as string](asset);

@@ -1,4 +1,4 @@
-import { Camera, Scene, WebGLRenderer } from 'three';
+import { WebGLRenderer } from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
 import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader';
@@ -29,54 +29,12 @@ export default class PostProcessing {
     this.composer = new EffectComposer(renderer);
     this.composer.setPixelRatio(pixelRatio);
 
-    this.transitionPass = new TransitionPass(graphicsSettings.resolution, false, this.gui);
     this.fxaaPass = new ShaderPass(FXAAShader);
+    this.fxaaPass.renderToScreen = true;
 
-    this.composer.addPass(this.transitionPass);
     this.composer.addPass(this.fxaaPass);
 
-    const sceneA = {
-      scene: new Scene(),
-      clearColor: 0x000000,
-      cameras: {
-        main: new Camera(),
-        debug: null
-      },
-      update: () => {}
-    };
-    const sceneB = {
-      scene: new Scene(),
-      clearColor: 0x000000,
-      cameras: {
-        main: new Camera(),
-        debug: null
-      },
-      update: () => {}
-    };
-    this.setScenes(sceneA, sceneB);
-
     this.gui.add(this.fxaaPass, 'enabled').name('fxaa');
-  }
-
-  /**
-   * Set the current webgl scene
-   *
-   * @param {SceneInterface} scene
-   * @memberof PostProcessing
-   */
-  setCurrentScene(scene: SceneInterface) {
-    this.transitionPass.setScenes(this.transitionPass.sceneB, scene);
-  }
-
-  /**
-   * Set both scenes
-   *
-   * @param {SceneInterface} sceneA
-   * @param {SceneInterface} sceneB
-   * @memberof PostProcessing
-   */
-  setScenes(sceneA: SceneInterface, sceneB: SceneInterface) {
-    this.transitionPass.setScenes(sceneA, sceneB);
   }
 
   /**
@@ -88,7 +46,6 @@ export default class PostProcessing {
     this.fxaaPass.material.uniforms.resolution.value.x = 1 / width;
     this.fxaaPass.material.uniforms.resolution.value.y = 1 / height;
     this.composer.setSize(width, height);
-    this.transitionPass.setSize(width, height);
   }
 
   /**

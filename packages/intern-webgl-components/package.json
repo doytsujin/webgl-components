@@ -17,7 +17,6 @@
       "materials/material-modifier.ts",
       "math/index.ts",
       "post-processing/index.ts",
-      "post-processing/passes/transition-pass/index.ts",
       "rendering/index.ts",
       "rendering/index.ts",
       "rendering/render-target.ts",
