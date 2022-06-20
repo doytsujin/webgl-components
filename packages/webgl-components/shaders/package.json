@@ -1,0 +1,4 @@
+{
+  "main": "dist/jam3-webgl-components-shaders.cjs.js",
+  "module": "dist/jam3-webgl-components-shaders.esm.js"
+}

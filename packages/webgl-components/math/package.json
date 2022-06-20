@@ -1,0 +1,4 @@
+{
+  "main": "dist/jam3-webgl-components-math.cjs.js",
+  "module": "dist/jam3-webgl-components-math.esm.js"
+}
