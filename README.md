@@ -33,4 +33,4 @@ Please make sure to read the [contributing guide](./docs/CONTRIBUTING.md) before
 
 ## License
 
-`@jam3/intern-webgl-components` is a private internal repository under the MIT Licence.
+`@jam3/intern-webgl-components` is open source and released under the MIT Licence.
