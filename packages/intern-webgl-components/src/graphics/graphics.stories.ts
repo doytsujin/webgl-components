@@ -1,7 +1,7 @@
 import '../style.css';
 
 import { Mesh, SphereBufferGeometry, MeshNormalMaterial } from 'three';
-import { setRendererSize } from '../rendering';
+import { resizeWithConstraint } from '../rendering';
 import graphicsProfiler from './graphics-profiler';
 import { Quality } from './quality-settings';
 import webglScene from '../webgl-scene';
@@ -14,12 +14,22 @@ export const profileGPU = () => {
 
   function resize() {
     if (root instanceof HTMLElement) {
-      const width = root.offsetWidth;
-      const height = root.offsetHeight;
+      const screenWidth = root.offsetWidth;
+      const screenHeight = root.offsetHeight;
+      const qualitySettings = graphicsProfiler.getQualitySettings();
+
+      const { width, height } = resizeWithConstraint(
+        screenWidth,
+        screenHeight,
+        qualitySettings.resolution.x,
+        qualitySettings.resolution.y
+      );
+
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      const settings = graphicsProfiler.getQualitySettings();
-      setRendererSize(renderer, width, height, settings.resolution.x, settings.resolution.y);
+      renderer.setSize(width, height);
+      renderer.domElement.style.width = `${screenWidth}px`;
+      renderer.domElement.style.height = `${screenHeight}px`;
     }
   }
 

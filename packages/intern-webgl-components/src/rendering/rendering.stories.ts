@@ -1,7 +1,7 @@
 import '../style.css';
 
 import { Vector2 } from 'three';
-import { setRendererSize, resizeWithConstraint } from '.';
+import { resizeWithConstraint } from '.';
 import webglScene from '../webgl-scene';
 
 export default { title: 'Rendering' };
@@ -55,7 +55,16 @@ export const resizeWebGL = () => {
 
   function resize() {
     if (root instanceof HTMLElement) {
-      setRendererSize(renderer, root.offsetWidth, root.offsetHeight, maxResolution.x, maxResolution.y);
+      const screenWidth = root.offsetWidth;
+      const screenHeight = root.offsetHeight;
+
+      const { width, height } = resizeWithConstraint(screenWidth, screenHeight, maxResolution.x, maxResolution.y);
+
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+      renderer.domElement.style.width = `${screenWidth}px`;
+      renderer.domElement.style.height = `${screenHeight}px`;
     }
   }
   resize();

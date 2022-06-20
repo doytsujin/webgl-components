@@ -10,26 +10,26 @@ export const guiControls = () => {
 
   const controller = {
     myBoolean: true,
-    myFunction: function () { },
+    myFunction: function () {},
     myString: 'lil-gui',
     myNumber: 1,
     color: '#ff69b4',
     offset2d: {
       x: 0.0,
-      y: 0.0,
+      y: 0.0
     },
 
     offset3d: {
       x: 0.0,
       y: 0.0,
-      z: 0.0,
+      z: 0.0
     },
 
     offset4d: {
       x: 0.0,
       y: 0.0,
       z: 0.0,
-      w: 0.0,
+      w: 0.0
     }
   };
 
@@ -47,10 +47,10 @@ export const guiControls = () => {
   }
   draw();
 
-  gui.add(controller, 'myBoolean');  // Checkbox
+  gui.add(controller, 'myBoolean'); // Checkbox
   gui.add(controller, 'myFunction'); // Button
-  gui.add(controller, 'myString');   // Text Field
-  gui.add(controller, 'myNumber');   // Number Field
+  gui.add(controller, 'myString'); // Text Field
+  gui.add(controller, 'myNumber'); // Number Field
 
   // Add sliders to number fields by passing min and max
   gui.add(controller, 'myNumber', 0, 1);
@@ -60,10 +60,10 @@ export const guiControls = () => {
   gui.add(controller, 'myNumber', [0, 1, 2]);
   gui.add(controller, 'myNumber', { Label1: 0, Label2: 1, Label3: 2 });
 
-  const offsetFolder = gui.addFolder('Position');
-  offsetFolder.addVector2(controller, 'offset2d').step(0.1).onChange(() => { draw(); });
-  offsetFolder.addVector3(controller, 'offset3d').step(0.1);
-  offsetFolder.addVector4(controller, 'offset4d').step(0.1);
+  // const offsetFolder = gui.addFolder('Position');
+  // offsetFolder.addVector2(controller, 'offset2d').step(0.1).onChange(() => { draw(); });
+  // offsetFolder.addVector3(controller, 'offset3d').step(0.1);
+  // offsetFolder.addVector4(controller, 'offset4d').step(0.1);
 
   // Create color pickers for multiple color formats
   const colorFormats = {
