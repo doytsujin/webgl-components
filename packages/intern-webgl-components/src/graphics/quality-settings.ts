@@ -12,7 +12,7 @@ export class Quality {
   static High = 'High';
 }
 
-export class QualitySettings {
+export default class QualitySettings {
   high: GraphicsSettings = {
     antialias: true,
     pixelRatio: MathUtils.clamp(window.devicePixelRatio, 1, 2),
@@ -40,7 +40,3 @@ export class QualitySettings {
     }
   }
 }
-
-const qualitySettings: QualitySettings = new QualitySettings();
-
-export default qualitySettings;
