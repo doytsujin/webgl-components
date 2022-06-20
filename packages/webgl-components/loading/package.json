@@ -1,0 +1,4 @@
+{
+  "main": "dist/jam3-webgl-components-loading.cjs.js",
+  "module": "dist/jam3-webgl-components-loading.esm.js"
+}

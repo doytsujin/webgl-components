@@ -1,0 +1,4 @@
+{
+  "main": "dist/jam3-webgl-components-utils-stats.cjs.js",
+  "module": "dist/jam3-webgl-components-utils-stats.esm.js"
+}

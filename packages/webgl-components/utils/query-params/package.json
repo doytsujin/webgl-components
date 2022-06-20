@@ -1,0 +1,4 @@
+{
+  "main": "dist/jam3-webgl-components-utils-query-params.cjs.js",
+  "module": "dist/jam3-webgl-components-utils-query-params.esm.js"
+}

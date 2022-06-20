@@ -1,8 +1,7 @@
 {
-  "name": "@jam3/intern-webgl-components",
-  "version": "0.0.1",
+  "name": "@jam3/webgl-components",
+  "version": "0.0.2",
   "description": "Modular components and utilities used for WebGL based projects",
-  "private": "true",
   "keywords": [
     "webgl",
     "threejs",
@@ -32,13 +31,13 @@
     "email": "amelierosser1986@gmail.com",
     "url": "https://ameliemaia.com/"
   },
-  "homepage": "https://jam3.github.io/intern-webgl-components/",
+  "homepage": "https://jam3.github.io/webgl-components/",
   "bugs": {
-    "url": "https://github.com/Jam3/intern-webgl-components/issues"
+    "url": "https://github.com/Jam3/webgl-components/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Jam3/intern-webgl-components.git"
+    "url": "git+https://github.com/Jam3/webgl-components.git"
   },
   "license": "MIT",
   "engines": {
