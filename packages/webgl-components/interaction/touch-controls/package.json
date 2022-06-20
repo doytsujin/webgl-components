@@ -1,0 +1,4 @@
+{
+  "main": "dist/jam3-webgl-components-interaction-touch-controls.cjs.js",
+  "module": "dist/jam3-webgl-components-interaction-touch-controls.esm.js"
+}
