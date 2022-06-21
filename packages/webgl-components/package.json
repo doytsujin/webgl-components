@@ -7,11 +7,8 @@
     "components",
     "best practices"
   ],
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
-  "main": "dist/jam3-webgl-components.cjs.js",
-  "module": "dist/jam3-webgl-components.esm.js",
-  "types": "dist/jam3-webgl-components.cjs.d.ts",
   "preconstruct": {
     "entrypoints": [
       "cameras/index.ts",
@@ -35,6 +32,27 @@
       "utils/query-params.ts",
       "utils/stats.ts"
     ]
+  },
+  "exports": {
+    "./cameras": "./cameras",
+    "./graphics/graphics-profiler": "./graphics/graphics-profiler",
+    "./graphics/quality-settings": "./graphics/quality-settings",
+    "./interaction/interactive-object": "./interaction/interactive-object",
+    "./interaction/touch-controls": "./interaction/touch-controls",
+    "./loading": "./loading",
+    "./lights": "./lights",
+    "./materials/material-modifier": "./materials/material-modifier",
+    "./math": "./math",
+    "./post-processing": "./post-processing",
+    "./rendering": "./rendering",
+    "./rendering/preload-gpu": "./rendering/preload-gpu",
+    "./rendering/render-target": "./rendering/render-target",
+    "./shaders/noise/simplex.glsl": "./shaders/noise/simplex.glsl",
+    "./utils/canvas": "./utils/canvas",
+    "./utils/gui": "./utils/gui",
+    "./utils/memory": "./utils/memory",
+    "./utils/query-params": "./utils/query-params",
+    "./utils/stats": "./utils/stats"
   },
   "dependencies": {
     "@jam3/detect": "^2.0.5",
