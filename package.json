@@ -1,13 +1,6 @@
 {
-  "name": "@jam3/webgl-components",
-  "version": "0.0.2",
-  "description": "Modular components and utilities used for WebGL based projects",
-  "keywords": [
-    "webgl",
-    "threejs",
-    "components",
-    "best practices"
-  ],
+  "name": "@jam3/webgl-components/root",
+  "private": true,
   "scripts": {
     "lint-staged": "lint-staged",
     "build": "preconstruct build",
@@ -17,7 +10,7 @@
     "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook -o ./storybook-docs",
     "publish-storybook": "npm run build-storybook && touch ./storybook-docs/.nojekyll && gh-pages -d storybook-docs -t true",
-    "release": "npm build && npm publish --access public"
+    "release": "npm build; cd ./packages/webgl-components && npm publish --access public"
   },
   "husky": {
     "hooks": {

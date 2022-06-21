@@ -1,6 +1,13 @@
 {
   "name": "@jam3/webgl-components",
-  "version": "0.0.1",
+  "description": "Modular components and utilities used for WebGL based projects",
+  "keywords": [
+    "webgl",
+    "threejs",
+    "components",
+    "best practices"
+  ],
+  "version": "0.0.4",
   "license": "MIT",
   "main": "dist/jam3-webgl-components.cjs.js",
   "module": "dist/jam3-webgl-components.esm.js",
