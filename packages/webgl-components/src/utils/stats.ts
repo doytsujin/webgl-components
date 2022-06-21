@@ -87,6 +87,10 @@ export default class RenderStats {
     }
   }
 
+  toggle(visible: boolean) {
+    this.container.style.display = visible ? 'block' : 'none';
+  }
+
   getStyle(options: RenderStatOptions) {
     let { x, y, unit, alignment } = options.position;
     switch (alignment) {

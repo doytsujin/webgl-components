@@ -1,5 +1,5 @@
 {
-  "name": "@jam3/webgl-components/root",
+  "name": "@jam3/webgl-components",
   "private": true,
   "scripts": {
     "lint-staged": "lint-staged",
