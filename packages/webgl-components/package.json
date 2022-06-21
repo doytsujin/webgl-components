@@ -9,6 +9,19 @@
   ],
   "version": "0.0.5",
   "license": "MIT",
+  "author": {
+    "name": "Amelie Maia",
+    "email": "amelierosser1986@gmail.com",
+    "url": "https://ameliemaia.com/"
+  },
+  "homepage": "https://jam3.github.io/webgl-components/",
+  "bugs": {
+    "url": "https://github.com/Jam3/webgl-components/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jam3/webgl-components.git"
+  },
   "preconstruct": {
     "entrypoints": [
       "cameras/index.ts",
