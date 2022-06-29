@@ -30,9 +30,6 @@ class ThreeRenderStats {
   }
 
   update(webglRenderer: WebGLRenderer) {
-    // sanity check
-    console.assert(webglRenderer instanceof WebGLRenderer);
-
     // refresh only 30time per second
     if (Date.now() - this.lastTime < 1000 / 30) return;
     this.lastTime = Date.now();

@@ -1,4 +1,4 @@
-import { Mesh, Object3D, Scene } from 'three';
+import { Object3D, Scene } from 'three';
 
 /**
  * Dispose of a threejs scene or object3D
@@ -8,14 +8,14 @@ import { Mesh, Object3D, Scene } from 'three';
  * @param {(Scene | Object3D | null)} parent
  * @return {*}  {void}
  */
-export function disposeObjects(object: Scene | Object3D, parent: Scene | Object3D | null): void {
+export function disposeObjects(object: any, parent: Scene | Object3D | null): void {
   if (object === null || object === undefined) return;
   if (parent) parent.remove(object);
 
-  if (object instanceof Mesh) {
+  if (object.type === 'Mesh') {
     object.geometry.dispose();
   }
-  if (object instanceof Mesh) {
+  if (object.type === 'Mesh') {
     object.material.dispose();
   }
   if (object.children) {

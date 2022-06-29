@@ -1,4 +1,5 @@
 import { getGPUTier, TierResult } from 'detect-gpu';
+import { MathUtils } from 'three';
 import QualitySettings, { Quality } from './quality-settings';
 
 export const QUALITY_MODES = [Quality.Normal, Quality.Medium, Quality.High];
@@ -20,7 +21,7 @@ class GraphicsProfiler {
     if (typeof qualityMode === 'string' && QUALITY_MODES.includes(qualityMode)) {
       this.quality = qualityMode;
     } else {
-      this.quality = this.tiers[this.gpuTier.tier];
+      this.quality = this.tiers[MathUtils.clamp(this.gpuTier.tier - 1, 0, 2)];
     }
   }
 
