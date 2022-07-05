@@ -1,16 +1,29 @@
 import '../style.css';
 
 import webglScene from '../webgl-scene';
-import GroupLoader from './group-loader';
+import AssetLoader from './asset-loader.worker';
+import detect from '@jam3/detect';
 import Asset, { AssetType } from './asset';
 import AssetManager from './asset-manager';
 import { Color, DoubleSide, Mesh, MeshBasicMaterial, PlaneBufferGeometry, Texture } from 'three';
 import JsonLoader from './json-loader';
+import RenderStats, { RenderStatsPosition } from '../utils/stats';
 
 export default { title: 'Loader' };
 
-export const loadAssetsWithWorkers = () => {
+export const withWorkers = () => {
   const { scene, camera, renderer } = webglScene();
+
+  const stats = new RenderStats({
+    debug: true,
+    parent: document.body,
+    position: {
+      alignment: RenderStatsPosition.TopLeft,
+      x: 1,
+      y: 1,
+      unit: 'rem'
+    }
+  });
 
   const assetManager = new AssetManager();
 
@@ -30,7 +43,7 @@ export const loadAssetsWithWorkers = () => {
   }
 
   function loadImages(response: Asset) {
-    const assets = [];
+    const assets: Array<Asset> = [];
     if (Array.isArray(response.data)) {
       for (let i = 0; i < response.data.length; i++) {
         assets.push(
@@ -43,31 +56,36 @@ export const loadAssetsWithWorkers = () => {
       }
     }
 
-    const loader = new GroupLoader({ id: 'images', minParallel: 5, maxParallel: 10 });
+    // const loader = new GroupLoader({ id: 'images', minParallel: 5, maxParallel: 10 });
+    const loader = new AssetLoader();
 
-    // loader.on('progress', (progress: number) => {
-    //   console.log(progress);
-    // });
+    function onProgress(progress: number) {
+      console.log(progress);
+    }
 
-    loader.once('loaded', (response: Asset[]) => {
+    function onError(error: string) {
+      console.log('onError', error);
+    }
+
+    function onLoaded(response: Asset[]) {
       assetManager.add('images', response);
 
       const total = response.length;
-
       const totalInstances = total;
       const grid = Math.round(Math.sqrt(total));
       const size = 10 * (grid / totalInstances);
-
       const offset = -(grid * size) * 0.5 + size / 2;
-
       // Add images to the scene
       const geometry = new PlaneBufferGeometry(1, 1);
       for (let i = 0; i < totalInstances; i++) {
         const params = { side: DoubleSide, wireframe: false, map: new Texture() };
-        const data = (assetManager.get('images', `matcap-${i}`) as Asset).data as typeof Image;
-        if (data != null && data instanceof Image) {
-          params.map.image = data;
-          params.map.needsUpdate = true;
+        const data = (assetManager.get('images', `matcap-${i}`) as Asset).data as typeof String;
+        if (data != null && typeof data === 'string') {
+          params.map.image = new Image();
+          params.map.image.src = data;
+          params.map.image.onload = () => {
+            params.map.needsUpdate = true;
+          };
         }
         const material = new MeshBasicMaterial(params);
         const mesh = new Mesh(geometry, material);
@@ -76,9 +94,34 @@ export const loadAssetsWithWorkers = () => {
         mesh.position.set(x, y, 0);
         scene.add(mesh);
       }
+    }
+
+    loader.addEventListener('message', (event: MessageEvent) => {
+      switch (event.data.status) {
+        case 'error':
+          onError(event.data.response);
+          break;
+        case 'progress':
+          onProgress(event.data.response);
+          break;
+        case 'loaded':
+          onLoaded(event.data.response);
+          break;
+        default:
+          break;
+      }
     });
 
-    loader.load(assets);
+    // Wait for webgl to start and then load
+    setTimeout(() => {
+      loader.postMessage({
+        settings: {
+          id: 'images',
+          parallelLoads: detect.device.desktop ? 20 : 10
+        },
+        assets
+      });
+    }, 1000);
   }
 
   loadData().then((response: Asset | void) => {
@@ -89,6 +132,7 @@ export const loadAssetsWithWorkers = () => {
   function update() {
     requestAnimationFrame(update);
     renderer.render(scene, camera);
+    stats.update(renderer);
   }
   update();
 

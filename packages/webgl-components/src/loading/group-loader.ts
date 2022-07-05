@@ -9,7 +9,6 @@ import ThreeGLTFLoader from './three-gltf-loader';
 import ThreeRgbeTexureLoader from './three-rgbe-texture-loader';
 import Asset, { AssetType } from './asset';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-import AssetLoaderWorker from './asset-loader.worker';
 
 const LOADERS = {
   [AssetType.Image]: ImageLoader,
@@ -49,27 +48,15 @@ export default class GroupLoader extends EventEmitter {
   currentParallel: number = 0;
   total: number = 0;
   dracoLoader?: DRACOLoader;
-  worker!: AssetLoaderWorker;
 
   constructor(settings: LoaderSettings = defaultSettings) {
     super();
     this.settings = Object.assign(this.settings, settings);
     this.parallelLoads = detect.device.desktop ? this.settings.maxParallel : this.settings.minParallel;
-
-    // if(this.threadSupport()) {
-    // }
-    // this.worker = new AssetLoaderWorker();
-    // this.worker.postMessage({
-    //   fn: 'test'
-    // });
   }
 
   setDracoLoader(dracoLoader: DRACOLoader) {
     this.dracoLoader = dracoLoader;
-  }
-
-  threadSupport() {
-    return !!window.Worker;
   }
 
   /**
