@@ -56,7 +56,6 @@ export const withWorkers = () => {
       }
     }
 
-    // const loader = new GroupLoader({ id: 'images', minParallel: 5, maxParallel: 10 });
     const loader = new AssetLoader();
 
     function onProgress(progress: number) {

@@ -41,11 +41,12 @@ export class ImageLoaderWorker extends Loader {
         response
           .blob()
           .then((blob) => {
-            if (/(gif|jpe?g|tiff?|png|webp)$/i.test(blob.type.split('/')[1])) {
+            const type = blob.type.split('/')[1];
+            if (/(gif|jpe?g|tiff?|png|webp)$/i.test(type)) {
               this.asset.data = URL.createObjectURL(blob);
               this.emit('loaded', this.asset);
             } else {
-              onError('Type mismatch');
+              onError(`Image type not supported: ${type}`);
             }
           })
           .catch(onError);

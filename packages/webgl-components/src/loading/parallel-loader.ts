@@ -57,6 +57,8 @@ export default class ParallelLoader extends EventEmitter {
       if (this.loaderClasses[asset.type as string] !== undefined) {
         const loader = new this.loaderClasses[asset.type as string](asset);
         this.loaders.push(loader);
+      } else {
+        console.log(`No loader found for media type: ${asset.type} `);
       }
     });
 
@@ -72,12 +74,16 @@ export default class ParallelLoader extends EventEmitter {
     }
   };
 
+  // Hook to implement custom logic based on the loader type
+  nextInQueue(loader: Loader) {}
+
   loadNextInQueue = () => {
     if (this.queue < this.total) {
       if (this.current < this.settings.parallelLoads) {
         const loader = this.loaders[this.queue];
         this.queue += 1;
         this.current += 1;
+        this.nextInQueue(loader);
         loader.once('loaded', this.onLoaded);
         loader.once('error', this.onError);
         loader.load();
