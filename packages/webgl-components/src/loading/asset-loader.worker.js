@@ -1,4 +1,5 @@
 import { AssetType } from './asset';
+import { LoadingEnvironment } from './loader';
 import ParallelLoader from './parallel-loader';
 // import JsonLoader from './json-loader';
 
@@ -26,7 +27,7 @@ function onMessage(event) {
 
   loader.settings.id = event.data.settings.id;
   loader.settings.parallelLoads = event.data.settings.parallelLoads;
-  loader.load(event.data.assets);
+  loader.load(event.data.assets, LoadingEnvironment.Worker);
 }
 
 self.addEventListener('message', onMessage);

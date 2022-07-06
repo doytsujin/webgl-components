@@ -1,15 +1,17 @@
 import EventEmitter from 'eventemitter3';
 import Asset, { AssetType } from './asset';
-import Loader from './loader';
-import { ImageLoaderWorker } from './image-loader';
+import Loader, { LoadingEnvironment } from './loader';
+import ImageLoader from './image-loader';
 
 const defaultSettings = {
   id: 'default',
+  preferWebWorker: true,
   parallelLoads: 10
 };
 
 export type LoaderSettings = {
   id: string;
+  preferWebWorker?: boolean;
   parallelLoads: number;
 };
 
@@ -27,17 +29,22 @@ export type LoaderClasses = {
 export default class ParallelLoader extends EventEmitter {
   settings: LoaderSettings = defaultSettings;
   loaderClasses = {
-    [AssetType.Image]: ImageLoaderWorker
+    [AssetType.Image]: ImageLoader
   };
   loaders: Array<Loader> = [];
   queue: number = 0;
   loaded: number = 0;
   total: number = 0;
   current: number = 0;
+  environment: LoadingEnvironment = LoadingEnvironment.Main;
 
   constructor(settings: LoaderSettings = defaultSettings) {
     super();
     this.settings = Object.assign(this.settings, settings);
+  }
+
+  webWorkersSupported() {
+    return !!window.Worker;
   }
 
   registerLoaders(loaders: LoaderClasses) {
@@ -50,7 +57,7 @@ export default class ParallelLoader extends EventEmitter {
    * @param {Asset[]} manifest
    * @memberof ParallelLoader
    */
-  load = (manifest: Asset[]) => {
+  load = (manifest: Asset[], environment: LoadingEnvironment) => {
     this.loaders = [];
     manifest.forEach((asset) => {
       if (asset.args === undefined) asset.args = {};
@@ -66,6 +73,7 @@ export default class ParallelLoader extends EventEmitter {
     this.queue = 0;
     this.current = 0;
     this.total = this.loaders.length;
+    this.environment = environment;
 
     if (this.total === 0) {
       this.emit('loaded', manifest);
@@ -86,7 +94,7 @@ export default class ParallelLoader extends EventEmitter {
         this.nextInQueue(loader);
         loader.once('loaded', this.onLoaded);
         loader.once('error', this.onError);
-        loader.load();
+        loader.load(this.settings.preferWebWorker, this.environment);
         this.loadNextInQueue();
       }
     }
