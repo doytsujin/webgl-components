@@ -1,6 +1,7 @@
 import { Texture } from 'three';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
-import Loader from './loader';
+import { LoadingStatus } from './asset';
+import Loader, { LoaderSettings } from './loader';
 
 /**
  * Threejs rgbe texture loader
@@ -10,9 +11,14 @@ import Loader from './loader';
  * @extends {Loader}
  */
 export default class ThreeRgbeTextureLoader extends Loader {
-  load = () => {
+  load = (settings?: LoaderSettings) => {
+    if (settings) {
+      this.settings = Object.assign(this.settings, settings);
+    }
+
     const loader = new RGBELoader();
     const onLoaded = (texture: Texture) => {
+      this.asset.status = LoadingStatus.Loaded;
       this.asset.data = texture;
       this.emit('loaded', this.asset);
     };
@@ -20,6 +26,7 @@ export default class ThreeRgbeTextureLoader extends Loader {
     const onProgress = () => {};
 
     const onError = (error: ErrorEvent) => {
+      this.asset.status = LoadingStatus.Error;
       this.emit('error', error, `Failed to load ${this.asset.src}`);
     };
 

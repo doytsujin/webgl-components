@@ -1,19 +1,7 @@
 import EventEmitter from 'eventemitter3';
 import Asset, { AssetType } from './asset';
-import Loader, { LoadingEnvironment } from './loader';
+import Loader, { LoaderSettings, defaultLoaderSettings } from './loader';
 import ImageLoader from './image-loader';
-
-const defaultSettings = {
-  id: 'default',
-  preferWebWorker: true,
-  parallelLoads: 10
-};
-
-export type LoaderSettings = {
-  id: string;
-  preferWebWorker?: boolean;
-  parallelLoads: number;
-};
 
 export type LoaderClasses = {
   [key: string]: Loader;
@@ -27,7 +15,7 @@ export type LoaderClasses = {
  * @extends {EventEmitter}
  */
 export default class ParallelLoader extends EventEmitter {
-  settings: LoaderSettings = defaultSettings;
+  settings: LoaderSettings = defaultLoaderSettings;
   loaderClasses = {
     [AssetType.Image]: ImageLoader
   };
@@ -36,9 +24,8 @@ export default class ParallelLoader extends EventEmitter {
   loaded: number = 0;
   total: number = 0;
   current: number = 0;
-  environment: LoadingEnvironment = LoadingEnvironment.Main;
 
-  constructor(settings: LoaderSettings = defaultSettings) {
+  constructor(settings: LoaderSettings = defaultLoaderSettings) {
     super();
     this.settings = Object.assign(this.settings, settings);
   }
@@ -57,7 +44,7 @@ export default class ParallelLoader extends EventEmitter {
    * @param {Asset[]} manifest
    * @memberof ParallelLoader
    */
-  load = (manifest: Asset[], environment: LoadingEnvironment) => {
+  load = (manifest: Asset[]) => {
     this.loaders = [];
     manifest.forEach((asset) => {
       if (asset.args === undefined) asset.args = {};
@@ -73,7 +60,6 @@ export default class ParallelLoader extends EventEmitter {
     this.queue = 0;
     this.current = 0;
     this.total = this.loaders.length;
-    this.environment = environment;
 
     if (this.total === 0) {
       this.emit('loaded', manifest);
@@ -94,7 +80,7 @@ export default class ParallelLoader extends EventEmitter {
         this.nextInQueue(loader);
         loader.once('loaded', this.onLoaded);
         loader.once('error', this.onError);
-        loader.load(this.settings.preferWebWorker, this.environment);
+        loader.load(this.settings);
         this.loadNextInQueue();
       }
     }
@@ -111,7 +97,14 @@ export default class ParallelLoader extends EventEmitter {
     if (this.loaded === this.total) {
       const assets: Array<Asset> = [];
       this.loaders.forEach((loader: Loader) => {
-        assets.push(loader.asset);
+        if (!(loader.asset instanceof Asset)) {
+          loader.asset = new Asset().fromObject(loader.asset);
+        }
+        if (loader.type === 'WorkerLoader') {
+          assets.push(...loader.assets);
+        } else {
+          assets.push(loader.asset);
+        }
       });
       this.emit('loaded', assets);
     } else {

@@ -1,8 +1,10 @@
-import Asset from './asset';
+import Asset, { AssetType } from './asset';
 import AssetLoader from './asset-loader.worker';
-import Loader from './loader';
+import Loader, { LoaderSettings } from './loader';
 
 const loader = new AssetLoader();
+
+const compatibleLoaders = [AssetType.Image];
 
 /**
  * Worker loader
@@ -12,12 +14,26 @@ const loader = new AssetLoader();
  * @extends {Loader}
  */
 export default class WorkerLoader extends Loader {
-  constructor(assets: Array<Asset>) {
+  type = 'WorkerLoader';
+
+  constructor(assets: Array<Asset> = []) {
     super(new Asset());
     this.assets = assets;
   }
 
-  load = (preferWebWorker: boolean) => {
+  supports(type: AssetType) {
+    return compatibleLoaders.includes(type as string);
+  }
+
+  addAsset(asset: Asset) {
+    this.assets.push(asset);
+  }
+
+  load = (settings?: LoaderSettings) => {
+    if (settings) {
+      this.settings = Object.assign(this.settings, settings);
+    }
+
     function onProgress(progress: number) {}
 
     const onError = (error: ErrorEvent) => {
@@ -27,8 +43,8 @@ export default class WorkerLoader extends Loader {
 
     const onLoaded = (data: Asset[]) => {
       loader.removeEventListener('message', onMessage);
-      this.asset.data = data;
-      this.emit('loaded', this.asset);
+      this.assets = data;
+      this.emit('loaded', this.assets);
     };
 
     const onMessage = (event: MessageEvent) => {
@@ -49,10 +65,7 @@ export default class WorkerLoader extends Loader {
 
     loader.addEventListener('message', onMessage);
     loader.postMessage({
-      settings: {
-        id: 'worker',
-        parallelLoads: 10
-      },
+      settings: this.settings,
       assets: this.assets
     });
   };

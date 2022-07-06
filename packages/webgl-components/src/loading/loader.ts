@@ -6,6 +6,20 @@ export class LoadingEnvironment {
   static Main = 'Main';
 }
 
+export type LoaderSettings = {
+  id: string;
+  preferWebWorker?: boolean;
+  parallelLoads: number;
+  environment?: LoadingEnvironment;
+};
+
+export const defaultLoaderSettings = {
+  id: 'default',
+  preferWebWorker: true,
+  parallelLoads: 10,
+  environment: LoadingEnvironment.Main
+};
+
 /**
  * Loader base class
  *
@@ -13,15 +27,17 @@ export class LoadingEnvironment {
  * @class Loader
  */
 class Loader extends EventEmitter {
-  asset: Asset;
+  asset!: Asset;
   assets: Array<Asset> = [];
+  type: string = '';
+  settings: LoaderSettings = defaultLoaderSettings;
 
   constructor(asset: Asset) {
     super();
     this.asset = asset;
   }
 
-  load = (preferWebWorker: boolean, environment: LoadingEnvironment) => {};
+  load = (settings?: LoaderSettings) => {};
 }
 
 export default Loader;

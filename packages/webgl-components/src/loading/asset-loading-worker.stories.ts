@@ -7,7 +7,8 @@ import AssetManager from './asset-manager';
 import { Color, DoubleSide, Mesh, MeshBasicMaterial, PlaneBufferGeometry, Texture } from 'three';
 import JsonLoader from './json-loader';
 import RenderStats, { RenderStatsPosition } from '../utils/stats';
-import WorkerLoader from './worker-loader';
+// import WorkerLoader from './worker-loader';
+import AssetLoader from './asset-loader';
 
 export default { title: 'Loader' };
 
@@ -64,11 +65,12 @@ export const withWorkers = () => {
       console.log('onError', error);
     }
 
-    function onLoaded(response: Asset) {
-      const assets = response.data as Asset[];
-      assetManager.add('images', assets);
+    function onLoaded(response: Asset[]) {
+      assetManager.add('images', response);
 
-      const total = assets.length;
+      console.log(response);
+
+      const total = response.length;
       const totalInstances = total;
       const grid = Math.round(Math.sqrt(total));
       const size = 10 * (grid / totalInstances);
@@ -94,7 +96,8 @@ export const withWorkers = () => {
       }
     }
 
-    const loader = new WorkerLoader(assets);
+    // const loader = new WorkerLoader(assets);
+    const loader = new AssetLoader({ id: 'images', parallelLoads: 10, preferWebWorker: true });
 
     loader.on('error', onError);
     loader.on('progress', onProgress);
@@ -102,7 +105,7 @@ export const withWorkers = () => {
 
     // Wait for webgl to start and then load
     setTimeout(() => {
-      loader.load(true);
+      loader.load(assets);
     }, 1000);
   }
 

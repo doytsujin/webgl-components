@@ -1,4 +1,4 @@
-import Loader from './loader';
+import Loader, { LoaderSettings } from './loader';
 import JsonLoader from './json-loader';
 import ThreeTextureLoader from './three-texture-loader';
 import ThreeFBXLoader from './three-fbx-loader';
@@ -6,17 +6,17 @@ import ThreeGLTFLoader from './three-gltf-loader';
 import ThreeRgbeTexureLoader from './three-rgbe-texture-loader';
 import Asset, { AssetType } from './asset';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-import ParallelLoader, { LoaderSettings } from './parallel-loader';
-import AssetLoaderWorker from './asset-loader.worker';
+import ParallelLoader from './parallel-loader';
+import WorkerLoader from './worker-loader';
 
 export default class AssetLoader extends ParallelLoader {
   dracoLoader?: DRACOLoader;
-  assetLoaderWorker!: AssetLoaderWorker;
+  workerLoader!: WorkerLoader;
 
   constructor(settings: LoaderSettings) {
     super(settings);
     if (this.webWorkersSupported()) {
-      this.assetLoaderWorker = new AssetLoaderWorker();
+      this.workerLoader = new WorkerLoader();
     }
     this.loaderClasses = Object.assign(this.loaderClasses, {
       [AssetType.Json]: JsonLoader,
@@ -37,12 +37,18 @@ export default class AssetLoader extends ParallelLoader {
     manifest.forEach((asset) => {
       if (asset.args === undefined) asset.args = {};
       if (this.loaderClasses[asset.type as string] !== undefined) {
-        const loader = new this.loaderClasses[asset.type as string](asset);
-        this.loaders.push(loader);
+        if (this.workerLoader.supports(asset.type)) {
+          this.workerLoader.addAsset(asset);
+        } else {
+          const loader = new this.loaderClasses[asset.type as string](asset);
+          this.loaders.push(loader);
+        }
       } else {
         console.log(`No loader found for media type: ${asset.type} `);
       }
     });
+
+    this.loaders.unshift(this.workerLoader);
 
     this.loaded = 0;
     this.queue = 0;

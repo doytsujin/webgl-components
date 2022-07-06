@@ -1,13 +1,8 @@
 import { AssetType } from './asset';
 import { LoadingEnvironment } from './loader';
 import ParallelLoader from './parallel-loader';
-// import JsonLoader from './json-loader';
 
 const loader = new ParallelLoader();
-
-// loader.registerLoaders({
-//   [AssetType.Json]: JsonLoader
-// });
 
 function onMessage(event) {
   const onError = (response) => {
@@ -27,7 +22,8 @@ function onMessage(event) {
 
   loader.settings.id = event.data.settings.id;
   loader.settings.parallelLoads = event.data.settings.parallelLoads;
-  loader.load(event.data.assets, LoadingEnvironment.Worker);
+  loader.settings.environment = LoadingEnvironment.Worker;
+  loader.load(event.data.assets);
 }
 
 self.addEventListener('message', onMessage);

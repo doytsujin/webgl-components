@@ -1,5 +1,6 @@
 import { TextureLoader, Texture } from 'three';
-import Loader from './loader';
+import { LoadingStatus } from './asset';
+import Loader, { LoaderSettings } from './loader';
 
 /**
  * Threejs texture loader
@@ -9,10 +10,15 @@ import Loader from './loader';
  * @extends {Loader}
  */
 export default class ThreeTextureLoader extends Loader {
-  load = () => {
+  load = (settings?: LoaderSettings) => {
+    if (settings) {
+      this.settings = Object.assign(this.settings, settings);
+    }
+
     const loader = new TextureLoader();
 
     const onLoaded = (texture: Texture) => {
+      this.asset.status = LoadingStatus.Loaded;
       this.asset.data = texture;
       this.emit('loaded', this.asset);
     };
@@ -20,6 +26,7 @@ export default class ThreeTextureLoader extends Loader {
     const onProgress = () => {};
 
     const onError = (error: ErrorEvent) => {
+      this.asset.status = LoadingStatus.Error;
       this.emit('error', error, `Failed to load ${this.asset.src}`);
     };
 
