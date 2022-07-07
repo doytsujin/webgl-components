@@ -1,5 +1,6 @@
 import { LoadingStatus } from './asset';
 import Loader, { LoaderSettings, LoadingEnvironment } from './loader';
+import LoaderManager from './loader-manager';
 
 /**
  * Image Loader
@@ -9,10 +10,12 @@ import Loader, { LoaderSettings, LoadingEnvironment } from './loader';
  * @extends {Loader}
  */
 export default class ImageLoader extends Loader {
-  load = (settings?: LoaderSettings) => {
+  load = (settings?: LoaderSettings, manager: LoaderManager = new LoaderManager('image-loader')) => {
     if (settings) {
       this.settings = Object.assign(this.settings, settings);
     }
+
+    manager.add(this);
 
     const onError = (error: string | Event) => {
       this.asset.status = LoadingStatus.Error;

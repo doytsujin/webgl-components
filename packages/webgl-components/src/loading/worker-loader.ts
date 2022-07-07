@@ -1,6 +1,7 @@
 import Asset, { AssetType } from './asset';
 import AssetLoader from './asset-loader.worker';
 import Loader, { LoaderSettings } from './loader';
+import LoaderManager from './loader-manager';
 
 const loader = new AssetLoader();
 
@@ -29,12 +30,22 @@ export default class WorkerLoader extends Loader {
     this.assets.push(asset);
   }
 
-  load = (settings?: LoaderSettings) => {
+  load = (settings?: LoaderSettings, manager: LoaderManager = new LoaderManager('worker-loader')) => {
     if (settings) {
       this.settings = Object.assign(this.settings, settings);
     }
 
-    function onProgress(progress: number) {}
+    // Work around
+    const loaders: Array<Loader> = [];
+    for (let i = 0; i < this.assets.length; i++) {
+      const loader = new Loader(new Asset());
+      manager.add(loader);
+      loaders.push(loader);
+    }
+
+    const onProgress = (loaded: number) => {
+      loaders[loaded - 1].emit('loaded');
+    };
 
     const onError = (error: ErrorEvent) => {
       loader.removeEventListener('message', onMessage);
@@ -53,7 +64,7 @@ export default class WorkerLoader extends Loader {
           onError(event.data.response);
           break;
         case 'progress':
-          onProgress(event.data.response);
+          onProgress(event.data.loaded);
           break;
         case 'loaded':
           onLoaded(event.data.response);

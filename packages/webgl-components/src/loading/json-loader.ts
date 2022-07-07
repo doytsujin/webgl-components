@@ -1,5 +1,6 @@
 import { LoadingStatus } from './asset';
 import Loader, { LoaderSettings } from './loader';
+import LoaderManager from './loader-manager';
 
 /**
  * Json loader
@@ -9,10 +10,12 @@ import Loader, { LoaderSettings } from './loader';
  * @extends {Loader}
  */
 export default class JsonLoader extends Loader {
-  load = (settings?: LoaderSettings) => {
+  load = (settings?: LoaderSettings, manager: LoaderManager = new LoaderManager('json-loader')) => {
     if (settings) {
       this.settings = Object.assign(this.settings, settings);
     }
+
+    manager.add(this);
 
     const req = new XMLHttpRequest();
 

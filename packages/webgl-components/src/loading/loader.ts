@@ -1,5 +1,6 @@
 import EventEmitter from 'eventemitter3';
 import Asset from './asset';
+import LoaderManager from './loader-manager';
 
 export class LoadingEnvironment {
   static Worker = 'Worker';
@@ -37,7 +38,7 @@ class Loader extends EventEmitter {
     this.asset = asset;
   }
 
-  load = (settings?: LoaderSettings) => {};
+  load = (settings?: LoaderSettings, manager: LoaderManager) => {};
 }
 
 export default Loader;

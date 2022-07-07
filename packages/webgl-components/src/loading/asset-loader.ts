@@ -8,13 +8,14 @@ import Asset, { AssetType } from './asset';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import ParallelLoader from './parallel-loader';
 import WorkerLoader from './worker-loader';
+import LoaderManager from './loader-manager';
 
 export default class AssetLoader extends ParallelLoader {
   dracoLoader?: DRACOLoader;
   workerLoader!: WorkerLoader;
 
-  constructor(settings: LoaderSettings) {
-    super(settings);
+  constructor(settings: LoaderSettings, manager: LoaderManager = new LoaderManager('asset-loader')) {
+    super(settings, manager);
     if (this.webWorkersSupported()) {
       this.workerLoader = new WorkerLoader();
     }
@@ -31,9 +32,7 @@ export default class AssetLoader extends ParallelLoader {
     this.dracoLoader = dracoLoader;
   }
 
-  load = (manifest: Asset[]) => {
-    this.loaders = [];
-
+  createLoaders(manifest: Asset[]) {
     manifest.forEach((asset) => {
       if (asset.args === undefined) asset.args = {};
       if (this.loaderClasses[asset.type as string] !== undefined) {
@@ -47,20 +46,8 @@ export default class AssetLoader extends ParallelLoader {
         console.log(`No loader found for media type: ${asset.type} `);
       }
     });
-
     this.loaders.unshift(this.workerLoader);
-
-    this.loaded = 0;
-    this.queue = 0;
-    this.current = 0;
-    this.total = this.loaders.length;
-
-    if (this.total === 0) {
-      this.emit('loaded', manifest);
-    } else {
-      this.loadNextInQueue();
-    }
-  };
+  }
 
   nextInQueue(loader: Loader) {
     if (loader instanceof ThreeGLTFLoader && this.dracoLoader) {

@@ -2,6 +2,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import Loader, { LoaderSettings } from './loader';
 import { LoadingStatus } from './asset';
+import LoaderManager from './loader-manager';
 
 /**
  * Threejs GLTF Loader
@@ -16,10 +17,12 @@ export default class ThreeGLTFLoader extends Loader {
   setDracoLoader(dracoLoader: DRACOLoader) {
     this.dracoLoader = dracoLoader;
   }
-  load = (settings?: LoaderSettings) => {
+  load = (settings?: LoaderSettings, manager: LoaderManager = new LoaderManager('three-gltf-loader')) => {
     if (settings) {
       this.settings = Object.assign(this.settings, settings);
     }
+
+    manager.add(this);
 
     const loader = new GLTFLoader();
 

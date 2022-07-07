@@ -9,8 +9,8 @@ function onMessage(event) {
     loader.removeAllListeners();
     self.postMessage({ status: 'error', response });
   };
-  const onProgress = (response) => {
-    self.postMessage({ status: 'progress', response });
+  const onProgress = (progress, loaded) => {
+    self.postMessage({ status: 'progress', progress, loaded });
   };
   const onLoaded = (response) => {
     loader.removeAllListeners();
