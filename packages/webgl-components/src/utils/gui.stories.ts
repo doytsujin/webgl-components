@@ -10,6 +10,7 @@ export const guiControls = () => {
 
   const controller = {
     myBoolean: true,
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     myFunction: function () {},
     myString: 'lil-gui',
     myNumber: 1,

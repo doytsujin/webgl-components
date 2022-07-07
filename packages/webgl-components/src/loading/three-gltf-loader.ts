@@ -30,12 +30,13 @@ export default class ThreeGLTFLoader extends Loader {
       loader.setDRACOLoader(this.dracoLoader);
     }
 
-    const onLoaded = (gltf: Object) => {
+    const onLoaded = (gltf: unknown) => {
       this.asset.status = LoadingStatus.Loaded;
       this.asset.data = gltf;
       this.emit('loaded', this.asset);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const onProgress = () => {};
 
     const onError = (error: ErrorEvent) => {

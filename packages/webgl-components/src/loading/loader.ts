@@ -30,7 +30,7 @@ export const defaultLoaderSettings = {
 class Loader extends EventEmitter {
   asset!: Asset;
   assets: Array<Asset> = [];
-  type: string = '';
+  type = '';
   settings: LoaderSettings = defaultLoaderSettings;
 
   constructor(asset: Asset) {
@@ -38,7 +38,8 @@ class Loader extends EventEmitter {
     this.asset = asset;
   }
 
-  load = (settings?: LoaderSettings, manager: LoaderManager) => {};
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
+  load = (_settings?: LoaderSettings, _manager?: LoaderManager) => {};
 }
 
 export default Loader;

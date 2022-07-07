@@ -1,6 +1,7 @@
 import { SpotLight } from 'three';
 import LightController from './light-controller';
-const GUI = require('lil-gui');
+require('lil-gui');
+import GUI from 'lil-gui';
 
 export type SpotLightSettings = {
   color: number;
@@ -32,8 +33,7 @@ const defaultSettings: SpotLightSettings = {
 export default class SpotLightController extends LightController {
   settings: SpotLightSettings = defaultSettings;
   light: SpotLight;
-  gui: typeof GUI;
-  guiParent: typeof GUI;
+  gui!: GUI;
 
   constructor(settings: SpotLightSettings = defaultSettings) {
     super();
@@ -50,8 +50,7 @@ export default class SpotLightController extends LightController {
     this.light.position.set(1, 1, 1);
   }
 
-  addGUI(guiParent: typeof GUI) {
-    this.guiParent = guiParent;
+  addGUI(guiParent: GUI) {
     const range = 50;
     this.gui = guiParent.addFolder('spot');
     this.gui.addColor(this.settings, 'color').onChange(this.onChange);
@@ -71,6 +70,6 @@ export default class SpotLightController extends LightController {
   };
 
   dispose() {
-    this.guiParent.removeFolder(this.gui.name);
+    this.gui.destroy();
   }
 }

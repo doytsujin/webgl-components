@@ -1,4 +1,4 @@
-import Asset, { AssetConfig } from './asset';
+import Asset from './asset';
 
 export type Assets = {
   [propName: string]: Array<Asset>;

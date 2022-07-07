@@ -1,10 +1,10 @@
 export class AssetType {
-  static Json: string = 'Json';
-  static Image: string = 'Image';
-  static FBX: string = 'FBX';
-  static GLTF: string = 'GLTF';
-  static Texture: string = 'Texture';
-  static RgbeTexture: string = 'RgbeTexture';
+  static Json = 'Json';
+  static Image = 'Image';
+  static FBX = 'FBX';
+  static GLTF = 'GLTF';
+  static Texture = 'Texture';
+  static RgbeTexture = 'RgbeTexture';
 }
 
 export class LoadingStatus {
@@ -17,8 +17,8 @@ export interface AssetConfig {
   id: string;
   src: string;
   type: AssetType;
-  args?: Object;
-  data?: Object;
+  args?: Record<string, unknown>;
+  data?: unknown;
   status?: LoadingStatus;
 }
 
@@ -29,11 +29,11 @@ export interface AssetConfig {
  * @class Asset
  */
 class Asset implements AssetConfig {
-  id: string = '';
-  src: string = '';
+  id = '';
+  src = '';
   type: AssetType = AssetType.Image;
-  args: Object = {};
-  data: Object = {};
+  args: Record<string, unknown> = {};
+  data: unknown;
   status: LoadingStatus = LoadingStatus.NotLoaded;
   constructor(config: AssetConfig = { id: '', type: AssetType.Image, src: '', status: LoadingStatus.NotLoaded }) {
     Object.assign(this, config);

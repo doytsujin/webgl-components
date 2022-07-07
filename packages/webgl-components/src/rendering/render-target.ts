@@ -9,7 +9,7 @@ import { WebGLRenderTarget, LinearFilter, NearestFilter, RGBFormat, UnsignedByte
  * @param {Object} [options={}]
  * @return {WebGLRenderTarget}
  */
-export function createRenderTarget(width: number = 1024, height: number = 1024, options: Object = {}) {
+export function createRenderTarget(width = 1024, height = 1024, options: Record<string, unknown> = {}) {
   const defaults = {
     minFilter: LinearFilter,
     magFilter: NearestFilter,

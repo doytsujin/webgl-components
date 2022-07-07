@@ -1,4 +1,3 @@
-import { AssetType } from './asset';
 import { LoadingEnvironment } from './loader';
 import ParallelLoader from './parallel-loader';
 

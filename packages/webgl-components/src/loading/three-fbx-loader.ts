@@ -20,12 +20,13 @@ export default class ThreeFBXLoader extends Loader {
 
     const loader = new FBXLoader();
 
-    const onLoaded = (data: Object) => {
+    const onLoaded = (data: unknown) => {
       this.asset.status = LoadingStatus.Loaded;
       this.asset.data = data;
       this.emit('loaded', this.asset);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const onProgress = () => {};
 
     const onError = (error: ErrorEvent) => {

@@ -21,10 +21,10 @@ export default class ParallelLoader extends EventEmitter {
     [AssetType.Image]: ImageLoader
   };
   loaders: Array<Loader> = [];
-  queue: number = 0;
-  loaded: number = 0;
-  total: number = 0;
-  current: number = 0;
+  queue = 0;
+  loaded = 0;
+  total = 0;
+  current = 0;
   manager!: LoaderManager;
 
   constructor(
@@ -78,7 +78,8 @@ export default class ParallelLoader extends EventEmitter {
   };
 
   // Hook to implement custom logic based on the loader type
-  nextInQueue(loader: Loader) {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
+  nextInQueue(_loader: Loader) {}
 
   loadNextInQueue = () => {
     if (this.queue < this.total) {

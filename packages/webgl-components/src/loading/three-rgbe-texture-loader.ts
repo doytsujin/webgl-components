@@ -26,6 +26,7 @@ export default class ThreeRgbeTextureLoader extends Loader {
       this.emit('loaded', this.asset);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const onProgress = () => {};
 
     const onError = (error: ErrorEvent) => {

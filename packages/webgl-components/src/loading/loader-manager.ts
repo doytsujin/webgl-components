@@ -2,11 +2,11 @@ import EventEmitter from 'eventemitter3';
 import Loader from './loader';
 
 export default class LoaderManager extends EventEmitter {
-  id: string = '';
+  id = '';
   loaders: Array<Loader> = [];
-  loaded: number = 0;
-  progress: number = 0;
-  total: number = 0;
+  loaded = 0;
+  progress = 0;
+  total = 0;
 
   constructor(id: string) {
     super();

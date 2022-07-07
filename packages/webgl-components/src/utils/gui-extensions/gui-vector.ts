@@ -1,3 +1,6 @@
+/* eslint-disable */
+// Note: Once this extension is working, we can fix linting
+
 import { Controller } from 'lil-gui';
 
 interface VectorInterface {
@@ -321,3 +324,5 @@ export class Vector4Controller extends VectorController {
     this._setVecProps(['x', 'y', 'z', 'w']);
   }
 }
+
+/* eslint-enable */
