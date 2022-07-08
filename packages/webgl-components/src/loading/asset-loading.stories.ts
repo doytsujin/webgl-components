@@ -22,7 +22,7 @@ import AssetLoader from './asset-loader';
 
 export default { title: 'Loader' };
 
-export const loadAssets = () => {
+export const allAssetTypes = () => {
   const { scene, camera, renderer } = webglScene();
 
   const assets = [
