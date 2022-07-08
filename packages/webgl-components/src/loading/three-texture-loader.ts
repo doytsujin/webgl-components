@@ -1,5 +1,4 @@
 import { TextureLoader, Texture } from 'three';
-import { LoadingStatus } from './asset';
 import Loader, { LoaderSettings } from './loader';
 import LoaderManager from './loader-manager';
 
@@ -21,19 +20,10 @@ export default class ThreeTextureLoader extends Loader {
     const loader = new TextureLoader();
 
     const onLoaded = (texture: Texture) => {
-      this.asset.status = LoadingStatus.Loaded;
       this.asset.data = texture;
       this.emit('loaded', this.asset);
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const onProgress = () => {};
-
-    const onError = (error: ErrorEvent) => {
-      this.asset.status = LoadingStatus.Error;
-      this.emit('error', error, `Failed to load ${this.asset.src}`);
-    };
-
-    loader.load(this.asset.src, onLoaded, onProgress, onError);
+    loader.load(this.asset.src, onLoaded, this.onProgress, this.onError);
   };
 }

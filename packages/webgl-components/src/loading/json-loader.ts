@@ -1,4 +1,3 @@
-import { LoadingStatus } from './asset';
 import Loader, { LoaderSettings } from './loader';
 import LoaderManager from './loader-manager';
 
@@ -17,21 +16,12 @@ export default class JsonLoader extends Loader {
 
     manager.add(this);
 
-    const req = new XMLHttpRequest();
-
-    req.onreadystatechange = () => {
-      if (req.readyState !== 4) return;
-      if (req.readyState === 4 && req.status === 200) {
-        this.asset.status = LoadingStatus.Loaded;
-        this.asset.data = JSON.parse(req.responseText);
+    fetch(this.asset.src)
+      .then((response) => response.json())
+      .then((data: Record<string, unknown>) => {
+        this.asset.data = data;
         this.emit('loaded', this.asset);
-      } else {
-        this.asset.status = LoadingStatus.Error;
-        this.emit('error', req.status, `Failed to load ${this.asset.src}`);
-      }
-    };
-
-    req.open('GET', this.asset.src, true);
-    req.send();
+      })
+      .catch(this.onError);
   };
 }

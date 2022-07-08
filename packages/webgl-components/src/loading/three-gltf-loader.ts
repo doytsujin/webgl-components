@@ -1,7 +1,6 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import Loader, { LoaderSettings } from './loader';
-import { LoadingStatus } from './asset';
 import LoaderManager from './loader-manager';
 
 /**
@@ -31,19 +30,10 @@ export default class ThreeGLTFLoader extends Loader {
     }
 
     const onLoaded = (gltf: unknown) => {
-      this.asset.status = LoadingStatus.Loaded;
       this.asset.data = gltf;
       this.emit('loaded', this.asset);
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const onProgress = () => {};
-
-    const onError = (error: ErrorEvent) => {
-      this.asset.status = LoadingStatus.Error;
-      this.emit('error', error, `Failed to load ${this.asset.src}`);
-    };
-
-    loader.load(this.asset.src, onLoaded, onProgress, onError);
+    loader.load(this.asset.src, onLoaded, this.onProgress, this.onError);
   };
 }

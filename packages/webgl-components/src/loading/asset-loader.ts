@@ -1,5 +1,4 @@
 import Loader, { LoaderSettings } from './loader';
-import JsonLoader from './json-loader';
 import ThreeTextureLoader from './three-texture-loader';
 import ThreeFBXLoader from './three-fbx-loader';
 import ThreeGLTFLoader from './three-gltf-loader';
@@ -20,7 +19,6 @@ export default class AssetLoader extends ParallelLoader {
       this.workerLoader = new WorkerLoader();
     }
     this.loaderClasses = Object.assign(this.loaderClasses, {
-      [AssetType.Json]: JsonLoader,
       [AssetType.Texture]: ThreeTextureLoader,
       [AssetType.FBX]: ThreeFBXLoader,
       [AssetType.GLTF]: ThreeGLTFLoader,
@@ -36,6 +34,7 @@ export default class AssetLoader extends ParallelLoader {
     manifest.forEach((asset) => {
       if (asset.args === undefined) asset.args = {};
       if (this.loaderClasses[asset.type as string] !== undefined) {
+        // Use worker loader for asset types it supports
         if (this.workerLoader.supports(asset.type)) {
           this.workerLoader.addAsset(asset);
         } else {

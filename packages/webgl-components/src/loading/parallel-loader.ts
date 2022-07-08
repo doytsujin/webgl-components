@@ -3,6 +3,7 @@ import Asset, { AssetType } from './asset';
 import Loader, { LoaderSettings, defaultLoaderSettings } from './loader';
 import ImageLoader from './image-loader';
 import LoaderManager from './loader-manager';
+import JsonLoader from './json-loader';
 
 export type LoaderClasses = {
   [key: string]: Loader;
@@ -18,7 +19,8 @@ export type LoaderClasses = {
 export default class ParallelLoader extends EventEmitter {
   settings: LoaderSettings = defaultLoaderSettings;
   loaderClasses = {
-    [AssetType.Image]: ImageLoader
+    [AssetType.Image]: ImageLoader,
+    [AssetType.Json]: JsonLoader
   };
   loaders: Array<Loader> = [];
   queue = 0;
@@ -96,6 +98,13 @@ export default class ParallelLoader extends EventEmitter {
     }
   };
 
+  checkAssetInstance(asset: Asset) {
+    if (!(asset instanceof Asset)) {
+      return new Asset().fromObject(asset);
+    }
+    return asset;
+  }
+
   /**
    * Loaded handler
    *
@@ -103,15 +112,19 @@ export default class ParallelLoader extends EventEmitter {
    */
   onLoaded = () => {
     this.loaded += 1;
+    // Note: This will report progress per loader
+    // It's advised to listen to the progress of LoaderManager to get more accurate loading for all files
     this.emit('progress', this.loaded / this.total, this.loaded, this.total);
     if (this.loaded === this.total) {
       const assets: Array<Asset> = [];
       this.loaders.forEach((loader: Loader) => {
-        if (!(loader.asset instanceof Asset)) {
-          loader.asset = new Asset().fromObject(loader.asset);
-        }
+        loader.asset = this.checkAssetInstance(loader.asset);
         if (loader.type === 'WorkerLoader') {
-          assets.push(...loader.assets);
+          assets.push(
+            ...loader.assets.map((asset) => {
+              return this.checkAssetInstance(asset);
+            })
+          );
         } else {
           assets.push(loader.asset);
         }

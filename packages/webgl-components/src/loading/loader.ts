@@ -38,6 +38,13 @@ class Loader extends EventEmitter {
     this.asset = asset;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  onProgress = () => {};
+
+  onError = (error: string | Event) => {
+    this.emit('error', error, `Failed to load ${this.asset.src}`);
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
   load = (_settings?: LoaderSettings, _manager?: LoaderManager) => {};
 }

@@ -5,7 +5,7 @@ import LoaderManager from './loader-manager';
 
 const loader = new AssetLoader();
 
-const compatibleLoaders = [AssetType.Image];
+const compatibleLoaders = [AssetType.Image, AssetType.Json];
 
 /**
  * Worker loader
@@ -49,7 +49,7 @@ export default class WorkerLoader extends Loader {
 
     const onError = (error: ErrorEvent) => {
       loader.removeEventListener('message', onMessage);
-      this.emit('error', error, `Failed to load ${this.asset.src}`);
+      this.onError(error);
     };
 
     const onLoaded = (data: Asset[]) => {

@@ -7,19 +7,12 @@ export class AssetType {
   static RgbeTexture = 'RgbeTexture';
 }
 
-export class LoadingStatus {
-  static NotLoaded = 'NotLoaded';
-  static Error = 'Error';
-  static Loaded = 'Loaded';
-}
-
 export interface AssetConfig {
   id: string;
   src: string;
   type: AssetType;
   args?: Record<string, unknown>;
   data?: unknown;
-  status?: LoadingStatus;
 }
 
 /**
@@ -34,8 +27,7 @@ class Asset implements AssetConfig {
   type: AssetType = AssetType.Image;
   args: Record<string, unknown> = {};
   data: unknown;
-  status: LoadingStatus = LoadingStatus.NotLoaded;
-  constructor(config: AssetConfig = { id: '', type: AssetType.Image, src: '', status: LoadingStatus.NotLoaded }) {
+  constructor(config: AssetConfig = { id: '', type: AssetType.Image, src: '' }) {
     Object.assign(this, config);
   }
 
@@ -43,7 +35,6 @@ class Asset implements AssetConfig {
     this.id = obj.id;
     this.src = obj.src;
     this.type = obj.type;
-    if (obj.status) this.status = obj.status;
     if (obj.args) this.args = obj.args;
     if (obj.data) this.data = obj.data;
     return this;

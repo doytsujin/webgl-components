@@ -22,17 +22,7 @@ class AssetManager {
    */
   add(group: string, assets: Asset[]) {
     this.assets[group] = this.assets[group] || [];
-    const tmp = [];
-    // Ensure assets we add are Asset types,
-    // otherwise 'get' won't return any assets we search for
-    for (let i = 0; i < assets.length; i++) {
-      if (!(assets[i] instanceof Asset)) {
-        tmp.push(new Asset().fromObject(assets[i]));
-      } else {
-        tmp.push(assets[i]);
-      }
-    }
-    this.assets[group].push(...tmp);
+    this.assets[group].push(...assets);
   }
 
   /**
