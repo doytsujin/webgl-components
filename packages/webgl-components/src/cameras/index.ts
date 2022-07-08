@@ -24,5 +24,3 @@ export function resetCamera(camera: PerspectiveCamera, zoom = 1, angle: Vector3 
 export function createPerspectiveCamera(aspect = 1): PerspectiveCamera {
   return new PerspectiveCamera(65, aspect, 0.1, 1000);
 }
-
-console.log('x');
