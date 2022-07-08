@@ -2,7 +2,7 @@
   "name": "@jam3/webgl-components",
   "private": true,
   "scripts": {
-    "lint": "eslint .",
+    "linters": "eslint .",
     "build": "preconstruct build",
     "watch": "preconstruct watch",
     "dev": "preconstruct dev",
@@ -10,7 +10,8 @@
     "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook -o ./storybook-docs",
     "publish-storybook": "npm run build-storybook && touch ./storybook-docs/.nojekyll && gh-pages -d storybook-docs -t true",
-    "release": "npm run build; cd ./packages/webgl-components && npm publish --access public"
+    "release": "npm run build; cd ./packages/webgl-components && npm publish --access public",
+    "prepare": "husky install"
   },
   "author": {
     "name": "Amelie Maia",
@@ -42,6 +43,8 @@
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.0",
     "@babel/preset-typescript": "^7.16.0",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
     "@preconstruct/cli": "^2.1.5",
     "@storybook/addon-actions": "^6.5.9",
     "@storybook/addon-essentials": "^6.5.9",
@@ -55,12 +58,27 @@
     "eslint": "^8.19.0",
     "eslint-plugin-standard": "^5.0.0",
     "gh-pages": "^4.0.0",
+    "husky": "^8.0.1",
     "jest": "^27.3.1",
+    "lint-staged": "^13.0.3",
     "storybook": "^6.5.9",
     "typescript": "^4.7.4",
     "worker-loader": "^3.0.8"
   },
   "dependencies": {
     "gsap": "^3.10.3"
+  },
+  "lint-staged": {
+    "./packages/**/*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "echo 'Pre-commit checks...' && lint-staged",
+      "pre-push": "echo 'Pre-push checks...' && npm run linters",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }
