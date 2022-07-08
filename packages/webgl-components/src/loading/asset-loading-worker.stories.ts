@@ -4,7 +4,6 @@ import webglScene from '../webgl-scene';
 import Asset, { AssetType } from './asset';
 import AssetManager from './asset-manager';
 import { Color, DoubleSide, Mesh, MeshBasicMaterial, PlaneBufferGeometry, Texture } from 'three';
-import JsonLoader from './json-loader';
 import RenderStats, { RenderStatsPosition } from '../utils/stats';
 import AssetLoader from './asset-loader';
 
@@ -26,33 +25,16 @@ export const withWorkers = () => {
 
   const assetManager = new AssetManager();
 
-  function loadData(): Promise<Asset | void> {
-    return new Promise((resolve, reject) => {
-      const loader = new JsonLoader(
+  function loadImages() {
+    const assets: Array<Asset> = [];
+    for (let i = 0; i < 100; i++) {
+      assets.push(
         new Asset({
-          id: 'data',
-          src: '/assets/tmp/data.json',
-          type: AssetType.Json
+          id: `image-${i}`,
+          src: `/assets/images/${i}.jpg`,
+          type: AssetType.Image
         })
       );
-      loader.once('error', reject);
-      loader.once('loaded', resolve);
-      loader.load();
-    });
-  }
-
-  function loadImages(response: Asset) {
-    const assets: Array<Asset> = [];
-    if (Array.isArray(response.data)) {
-      for (let i = 0; i < response.data.length; i++) {
-        assets.push(
-          new Asset({
-            id: `matcap-${i}`,
-            src: `/assets/tmp/${response.data[i]}`,
-            type: AssetType.Image
-          })
-        );
-      }
     }
 
     function onProgress(progress: number) {
@@ -77,7 +59,7 @@ export const withWorkers = () => {
       const geometry = new PlaneBufferGeometry(1, 1);
       for (let i = 0; i < totalInstances; i++) {
         const params = { side: DoubleSide, wireframe: false, map: new Texture() };
-        const data = (assetManager.get('images', `matcap-${i}`) as Asset).data as typeof String;
+        const data = (assetManager.get('images', `image-${i}`) as Asset).data as typeof String;
         if (data != null && typeof data === 'string') {
           params.map.image = new Image();
           params.map.image.src = data;
@@ -106,9 +88,7 @@ export const withWorkers = () => {
     }, 1000);
   }
 
-  loadData().then((response: Asset | void) => {
-    if (response != null) loadImages(response);
-  });
+  loadImages();
 
   renderer.setClearColor(new Color(0x222222));
   function update() {
