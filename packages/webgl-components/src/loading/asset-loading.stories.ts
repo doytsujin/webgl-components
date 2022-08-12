@@ -1,7 +1,6 @@
 import '../style.css';
 
 import webglScene from '../webgl-scene';
-import GroupLoader from './asset-loader';
 import Asset, { AssetType } from './asset';
 import AssetManager from './asset-manager';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
@@ -79,7 +78,7 @@ export const allAssetTypes = () => {
   const ktxLoader = new KTX2Loader();
   ktxLoader.setTranscoderPath('/lib/basis/').detectSupport(renderer);
 
-  const loader = new GroupLoader({ id: 'example', parallelLoads: 5, preferWebWorker: true });
+  const loader = new AssetLoader({ id: 'example', parallelLoads: 5, preferWebWorker: true });
   loader.setDracoLoader(dracoLoader);
   loader.setKtx2Loader(ktxLoader);
 
