@@ -1,7 +1,7 @@
 import Loader from './loader';
 import AssetManager from './asset-manager';
 import Asset, { AssetType } from './asset';
-import GroupLoader from './group-loader';
+import GroupLoader from './asset-loader';
 import ImageLoader from './image-loader';
 import JSONLoader from './json-loader';
 import ThreeFBXLoader from './three-fbx-loader';

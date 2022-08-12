@@ -1,4 +1,5 @@
-const querystring = require('query-string');
+require('query-string');
+import querystring from 'query-string';
 
 /**
  * Get a query parameter
@@ -25,7 +26,7 @@ export function getQueryFromParams(prop: string, $window: Window): void | string
  * @param {boolean} [reload=false]
  * @return {*}  {void}
  */
-export function setQuery(query: string, value: string, $window: Window, reload: boolean = false): void {
+export function setQuery(query: string, value: string, $window: Window, reload = false): void {
   if (typeof $window !== 'undefined') {
     const queries = querystring.parse($window.location.search);
     const newQueries = Object.assign({}, queries, {

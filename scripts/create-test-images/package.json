@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "dependencies": {
+    "canvas": "^2.9.3",
+    "three": "^0.142.0"
+  }
+}

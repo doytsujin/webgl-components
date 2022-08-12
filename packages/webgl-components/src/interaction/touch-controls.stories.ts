@@ -46,7 +46,7 @@ export const touchControls = () => {
   function onMove(event: Array<Pointer>) {
     addCircles(event);
   }
-  function onEnd(event: Array<Pointer>) {
+  function onEnd() {
     counter = 0;
     circles = [];
   }

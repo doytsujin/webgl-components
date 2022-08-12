@@ -1,6 +1,7 @@
 import { AmbientLight } from 'three';
 import LightController from './light-controller';
-const GUI = require('lil-gui');
+require('lil-gui');
+import GUI from 'lil-gui';
 
 export type AmbientLightSettings = {
   color: number;
@@ -19,8 +20,7 @@ const defaultSettings: AmbientLightSettings = { color: 0xd4d4d4, intensity: 0.6 
 export default class AmbientLightController extends LightController {
   light: AmbientLight;
   settings: AmbientLightSettings = defaultSettings;
-  gui: typeof GUI;
-  guiParent: typeof GUI;
+  gui!: GUI;
 
   constructor(settings: AmbientLightSettings = defaultSettings) {
     super();
@@ -28,8 +28,7 @@ export default class AmbientLightController extends LightController {
     this.light = new AmbientLight(this.settings.color, this.settings.intensity);
   }
 
-  addGUI(guiParent: typeof GUI) {
-    this.guiParent = guiParent;
+  addGUI(guiParent: GUI) {
     this.gui = guiParent.addFolder('ambient');
     this.gui.add(this.light, 'intensity', 0, 1);
     this.gui.addColor(this.settings, 'color').onChange(this.onChange);
@@ -40,6 +39,6 @@ export default class AmbientLightController extends LightController {
   };
 
   dispose() {
-    this.guiParent.removeFolder(this.gui.name);
+    this.gui.destroy();
   }
 }

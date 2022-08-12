@@ -20,7 +20,7 @@ class ThreeRenderStats {
     msDiv.appendChild(msText);
 
     const nLines = 9;
-    for (var i = 0; i < nLines; i++) {
+    for (let i = 0; i < nLines; i++) {
       this.msTexts[i] = document.createElement('div');
       this.msTexts[i].style.cssText =
         'color:rgb(255, 255, 255);background-color:rgb(0, 0, 0);font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px';
@@ -89,7 +89,7 @@ export default class RenderStats {
   }
 
   getStyle(options: RenderStatOptions) {
-    let { x, y, unit, alignment } = options.position;
+    const { x, y, unit, alignment } = options.position;
     switch (alignment) {
       case RenderStatsPosition.TopLeft:
         return `top:${y}${unit};left:${x}${unit}`;

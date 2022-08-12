@@ -1,28 +1,29 @@
-const GUICls = require('lil-gui').default;
-// import { Vector2Controller, Vector3Controller, Vector4Controller } from './gui-extensions/gui-vector';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+require('lil-gui');
+import GUICls from 'lil-gui';
 
 class Folder {
-  add(_arg0?: Object, _arg1?: Object, _arg2?: Object, _arg3?: Object, _arg4?: Object) {
+  add(_arg0?: unknown, _arg1?: unknown, _arg2?: unknown, _arg3?: unknown, _arg4?: unknown) {
     return this;
   }
-  addFolder(_name: String) {
+  addFolder(_name: string) {
     return new Folder();
   }
 
-  removeFolder(_name?: Object) {
+  removeFolder(_name?: unknown) {
     return new Folder();
   }
 
   destroy() {
     return this;
   }
-  addColor(_arg0?: Object, _arg1?: Object) {
+  addColor(_arg0?: unknown, _arg1?: unknown) {
     return this;
   }
-  listen(_arg?: Object) {
+  listen(_arg?: unknown) {
     return this;
   }
-  name(_arg?: String) {
+  name(_arg?: string) {
     return this;
   }
   close() {
@@ -31,10 +32,10 @@ class Folder {
   step() {
     return this;
   }
-  onChange(_arg?: Object) {
+  onChange(_arg?: unknown) {
     return this;
   }
-  setValue(_arg?: Object) {
+  setValue(_arg?: unknown) {
     return this;
   }
   remove() {
@@ -46,27 +47,27 @@ class Folder {
 }
 
 export class GUIWrapper {
-  add(_arg0?: Object, _arg1?: Object, _arg2?: Object, _arg3?: Object, _arg4?: Object) {
+  add(_arg0?: unknown, _arg1?: unknown, _arg2?: unknown, _arg3?: unknown, _arg4?: unknown) {
     return this;
   }
-  addFolder(_name: String) {
+  addFolder(_name: string) {
     return new Folder();
   }
 
-  removeFolder(_name?: Object) {
+  removeFolder(_name?: unknown) {
     return new Folder();
   }
 
   destroy() {
     return this;
   }
-  addColor(_arg0?: Object, _arg1?: Object) {
+  addColor(_arg0?: unknown, _arg1?: unknown) {
     return this;
   }
-  listen(_arg?: Object) {
+  listen(_arg?: unknown) {
     return this;
   }
-  name(_arg?: String) {
+  name(_arg?: string) {
     return this;
   }
   close() {
@@ -75,10 +76,10 @@ export class GUIWrapper {
   step() {
     return this;
   }
-  onChange(_arg?: Object) {
+  onChange(_arg?: unknown) {
     return this;
   }
-  setValue(_arg?: Object) {
+  setValue(_arg?: unknown) {
     return this;
   }
   remove() {
@@ -89,15 +90,15 @@ export class GUIWrapper {
   }
 
   //Extensions -------
-  addVector2(_object: any, _property: any, _min: number, _max: number, _step: number) {
+  addVector2(_object: unknown, _property: unknown, _min: number, _max: number, _step: number) {
     return this;
   }
 
-  addVector3(_object: any, _property: any, _min: number, _max: number, _step: number) {
+  addVector3(_object: unknown, _property: unknown, _min: number, _max: number, _step: number) {
     return this;
   }
 
-  addVector4(_object: any, _property: any, _min: number, _max: number, _step: number) {
+  addVector4(_object: unknown, _property: unknown, _min: number, _max: number, _step: number) {
     return this;
   }
 }

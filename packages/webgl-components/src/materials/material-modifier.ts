@@ -13,7 +13,7 @@ type ShaderProps = {
 
 export type ShaderConfig = {
   uniforms: {
-    [prop: string]: any;
+    [prop: string]: Record<string, unknown>;
   };
   // uniforms: {
   //   [prop: string]: Object;

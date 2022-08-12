@@ -1,6 +1,7 @@
 import { DirectionalLight, DirectionalLightHelper } from 'three';
 import LightController from './light-controller';
-const GUI = require('lil-gui');
+require('lil-gui');
+import GUI from 'lil-gui';
 
 export type DirectioalLightSettings = {
   color: number;
@@ -19,8 +20,7 @@ const defaultSettings: DirectioalLightSettings = { color: 0xd4d4d4, intensity: 0
 export default class DirectionalLightController extends LightController {
   settings: DirectioalLightSettings = defaultSettings;
   light: DirectionalLight;
-  gui: typeof GUI;
-  guiParent: typeof GUI;
+  gui!: GUI;
   helper: DirectionalLightHelper;
 
   constructor(settings: DirectioalLightSettings = defaultSettings) {
@@ -31,8 +31,7 @@ export default class DirectionalLightController extends LightController {
     this.helper = new DirectionalLightHelper(this.light);
   }
 
-  addGUI(guiParent: typeof GUI) {
-    this.guiParent = guiParent;
+  addGUI(guiParent: GUI) {
     this.gui = guiParent.addFolder('directional');
     this.gui.addColor(this.settings, 'color').onChange(this.onChange);
     this.gui.add(this.light, 'intensity', 0, 1);
@@ -47,6 +46,6 @@ export default class DirectionalLightController extends LightController {
   };
 
   dispose() {
-    this.guiParent.removeFolder(this.gui.name);
+    this.gui.destroy();
   }
 }

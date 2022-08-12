@@ -1,6 +1,7 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-import Loader from './loader';
+import Loader, { LoaderSettings } from './loader';
+import LoaderManager from './loader-manager';
 
 /**
  * Threejs GLTF Loader
@@ -15,25 +16,24 @@ export default class ThreeGLTFLoader extends Loader {
   setDracoLoader(dracoLoader: DRACOLoader) {
     this.dracoLoader = dracoLoader;
   }
+  load = (settings?: LoaderSettings, manager: LoaderManager = new LoaderManager('three-gltf-loader')) => {
+    if (settings) {
+      this.settings = Object.assign(this.settings, settings);
+    }
 
-  load = () => {
+    manager.add(this);
+
     const loader = new GLTFLoader();
 
     if (this.dracoLoader != null) {
       loader.setDRACOLoader(this.dracoLoader);
     }
 
-    const onLoaded = (gltf: Object) => {
+    const onLoaded = (gltf: unknown) => {
       this.asset.data = gltf;
       this.emit('loaded', this.asset);
     };
 
-    const onProgress = () => {};
-
-    const onError = (error: ErrorEvent) => {
-      this.emit('error', error, `Failed to load ${this.asset.src}`);
-    };
-
-    loader.load(this.asset.src, onLoaded, onProgress, onError);
+    loader.load(this.asset.src, onLoaded, this.onProgress, this.onError);
   };
 }
