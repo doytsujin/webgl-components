@@ -5,6 +5,7 @@ export class AssetType {
   static GLTF = 'GLTF';
   static Texture = 'Texture';
   static RgbeTexture = 'RgbeTexture';
+  static Ktx2Texture = 'Ktx2Texture';
 }
 
 export interface AssetConfig {

@@ -19,6 +19,7 @@ import {
 } from 'three';
 import RenderStats, { RenderStatsPosition } from '../utils/stats';
 import AssetLoader from './asset-loader';
+import { KTX2Loader } from 'three/examples/jsm/loaders/KTX2Loader';
 
 export default { title: 'Loader' };
 
@@ -55,6 +56,16 @@ export const allAssetTypes = () => {
       id: 'enviroment-map',
       src: '/assets/env-map.hdr',
       type: AssetType.RgbeTexture
+    }),
+    new Asset({
+      id: 'sample-uastc',
+      src: '/assets/sample-uastc.ktx2',
+      type: AssetType.Ktx2Texture
+    }),
+    new Asset({
+      id: 'fire-uastc',
+      src: '/assets/fire-1024.ktx2',
+      type: AssetType.Ktx2Texture
     })
   ];
 
@@ -65,8 +76,12 @@ export const allAssetTypes = () => {
   dracoLoader.setDecoderPath('/lib/draco/gltf/');
   dracoLoader.preload();
 
+  const ktxLoader = new KTX2Loader();
+  ktxLoader.setTranscoderPath('/lib/basis/').detectSupport(renderer);
+
   const loader = new GroupLoader({ id: 'example', parallelLoads: 5, preferWebWorker: true });
   loader.setDracoLoader(dracoLoader);
+  loader.setKtx2Loader(ktxLoader);
 
   loader.manager.on('progress', (progress: number) => {
     console.log('progress', progress);
