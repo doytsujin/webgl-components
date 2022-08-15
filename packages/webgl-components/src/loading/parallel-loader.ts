@@ -39,7 +39,7 @@ export default class ParallelLoader extends EventEmitter {
   }
 
   webWorkersSupported() {
-    return !!window.Worker;
+    return false; //!!window.Worker;
   }
 
   registerLoaders(loaders: LoaderClasses) {

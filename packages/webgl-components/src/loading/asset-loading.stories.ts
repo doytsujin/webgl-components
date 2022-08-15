@@ -184,13 +184,16 @@ export const withWorker = () => {
       const geometry = new PlaneBufferGeometry(1, 1);
       for (let i = 0; i < totalInstances; i++) {
         const params = { side: DoubleSide, wireframe: false, map: new Texture() };
-        const data = (assetManager.get('images', `image-${i}`) as Asset).data as typeof String;
-        if (data != null && typeof data === 'string') {
-          params.map.image = new Image();
-          params.map.image.src = data;
-          params.map.image.onload = () => {
-            params.map.needsUpdate = true;
-          };
+        const data = (assetManager.get('images', `image-${i}`) as Asset).data as typeof HTMLImageElement;
+        // if (data != null && typeof data === 'string') {
+        if (data != null && data instanceof HTMLImageElement) {
+          params.map.image = data;
+          params.map.needsUpdate = true;
+          // params.map.image = new Image();
+          // params.map.image.src = data;
+          // params.map.image.onload = () => {
+          //   params.map.needsUpdate = true;
+          // };
         }
         const material = new MeshBasicMaterial(params);
         const mesh = new Mesh(geometry, material);

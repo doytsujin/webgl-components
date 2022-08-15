@@ -16,32 +16,32 @@ export default class ImageLoader extends Loader {
 
     manager.add(this);
 
-    if (this.settings.environment === LoadingEnvironment.Worker && this.settings.preferWebWorker) {
-      fetch(this.asset.src)
-        .then((response) => {
-          response
-            .blob()
-            .then((blob: Blob) => {
-              const type = blob.type.split('/')[1];
-              if (/(gif|jpe?g|tiff?|png|webp)$/i.test(type)) {
-                this.asset.data = URL.createObjectURL(blob);
-                this.emit('loaded', this.asset);
-              } else {
-                this.onError(`Image type not supported: ${type}`);
-              }
-            })
-            .catch(this.onError);
-        })
-        .catch(this.onError);
-    } else {
-      const image = new Image();
+    // if (this.settings.environment === LoadingEnvironment.Worker && this.settings.preferWebWorker) {
+    //   fetch(this.asset.src)
+    //     .then((response) => {
+    //       response
+    //         .blob()
+    //         .then((blob: Blob) => {
+    //           const type = blob.type.split('/')[1];
+    //           if (/(gif|jpe?g|tiff?|png|webp)$/i.test(type)) {
+    //             this.asset.data = URL.createObjectURL(blob);
+    //             this.emit('loaded', this.asset);
+    //           } else {
+    //             this.onError(`Image type not supported: ${type}`);
+    //           }
+    //         })
+    //         .catch(this.onError);
+    //     })
+    //     .catch(this.onError);
+    // } else {
+    const image = new Image();
 
-      image.onload = () => {
-        this.asset.data = image;
-        this.emit('loaded', this.asset);
-      };
-      image.onerror = this.onError;
-      image.src = this.asset.src;
-    }
+    image.onload = () => {
+      this.asset.data = image;
+      this.emit('loaded', this.asset);
+    };
+    image.onerror = this.onError;
+    image.src = this.asset.src;
+    // }
   };
 }
