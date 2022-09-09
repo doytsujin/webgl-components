@@ -7,7 +7,7 @@
     "components",
     "best practices"
   ],
-  "version": "0.0.17",
+  "version": "0.0.18",
   "license": "MIT",
   "author": {
     "name": "Amelie Maia",
@@ -33,7 +33,6 @@
       "loading/index.ts",
       "materials/material-modifier.ts",
       "math/index.ts",
-      "post-processing/index.ts",
       "rendering/index.ts",
       "rendering/index.ts",
       "rendering/render-target.ts",

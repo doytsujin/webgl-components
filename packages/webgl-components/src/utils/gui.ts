@@ -94,6 +94,12 @@ export class GUIWrapper {
   reset() {
     return this;
   }
+  min(_arg?: unknown) {
+    return this;
+  }
+  max(_arg?: unknown) {
+    return this;
+  }
 }
 
 function createGUI(debug: boolean) {
