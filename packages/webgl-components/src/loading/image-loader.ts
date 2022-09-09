@@ -1,4 +1,4 @@
-import Loader, { LoaderSettings, LoadingEnvironment } from './loader';
+import Loader, { LoaderSettings } from './loader';
 import LoaderManager from './loader-manager';
 
 /**

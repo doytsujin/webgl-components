@@ -3,14 +3,14 @@ import '../style.css';
 import { Mesh, SphereBufferGeometry, MeshNormalMaterial } from 'three';
 import webglScene from '../webgl-scene';
 
-import GUI from '../utils/gui';
+import { createGUI } from '../utils/gui';
 import PostProcessing from '.';
 import graphicsProfiler from '../graphics/graphics-profiler';
 import { getRenderBufferSize } from '../rendering';
 
 export default { title: 'Rendering' };
 export const postProcessing = () => {
-  const gui = GUI(true);
+  const gui = createGUI(true);
 
   const { scene, renderer } = webglScene();
 

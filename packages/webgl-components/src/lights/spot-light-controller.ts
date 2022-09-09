@@ -1,7 +1,7 @@
 import { SpotLight } from 'three';
-import LightController from './light-controller';
-require('lil-gui');
+import LightController, { GUI_PRECISION } from './light-controller';
 import GUI from 'lil-gui';
+import { GUIWrapper } from '../utils/gui';
 
 export type SpotLightSettings = {
   color: number;
@@ -11,6 +11,21 @@ export type SpotLightSettings = {
   power: number;
   penumbra: number;
   decay: number;
+};
+
+export type SpotLightGUISettings = {
+  intensity: { min: number; max: number; precision: number };
+  distance: { min: number; max: number; precision: number };
+  decay: { min: number; max: number; precision: number };
+  angle: { min: number; max: number; precision: number };
+  penumbra: { min: number; max: number; precision: number };
+  power: { min: number; max: number; precision: number };
+  range: {
+    x: { min: number; max: number };
+    y: { min: number; max: number };
+    z: { min: number; max: number };
+    precision: number;
+  };
 };
 
 const defaultSettings: SpotLightSettings = {
@@ -23,6 +38,21 @@ const defaultSettings: SpotLightSettings = {
   decay: 1
 };
 
+const defaultGUISettings: SpotLightGUISettings = {
+  intensity: { min: 0, max: 10, precision: GUI_PRECISION },
+  distance: { min: 0, max: 100, precision: GUI_PRECISION },
+  decay: { min: 0, max: 1, precision: GUI_PRECISION },
+  angle: { min: 0, max: 1, precision: GUI_PRECISION },
+  penumbra: { min: 0, max: 1, precision: GUI_PRECISION },
+  power: { min: 0, max: 2, precision: GUI_PRECISION },
+  range: {
+    x: { min: -100, max: 100 },
+    y: { min: -100, max: 100 },
+    z: { min: -100, max: 100 },
+    precision: GUI_PRECISION
+  }
+};
+
 /**
  * Utility for creating spot lights
  *
@@ -33,7 +63,7 @@ const defaultSettings: SpotLightSettings = {
 export default class SpotLightController extends LightController {
   settings: SpotLightSettings = defaultSettings;
   light: SpotLight;
-  gui!: GUI;
+  gui!: GUI | GUIWrapper;
 
   constructor(settings: SpotLightSettings = defaultSettings) {
     super();
@@ -50,19 +80,55 @@ export default class SpotLightController extends LightController {
     this.light.position.set(1, 1, 1);
   }
 
-  addGUI(guiParent: GUI) {
-    const range = 50;
+  addGUI(guiParent: GUI | GUIWrapper, guiSettings: SpotLightGUISettings = defaultGUISettings) {
     this.gui = guiParent.addFolder('spot');
+    this.gui.add(this.light, 'visible');
     this.gui.addColor(this.settings, 'color').onChange(this.onChange);
-    this.gui.add(this.light, 'intensity', 0, 10);
-    this.gui.add(this.light, 'distance', 0, 100);
-    this.gui.add(this.light, 'decay', 0, 1);
-    this.gui.add(this.light, 'angle', 0, 1);
-    this.gui.add(this.light, 'penumbra', 0, 1);
-    this.gui.add(this.light, 'power', 0, 2);
-    this.gui.add(this.light.position, 'x', -range, range, 0.01);
-    this.gui.add(this.light.position, 'y', -range, range, 0.01);
-    this.gui.add(this.light.position, 'z', -range, range, 0.01);
+    this.gui.add(
+      this.light,
+      'intensity',
+      guiSettings.intensity.min,
+      guiSettings.intensity.max,
+      guiSettings.intensity.precision
+    );
+    this.gui.add(
+      this.light,
+      'distance',
+      guiSettings.distance.min,
+      guiSettings.distance.max,
+      guiSettings.distance.precision
+    );
+    this.gui.add(this.light, 'decay', guiSettings.decay.min, guiSettings.decay.max, guiSettings.decay.precision);
+    this.gui.add(this.light, 'angle', guiSettings.angle.min, guiSettings.angle.max, guiSettings.angle.precision);
+    this.gui.add(
+      this.light,
+      'penumbra',
+      guiSettings.penumbra.min,
+      guiSettings.penumbra.max,
+      guiSettings.penumbra.precision
+    );
+    this.gui.add(this.light, 'power', guiSettings.power.min, guiSettings.power.max, guiSettings.power.precision);
+    this.gui.add(
+      this.light.position,
+      'x',
+      guiSettings.range.x.min,
+      guiSettings.range.x.max,
+      guiSettings.range.precision
+    );
+    this.gui.add(
+      this.light.position,
+      'y',
+      guiSettings.range.y.min,
+      guiSettings.range.y.max,
+      guiSettings.range.precision
+    );
+    this.gui.add(
+      this.light.position,
+      'z',
+      guiSettings.range.z.min,
+      guiSettings.range.z.max,
+      guiSettings.range.precision
+    );
   }
 
   onChange = () => {
