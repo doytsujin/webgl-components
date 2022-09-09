@@ -1,4 +1,4 @@
-import { WebGLRenderTarget, LinearFilter, NearestFilter, RGBFormat, UnsignedByteType } from 'three';
+import { WebGLRenderTarget, LinearFilter, NearestFilter, RGBAFormat, UnsignedByteType } from 'three';
 
 /**
  * Render target helper
@@ -13,7 +13,7 @@ export function createRenderTarget(width = 1024, height = 1024, options: Record<
   const defaults = {
     minFilter: LinearFilter,
     magFilter: NearestFilter,
-    format: RGBFormat,
+    format: RGBAFormat,
     type: UnsignedByteType,
     stencilBuffer: false
   };
