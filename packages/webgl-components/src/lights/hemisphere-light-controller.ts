@@ -1,4 +1,4 @@
-import { LightController } from '@jam3/webgl-components/lights';
+import LightController from './light-controller';
 import GUI from 'lil-gui';
 import { HemisphereLight, HemisphereLightHelper } from 'three';
 import { GUIWrapper } from '../utils/gui';
