@@ -1,7 +1,6 @@
 import { WebGLRenderer } from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { GraphicsSettings } from '../graphics/quality-settings';
-require('lil-gui');
 import GUI from 'lil-gui';
 
 /**

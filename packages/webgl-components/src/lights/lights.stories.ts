@@ -9,7 +9,7 @@ import {
 } from 'three';
 import '../style.css';
 import webglScene from '../webgl-scene';
-import GUI from '../utils/gui';
+import { createGUI } from '../utils/gui';
 import AmbientLightController from './ambient-light-controller';
 import DirectionalLightController from './directional-light-controller';
 import SpotLightController from './spot-light-controller';
@@ -17,7 +17,7 @@ import SpotLightController from './spot-light-controller';
 export default { title: 'Lights' };
 
 export const LightController = () => {
-  const gui = GUI(true);
+  const gui = createGUI(true);
   const { renderer, camera, scene } = webglScene(false);
 
   renderer.shadowMap.enabled = true;
@@ -28,7 +28,7 @@ export const LightController = () => {
   ambient.addGUI(gui);
   scene.add(ambient.light);
 
-  const directional = new DirectionalLightController({ color: 0xffffc2, intensity: 0.3 });
+  const directional = new DirectionalLightController({ color: 0xffffc2, intensity: 0.3, helperSize: 1 });
   directional.addGUI(gui);
 
   directional.light.position.set(-15, 40, 35);

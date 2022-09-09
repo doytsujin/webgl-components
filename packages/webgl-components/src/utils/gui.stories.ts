@@ -1,12 +1,12 @@
 import '../style.css';
 import createCanvas from './canvas';
-import GUI from './gui';
+import { createGUI } from './gui';
 
 export default { title: 'Utils' };
 
 export const guiControls = () => {
   // Passing false will use a synthethic wrapper of the GUI
-  const gui = GUI(true);
+  const gui = createGUI(true);
 
   const controller = {
     myBoolean: true,
