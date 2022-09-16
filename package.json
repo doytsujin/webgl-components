@@ -11,7 +11,7 @@
     "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook -o ./storybook-docs",
     "publish-storybook": "npm run build-storybook && touch ./storybook-docs/.nojekyll && gh-pages -d storybook-docs -t true",
-    "release": "npm run build; cd ./packages/webgl-components && npm publish --access public",
+    "release": "npm run build; npm run publish-storybook; cd ./packages/webgl-components && npm publish --access public",
     "prepare": "husky install"
   },
   "author": {
