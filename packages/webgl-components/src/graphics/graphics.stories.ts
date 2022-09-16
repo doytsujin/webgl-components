@@ -36,7 +36,8 @@ export const profileGPU = () => {
   // If the graphics query parameter is set, use it over the current gpu tier
   const qualityMode = getQueryFromParams('quality', window.parent);
 
-  graphicsProfiler.run(qualityMode).then(() => {
+  // Note: latest benchmarks can be downloaded from: https://github.com/pmndrs/detect-gpu/raw/master/benchmarks.tar.gz
+  graphicsProfiler.run(qualityMode, { benchmarksURL: '/lib/benchmarks' }).then(() => {
     // Optimise geometry based on gpu performance
     const divisions = graphicsProfiler.equals(Quality.High) ? 64 : 32;
     const mesh = new Mesh(
