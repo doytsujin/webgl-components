@@ -15,8 +15,8 @@ class GraphicsProfiler {
   tiers: Array<Quality> = [Quality.Normal, Quality.Medium, Quality.High];
   qualitySettings: QualitySettings = new QualitySettings();
 
-  async run(qualityMode: Quality | void) {
-    this.gpuTier = await getGPUTier();
+  async run(qualityMode: Quality | void, detectGpuOptions = {}) {
+    this.gpuTier = await getGPUTier(detectGpuOptions);
 
     if (typeof qualityMode === 'string' && QUALITY_MODES.includes(qualityMode)) {
       this.quality = qualityMode;
