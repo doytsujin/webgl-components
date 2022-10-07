@@ -13,13 +13,7 @@ class ThreeRenderStats {
     msDiv.style.cssText = 'padding:0 0 3px 3px;text-align:left;background-color:rgb(0, 0, 0);';
     this.dom.appendChild(msDiv);
 
-    const msText = document.createElement('div');
-    msText.style.cssText =
-      'color:rgb(255, 255, 255);font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px';
-    msText.innerHTML = 'WebGLRenderer';
-    msDiv.appendChild(msText);
-
-    const nLines = 9;
+    const nLines = 11;
     for (let i = 0; i < nLines; i++) {
       this.msTexts[i] = document.createElement('div');
       this.msTexts[i].style.cssText =
@@ -29,20 +23,32 @@ class ThreeRenderStats {
     }
   }
 
+  getMaxMemory() {
+    return Math.round(window.performance.memory ? window.performance.memory.jsHeapSizeLimit / 1048576 : 0);
+  }
+
+  getCurrentMemory() {
+    return Math.round(
+      window.performance && window.performance.memory ? window.performance.memory.usedJSHeapSize / 1048576 : 0
+    );
+  }
+
   update(webglRenderer: WebGLRenderer) {
     // refresh only 30time per second
     if (Date.now() - this.lastTime < 1000 / 30) return;
     this.lastTime = Date.now();
 
-    this.msTexts[0].textContent = '=== Memory ===';
-    this.msTexts[1].textContent = 'Programs: ' + webglRenderer.info.programs?.length;
-    this.msTexts[2].textContent = 'Geometries: ' + webglRenderer.info.memory.geometries;
-    this.msTexts[3].textContent = 'Textures: ' + webglRenderer.info.memory.textures;
-    this.msTexts[4].textContent = '=== Render ===';
-    this.msTexts[5].textContent = 'Calls: ' + webglRenderer.info.render.calls;
-    this.msTexts[6].textContent = 'Triangles: ' + webglRenderer.info.render.triangles;
-    this.msTexts[7].textContent = 'Lines: ' + webglRenderer.info.render.lines;
-    this.msTexts[8].textContent = 'Points: ' + webglRenderer.info.render.points;
+    this.msTexts[0].textContent = `=== Content ===`;
+    this.msTexts[1].textContent = `Programs: ${webglRenderer.info.programs?.length}`;
+    this.msTexts[2].textContent = `Geometries: ${webglRenderer.info.memory.geometries}`;
+    this.msTexts[3].textContent = `Textures: ${webglRenderer.info.memory.textures}`;
+    this.msTexts[4].textContent = `=== Render ===`;
+    this.msTexts[5].textContent = `Calls: ${webglRenderer.info.render.calls}`;
+    this.msTexts[6].textContent = `Triangles: ${webglRenderer.info.render.triangles}`;
+    this.msTexts[7].textContent = `Lines: ${webglRenderer.info.render.lines}`;
+    this.msTexts[8].textContent = `Points: ${webglRenderer.info.render.points}`;
+    this.msTexts[9].textContent = `=== System ===`;
+    this.msTexts[10].textContent = `Memory: ${this.getCurrentMemory()}mb/${this.getMaxMemory()}`;
   }
 }
 
