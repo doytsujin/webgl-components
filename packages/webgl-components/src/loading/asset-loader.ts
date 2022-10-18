@@ -14,6 +14,7 @@ import { KTX2Loader } from 'three/examples/jsm/loaders/KTX2Loader';
 export default class AssetLoader extends ParallelLoader {
   dracoLoader?: DRACOLoader;
   ktx2Loader?: KTX2Loader;
+  meshoptDecoder?: unknown;
   // workerLoader!: WorkerLoader;
 
   constructor(settings: LoaderSettings, manager: LoaderManager = new LoaderManager('asset-loader')) {
@@ -38,6 +39,10 @@ export default class AssetLoader extends ParallelLoader {
     this.ktx2Loader = ktx2Loader;
   }
 
+  setMeshoptDecoder(decoder: unknown) {
+    this.meshoptDecoder = decoder;
+  }
+
   createLoaders(manifest: Asset[]) {
     manifest.forEach((asset) => {
       if (asset.args === undefined) asset.args = {};
@@ -57,8 +62,12 @@ export default class AssetLoader extends ParallelLoader {
   }
 
   nextInQueue(loader: Loader) {
-    if (loader instanceof ThreeGLTFLoader && this.dracoLoader) {
-      loader.setDracoLoader(this.dracoLoader);
+    if (loader instanceof ThreeGLTFLoader) {
+      if (this.dracoLoader) loader.setDracoLoader(this.dracoLoader);
+
+      if (this.ktx2Loader) loader.setKtx2Loader(this.ktx2Loader);
+
+      if (this.meshoptDecoder) loader.setMeshoptDecoder(this.meshoptDecoder);
     }
     if (loader instanceof ThreeKtx2TexureLoader && this.ktx2Loader) {
       loader.setKtx2Loader(this.ktx2Loader);

@@ -20,6 +20,9 @@ import RenderStats, { RenderStatsPosition } from '../utils/stats';
 import AssetLoader from './asset-loader';
 import { KTX2Loader } from 'three/examples/jsm/loaders/KTX2Loader';
 
+/* eslint @typescript-eslint/no-var-requires: "off" */
+const { MeshoptDecoder } = require('three/examples/jsm/libs/meshopt_decoder.module.js');
+
 export default { title: 'Loader' };
 
 export const allAssetTypes = () => {
@@ -81,6 +84,7 @@ export const allAssetTypes = () => {
   const loader = new AssetLoader({ id: 'example', parallelLoads: 5, preferWebWorker: true });
   loader.setDracoLoader(dracoLoader);
   loader.setKtx2Loader(ktxLoader);
+  loader.setMeshoptDecoder(MeshoptDecoder);
 
   loader.manager.on('progress', (progress: number) => {
     console.log('progress', progress);
