@@ -13,7 +13,7 @@ import { KTX2Loader } from 'three/examples/jsm/loaders/KTX2Loader';
 export default class ThreeGLTFLoader extends Loader {
   dracoLoader?: DRACOLoader;
   ktx2Loader?: KTX2Loader;
-  meshoptDecoder?: any;
+  meshoptDecoder?: unknown;
 
   setDracoLoader(dracoLoader: DRACOLoader) {
     this.dracoLoader = dracoLoader;
@@ -23,7 +23,7 @@ export default class ThreeGLTFLoader extends Loader {
     this.ktx2Loader = ktx2Loader;
   }
 
-  setMeshoptDecoder(decoder: any) {
+  setMeshoptDecoder(decoder: unknown) {
     this.meshoptDecoder = decoder;
   }
 
@@ -45,7 +45,6 @@ export default class ThreeGLTFLoader extends Loader {
     }
 
     if (this.meshoptDecoder != null) {
-      console.log(this.meshoptDecoder);
       loader.setMeshoptDecoder(this.meshoptDecoder);
     }
 

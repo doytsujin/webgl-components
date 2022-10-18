@@ -14,7 +14,7 @@ import { KTX2Loader } from 'three/examples/jsm/loaders/KTX2Loader';
 export default class AssetLoader extends ParallelLoader {
   dracoLoader?: DRACOLoader;
   ktx2Loader?: KTX2Loader;
-  meshoptDecoder: any;
+  meshoptDecoder?: unknown;
   // workerLoader!: WorkerLoader;
 
   constructor(settings: LoaderSettings, manager: LoaderManager = new LoaderManager('asset-loader')) {
@@ -38,8 +38,8 @@ export default class AssetLoader extends ParallelLoader {
   setKtx2Loader(ktx2Loader: KTX2Loader) {
     this.ktx2Loader = ktx2Loader;
   }
-  setMeshoptDecoder(decoder: any) {
-    console.log(decoder);
+
+  setMeshoptDecoder(decoder: unknown) {
     this.meshoptDecoder = decoder;
   }
 
