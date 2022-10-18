@@ -51,7 +51,7 @@ export const allAssetTypes = () => {
     }),
     new Asset({
       id: 'jam3-logo',
-      src: '/assets/jam3.glb',
+      src: '/assets/jam3-high.glb',
       type: AssetType.GLTF
     }),
     new Asset({
