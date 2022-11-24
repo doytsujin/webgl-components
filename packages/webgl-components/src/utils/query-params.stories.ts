@@ -1,12 +1,12 @@
 import '../style.css';
 import createCanvas from './canvas';
-import GUI from './gui';
+import { createGUI } from './gui';
 import { getQueryFromParams, setQuery } from './query-params';
 
 export default { title: 'Utils' };
 
 export const queryParams = () => {
-  const gui = GUI(true);
+  const gui = createGUI(true);
 
   const controller = {
     color: '#ff69b4'

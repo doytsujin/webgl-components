@@ -2,14 +2,14 @@ import webglScene from '../webgl-scene';
 import '../style.css';
 import RenderStats, { RenderStatsPosition } from './stats';
 import { IcosahedronBufferGeometry, Mesh, MeshNormalMaterial } from 'three';
-import GUI from './gui';
+import { createGUI } from './gui';
 
 export default { title: 'Utils' };
 
 export const renderStats = () => {
   const { scene, camera, renderer } = webglScene();
 
-  const gui = GUI(true);
+  const gui = createGUI(true);
 
   const mesh = new Mesh(new IcosahedronBufferGeometry(2, 3), new MeshNormalMaterial());
   scene.add(mesh);

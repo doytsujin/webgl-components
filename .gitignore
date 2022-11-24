@@ -22,3 +22,4 @@ flow-typed
 
 dist
 /storybook-docs
+/public/assets/tmp

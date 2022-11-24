@@ -26,10 +26,15 @@ export default class InteractiveObject extends EventEmitter {
   coords: Vector2 = new Vector2();
   intersects: Array<Intersection<Object3D<Event>>> | null;
   fired: { hoverOut: boolean; hoverOver: boolean };
-  intersected: boolean = false;
-  hovering: boolean = false;
+  intersected = false;
+  hovering = false;
 
-  constructor(object: Object3D, camera: PerspectiveCamera, element: HTMLElement, options: InteractiveObjectOptions = {}) {
+  constructor(
+    object: Object3D,
+    camera: PerspectiveCamera,
+    element: HTMLElement,
+    options: InteractiveObjectOptions = {}
+  ) {
     super();
     this.object = object;
     this.camera = camera;
@@ -75,7 +80,7 @@ export default class InteractiveObject extends EventEmitter {
     this.setCoords(event[0].normalX, event[0].normalY);
     this.intersected = this.raycast();
     if (this.intersected) {
-      this.emit('start', this.intersects![0]);
+      this.emit('start', this.intersects?.[0]);
     }
   };
 
@@ -90,7 +95,7 @@ export default class InteractiveObject extends EventEmitter {
     this.intersected = this.raycast();
     this.hovering = this.intersected;
     if (this.intersected) {
-      if (!this.fired.hoverOver || this.options.mouseMove) this.emit('hover', true, this.intersects![0]);
+      if (!this.fired.hoverOver || this.options.mouseMove) this.emit('hover', true, this.intersects?.[0]);
       this.fired.hoverOut = false;
       this.fired.hoverOver = true;
     } else if (!this.fired.hoverOut) {
@@ -103,10 +108,9 @@ export default class InteractiveObject extends EventEmitter {
   /**
    * Touch and hover out handler
    *
-   * @param {Array<Pointer>} _event
    * @memberof InteractiveObject
    */
-  onTouchEnd = (_event: Array<Pointer>) => {
+  onTouchEnd = () => {
     if (this.hovering) {
       this.hovering = false;
       this.emit('hover', false);

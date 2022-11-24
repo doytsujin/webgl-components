@@ -31,7 +31,7 @@ export default class TouchControls extends EventEmitter {
     touchMove: true,
     touchEnd: true
   };
-  isDown: boolean = false;
+  isDown = false;
 
   constructor(element: HTMLElement, options: TouchControlsOptions = {}) {
     super();
@@ -154,7 +154,7 @@ export default class TouchControls extends EventEmitter {
    * @param {MouseEvent} _event
    * @memberof TouchControls
    */
-  onMouseOver = (_event: MouseEvent) => {
+  onMouseOver = () => {
     this.emit('hover', true);
   };
 
@@ -164,7 +164,7 @@ export default class TouchControls extends EventEmitter {
    * @param {MouseEvent} _event
    * @memberof TouchControls
    */
-  onMouseOut = (_event: MouseEvent) => {
+  onMouseOut = () => {
     this.emit('hover', false);
   };
 

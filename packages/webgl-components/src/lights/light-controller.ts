@@ -1,7 +1,14 @@
-import { Light } from 'three';
-const GUI = require('lil-gui');
+import { Group, Light } from 'three';
+import GUI from 'lil-gui';
+import { GUIWrapper } from '../utils/gui';
+
+export const GUI_PRECISION = 0.01;
 
 export default class LightController {
   light: Light = new Light();
-  addGUI(_gui: typeof GUI) {}
+  helpers: Group = new Group();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  addGUI(guiParent: GUI | GUIWrapper) {
+    //
+  }
 }

@@ -8,6 +8,7 @@ import { Object3D, Scene } from 'three';
  * @param {(Scene | Object3D | null)} parent
  * @return {*}  {void}
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function disposeObjects(object: any, parent: Scene | Object3D | null): void {
   if (object === null || object === undefined) return;
   if (parent) parent.remove(object);

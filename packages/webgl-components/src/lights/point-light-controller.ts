@@ -1,6 +1,7 @@
 import { PointLight } from 'three';
-import LightController from './light-controller';
-const GUI = require('lil-gui');
+import LightController, { GUI_PRECISION } from './light-controller';
+import GUI from 'lil-gui';
+import { GUIWrapper } from '../utils/gui';
 
 export type PointLightSettings = {
   color: number;
@@ -9,11 +10,35 @@ export type PointLightSettings = {
   decay: number;
 };
 
+export type PointLightGUISettings = {
+  intensity: { min: number; max: number; precision?: number };
+  distance: { min: number; max: number; precision?: number };
+  decay: { min: number; max: number; precision?: number };
+  position: {
+    x: { min: number; max: number };
+    y: { min: number; max: number };
+    z: { min: number; max: number };
+    precision?: number;
+  };
+};
+
 const defaultSettings: PointLightSettings = {
   color: 0xd4d4d4,
   intensity: 0.6,
   distance: 100,
   decay: 0
+};
+
+const defaultGUISettings: PointLightGUISettings = {
+  intensity: { min: 0, max: 10, precision: GUI_PRECISION },
+  distance: { min: 0, max: 1000, precision: GUI_PRECISION },
+  decay: { min: 0, max: 1000, precision: GUI_PRECISION },
+  position: {
+    x: { min: 0, max: 1000 },
+    y: { min: 0, max: 1000 },
+    z: { min: 0, max: 1000 },
+    precision: GUI_PRECISION
+  }
 };
 
 /**
@@ -26,8 +51,7 @@ const defaultSettings: PointLightSettings = {
 export default class PointLightController extends LightController {
   settings: PointLightSettings = defaultSettings;
   light: PointLight;
-  gui: typeof GUI;
-  guiParent: typeof GUI;
+  gui!: GUI | GUIWrapper;
 
   constructor(settings: PointLightSettings = defaultSettings) {
     super();
@@ -41,17 +65,46 @@ export default class PointLightController extends LightController {
     this.light.position.set(1, 1, 1);
   }
 
-  addGUI(guiParent: typeof GUI) {
-    this.guiParent = guiParent;
-    const range = 50;
+  addGUI(guiParent: GUI | GUIWrapper, guiSettings: PointLightGUISettings = defaultGUISettings) {
     this.gui = guiParent.addFolder('point');
+    this.gui.add(this.light, 'visible');
     this.gui.addColor(this.settings, 'color').onChange(this.onChange);
-    this.gui.add(this.settings, 'intensity', 0, 10);
-    this.gui.add(this.settings, 'distance', 0, 1000);
-    this.gui.add(this.settings, 'decay', 0, 1000);
-    this.gui.add(this.light.position, 'x', -range, range, 0.01);
-    this.gui.add(this.light.position, 'y', -range, range, 0.01);
-    this.gui.add(this.light.position, 'z', -range, range, 0.01);
+    this.gui.add(
+      this.settings,
+      'intensity',
+      guiSettings.intensity.min,
+      guiSettings.intensity.max,
+      guiSettings.intensity.precision
+    );
+    this.gui.add(
+      this.settings,
+      'distance',
+      guiSettings.distance.min,
+      guiSettings.distance.max,
+      guiSettings.distance.precision
+    );
+    this.gui.add(this.settings, 'decay', guiSettings.decay.min, guiSettings.decay.max, guiSettings.decay.precision);
+    this.gui.add(
+      this.light.position,
+      'x',
+      guiSettings.position.x.min,
+      guiSettings.position.x.max,
+      guiSettings.position.precision
+    );
+    this.gui.add(
+      this.light.position,
+      'y',
+      guiSettings.position.y.min,
+      guiSettings.position.y.max,
+      guiSettings.position.precision
+    );
+    this.gui.add(
+      this.light.position,
+      'z',
+      guiSettings.position.z.min,
+      guiSettings.position.z.max,
+      guiSettings.position.precision
+    );
   }
 
   onChange = () => {
@@ -59,6 +112,6 @@ export default class PointLightController extends LightController {
   };
 
   dispose() {
-    this.guiParent.removeFolder(this.gui.name);
+    this.gui.destroy();
   }
 }

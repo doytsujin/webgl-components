@@ -23,7 +23,7 @@ export function resizeWithConstraint(
     const ratio = height / width;
     width = baseSize;
     height = Math.floor(baseSize * ratio);
-    let newSize = width * height;
+    const newSize = width * height;
     const scalar = Math.sqrt(maxSize / newSize);
     width = Math.floor(width * scalar);
     height = Math.floor(height * scalar);

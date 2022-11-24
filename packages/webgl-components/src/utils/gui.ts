@@ -1,72 +1,73 @@
-const GUICls = require('lil-gui').default;
-// import { Vector2Controller, Vector3Controller, Vector4Controller } from './gui-extensions/gui-vector';
-
-class Folder {
-  add(_arg0?: Object, _arg1?: Object, _arg2?: Object, _arg3?: Object, _arg4?: Object) {
-    return this;
-  }
-  addFolder(_name: String) {
-    return new Folder();
-  }
-
-  removeFolder(_name?: Object) {
-    return new Folder();
-  }
-
-  destroy() {
-    return this;
-  }
-  addColor(_arg0?: Object, _arg1?: Object) {
-    return this;
-  }
-  listen(_arg?: Object) {
-    return this;
-  }
-  name(_arg?: String) {
-    return this;
-  }
-  close() {
-    return this;
-  }
-  step() {
-    return this;
-  }
-  onChange(_arg?: Object) {
-    return this;
-  }
-  setValue(_arg?: Object) {
-    return this;
-  }
-  remove() {
-    return this;
-  }
-  open() {
-    return this;
-  }
-}
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import GUI from 'lil-gui';
 
 export class GUIWrapper {
-  add(_arg0?: Object, _arg1?: Object, _arg2?: Object, _arg3?: Object, _arg4?: Object) {
+  root: unknown;
+  parent: unknown;
+  $children: unknown;
+  children: Array<unknown> = [];
+  controllers: Array<unknown> = [];
+  folders: Array<unknown> = [];
+  _closed = false;
+  _hidden = false;
+  _title = '';
+  domElement!: HTMLElement;
+  $title!: HTMLElement;
+  _onChange = () => {
+    //
+  };
+  _callOnChange = () => {
+    //
+  };
+  _onFinishChange = () => {
+    //
+  };
+  _callOnFinishChange = () => {
+    //
+  };
+  controllersRecursive() {
     return this;
   }
-  addFolder(_name: String) {
-    return new Folder();
+  foldersRecursive() {
+    return this;
   }
-
-  removeFolder(_name?: Object) {
-    return new Folder();
+  load(_arg0?: unknown, _arg1?: unknown) {
+    return this;
   }
-
+  save(_arg0?: unknown) {
+    return this;
+  }
+  title(_arg0?: unknown) {
+    return this;
+  }
+  show(_arg0?: unknown) {
+    return this;
+  }
+  hide(_arg0?: unknown) {
+    return this;
+  }
+  openAnimated(_arg0?: unknown) {
+    return this;
+  }
+  add(_arg0?: unknown, _arg1?: unknown, _arg2?: unknown, _arg3?: unknown, _arg4?: unknown) {
+    return this;
+  }
+  addFolder(_name: string) {
+    return new GUIWrapper();
+  }
+  removeFolder(_name?: unknown) {
+    return new GUIWrapper();
+  }
   destroy() {
     return this;
   }
-  addColor(_arg0?: Object, _arg1?: Object) {
+  addColor(_arg0?: unknown, _arg1?: unknown) {
     return this;
   }
-  listen(_arg?: Object) {
+  listen(_arg?: unknown) {
     return this;
   }
-  name(_arg?: String) {
+  name(_arg?: string) {
     return this;
   }
   close() {
@@ -75,10 +76,13 @@ export class GUIWrapper {
   step() {
     return this;
   }
-  onChange(_arg?: Object) {
+  onChange(_arg?: unknown) {
     return this;
   }
-  setValue(_arg?: Object) {
+  onFinishChange(_arg?: unknown) {
+    return this;
+  }
+  setValue(_arg?: unknown) {
     return this;
   }
   remove() {
@@ -87,34 +91,20 @@ export class GUIWrapper {
   open() {
     return this;
   }
-
-  //Extensions -------
-  addVector2(_object: any, _property: any, _min: number, _max: number, _step: number) {
+  reset() {
     return this;
   }
-
-  addVector3(_object: any, _property: any, _min: number, _max: number, _step: number) {
+  min(_arg?: unknown) {
     return this;
   }
-
-  addVector4(_object: any, _property: any, _min: number, _max: number, _step: number) {
+  max(_arg?: unknown) {
     return this;
   }
 }
 
-// GUICls.prototype.addVector2 = function (object: any, property: any, min: number, max: number, step: number) {
-//   return new Vector2Controller(this, object, property, min, max, step);
-// };
-
-// GUICls.prototype.addVector3 = function (object: any, property: any, min: number, max: number, step: number) {
-//   return new Vector3Controller(this, object, property, min, max, step);
-// };
-
-// GUICls.prototype.addVector4 = function (object: any, property: any, min: number, max: number, step: number) {
-//   return new Vector4Controller(this, object, property, min, max, step);
-// };
-
-export default function GUI(debug: boolean) {
-  const Cls = debug ? GUICls : GUIWrapper;
+function createGUI(debug: boolean) {
+  const Cls = debug ? GUI : GUIWrapper;
   return new Cls();
 }
+
+export { GUI, createGUI };
