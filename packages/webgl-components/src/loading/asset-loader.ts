@@ -10,11 +10,14 @@ import ParallelLoader from './parallel-loader';
 // import WorkerLoader from './worker-loader';
 import LoaderManager from './loader-manager';
 import { KTX2Loader } from 'three/examples/jsm/loaders/KTX2Loader';
+import ThreeSoundLoader from './three-sound-loader';
+import { AudioListener } from 'three';
 
 export default class AssetLoader extends ParallelLoader {
   dracoLoader?: DRACOLoader;
   ktx2Loader?: KTX2Loader;
   meshoptDecoder?: unknown;
+  audioListener?: AudioListener;
   // workerLoader!: WorkerLoader;
 
   constructor(settings: LoaderSettings, manager: LoaderManager = new LoaderManager('asset-loader')) {
@@ -27,7 +30,8 @@ export default class AssetLoader extends ParallelLoader {
       [AssetType.FBX]: ThreeFBXLoader,
       [AssetType.GLTF]: ThreeGLTFLoader,
       [AssetType.RgbeTexture]: ThreeRgbeTexureLoader,
-      [AssetType.Ktx2Texture]: ThreeKtx2TexureLoader
+      [AssetType.Ktx2Texture]: ThreeKtx2TexureLoader,
+      [AssetType.Sound]: ThreeSoundLoader
     });
   }
 
@@ -41,6 +45,10 @@ export default class AssetLoader extends ParallelLoader {
 
   setMeshoptDecoder(decoder: unknown) {
     this.meshoptDecoder = decoder;
+  }
+
+  setAudioListener(audioListener: AudioListener) {
+    this.audioListener = audioListener;
   }
 
   createLoaders(manifest: Asset[]) {
@@ -62,15 +70,39 @@ export default class AssetLoader extends ParallelLoader {
   }
 
   nextInQueue(loader: Loader) {
-    if (loader instanceof ThreeGLTFLoader) {
-      if (this.dracoLoader) loader.setDracoLoader(this.dracoLoader);
-
-      if (this.ktx2Loader) loader.setKtx2Loader(this.ktx2Loader);
-
-      if (this.meshoptDecoder) loader.setMeshoptDecoder(this.meshoptDecoder);
+    function logMissingConfiguration(fn: string, fileType: string) {
+      console.error(`${fn} needs to be called before loading an ${fileType} file`);
     }
-    if (loader instanceof ThreeKtx2TexureLoader && this.ktx2Loader) {
-      loader.setKtx2Loader(this.ktx2Loader);
+    if (loader instanceof ThreeGLTFLoader) {
+      if (this.dracoLoader) {
+        loader.setDracoLoader(this.dracoLoader);
+      } else {
+        logMissingConfiguration('setDracoLoader', 'gltf');
+      }
+      if (this.ktx2Loader) {
+        loader.setKtx2Loader(this.ktx2Loader);
+      } else {
+        logMissingConfiguration('setKtx2Loader', 'gltf');
+      }
+      if (this.meshoptDecoder) {
+        loader.setMeshoptDecoder(this.meshoptDecoder);
+      } else {
+        logMissingConfiguration('setMeshoptDecoder', 'gltf');
+      }
+    }
+    if (loader instanceof ThreeKtx2TexureLoader) {
+      if (this.ktx2Loader) {
+        loader.setKtx2Loader(this.ktx2Loader);
+      } else {
+        logMissingConfiguration('setKtx2Loader', 'ktx2');
+      }
+    }
+    if (loader instanceof ThreeSoundLoader) {
+      if (this.audioListener) {
+        loader.setAudioListener(this.audioListener);
+      } else {
+        logMissingConfiguration('setAudioListener', 'audio');
+      }
     }
   }
 }

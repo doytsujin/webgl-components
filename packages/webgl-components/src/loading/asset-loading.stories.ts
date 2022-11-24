@@ -5,6 +5,7 @@ import Asset, { AssetType } from './asset';
 import AssetManager from './asset-manager';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import {
+  AudioListener,
   Color,
   DoubleSide,
   EquirectangularReflectionMapping,
@@ -68,6 +69,11 @@ export const allAssetTypes = () => {
       id: 'fire-uastc',
       src: '/assets/fire-1024.ktx2',
       type: AssetType.Ktx2Texture
+    }),
+    new Asset({
+      id: 'sound',
+      src: '/assets/moh-background.mp3',
+      type: AssetType.Sound
     })
   ];
 
@@ -81,10 +87,13 @@ export const allAssetTypes = () => {
   const ktxLoader = new KTX2Loader();
   ktxLoader.setTranscoderPath('/lib/basis/').detectSupport(renderer);
 
+  const audioListener = new AudioListener();
+
   const loader = new AssetLoader({ id: 'example', parallelLoads: 5, preferWebWorker: true });
   loader.setDracoLoader(dracoLoader);
   loader.setKtx2Loader(ktxLoader);
   loader.setMeshoptDecoder(MeshoptDecoder);
+  loader.setAudioListener(audioListener);
 
   loader.manager.on('progress', (progress: number) => {
     console.log('progress', progress);
