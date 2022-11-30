@@ -7,6 +7,7 @@ export class AssetType {
   static RgbeTexture = 'RgbeTexture';
   static Ktx2Texture = 'Ktx2Texture';
   static Sound = 'Sound';
+  static VideoTexture = 'VideoTexture';
 }
 
 export interface AssetConfig {

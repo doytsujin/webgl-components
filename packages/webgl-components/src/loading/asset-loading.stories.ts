@@ -15,7 +15,8 @@ import {
   Object3D,
   PlaneBufferGeometry,
   Scene,
-  Texture
+  Texture,
+  VideoTexture
 } from 'three';
 import RenderStats, { RenderStatsPosition } from '../utils/stats';
 import AssetLoader from './asset-loader';
@@ -74,6 +75,11 @@ export const allAssetTypes = () => {
       id: 'sound',
       src: '/assets/moh-background.mp3',
       type: AssetType.Sound
+    }),
+    new Asset({
+      id: 'video',
+      src: '/assets/mask.mp4',
+      type: AssetType.VideoTexture
     })
   ];
 
@@ -130,6 +136,21 @@ export const allAssetTypes = () => {
           }
         });
       }
+    }
+
+    const videoAsset = (assetManager.get('example', 'video') as Asset).data as VideoTexture;
+    videoAsset.image.loop = true;
+
+    if (videoAsset) {
+      const videoMesh = new Mesh(
+        new PlaneBufferGeometry(5, 5),
+        new MeshBasicMaterial({
+          map: videoAsset,
+          side: DoubleSide
+        })
+      );
+      videoMesh.position.set(-7, 1, 0);
+      scene.add(videoMesh);
     }
   });
 
