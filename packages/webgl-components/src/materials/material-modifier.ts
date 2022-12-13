@@ -22,6 +22,11 @@ export type ShaderConfig = {
   fragmentShader: { uniforms: string; functions: string; [prop: string]: string };
 };
 
+export type Hooks = {
+  vertex: ShaderProps;
+  fragment: ShaderProps;
+};
+
 const hooks = {
   vertex: {
     preTransform: 'before:#include <begin_vertex>\n',
@@ -35,8 +40,9 @@ const hooks = {
   }
 };
 
-function replace(shader: string, hooks: ShaderProps, config: ShaderProps) {
-  Object.keys(hooks).forEach((hook: string) => {
+function replace(shader: string, hooks: ShaderProps, config: ShaderProps, customHooks: Hooks) {
+  const mergedHooks = { ...hooks, ...customHooks };
+  Object.keys(mergedHooks).forEach((hook: string) => {
     if (config[hook] != null) {
       const parts = hooks[hook].split(':');
       const line = parts[1];
@@ -47,6 +53,10 @@ function replace(shader: string, hooks: ShaderProps, config: ShaderProps) {
             `${line}
             ${config[hook]}`
           );
+          break;
+        }
+        case 'replace': {
+          shader = shader.replace(line, config[hook]);
           break;
         }
         default: {
@@ -72,7 +82,11 @@ function replace(shader: string, hooks: ShaderProps, config: ShaderProps) {
  * @param {ShaderConfig} config
  * @return {*}
  */
-export default function materialModifier(shader: Shader, config: ShaderConfig) {
+export default function materialModifier(
+  shader: Shader,
+  config: ShaderConfig,
+  customHooks: Hooks = { vertex: {}, fragment: {} }
+) {
   shader.uniforms = UniformsUtils.merge([shader.uniforms, config.uniforms]);
 
   shader.vertexShader = `
@@ -86,8 +100,8 @@ export default function materialModifier(shader: Shader, config: ShaderConfig) {
     ${shader.fragmentShader}
   `;
 
-  shader.vertexShader = replace(shader.vertexShader, hooks.vertex, config.vertexShader);
-  shader.fragmentShader = replace(shader.fragmentShader, hooks.fragment, config.fragmentShader);
+  shader.vertexShader = replace(shader.vertexShader, hooks.vertex, config.vertexShader, customHooks);
+  shader.fragmentShader = replace(shader.fragmentShader, hooks.fragment, config.fragmentShader, customHooks);
 
   return shader;
 }
