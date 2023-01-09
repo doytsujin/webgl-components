@@ -1,4 +1,4 @@
-import { UniformsUtils, IUniform } from 'three';
+import { IUniform, UniformsUtils } from 'three';
 
 export type Shader = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -11,23 +11,21 @@ type ShaderProps = {
   [prop: string]: string;
 };
 
-export type ShaderConfig = {
-  uniforms: {
-    [prop: string]: Record<string, unknown>;
-  };
-  // uniforms: {
-  //   [prop: string]: Object;
-  // };
-  vertexShader: { uniforms: string; functions: string; [prop: string]: string };
-  fragmentShader: { uniforms: string; functions: string; [prop: string]: string };
-};
-
 export type Hooks = {
   vertex: ShaderProps;
   fragment: ShaderProps;
 };
 
-const hooks = {
+export type ShaderConfig = {
+  hooks?: Hooks;
+  uniforms: {
+    [prop: string]: Record<string, unknown>;
+  };
+  vertexShader: { uniforms: string; functions: string; [prop: string]: string };
+  fragmentShader: { uniforms: string; functions: string; [prop: string]: string };
+};
+
+const hooks: Hooks = {
   vertex: {
     preTransform: 'before:#include <begin_vertex>\n',
     postTransform: 'after:#include <project_vertex>\n',
@@ -40,9 +38,8 @@ const hooks = {
   }
 };
 
-function replace(shader: string, hooks: ShaderProps, config: ShaderProps, customHooks: Hooks) {
-  const mergedHooks = { ...hooks, ...customHooks };
-  Object.keys(mergedHooks).forEach((hook: string) => {
+function replace(shader: string, hooks: ShaderProps, config: ShaderProps) {
+  Object.keys(hooks).forEach((hook: string) => {
     if (config[hook] != null) {
       const parts = hooks[hook].split(':');
       const line = parts[1];
@@ -82,11 +79,7 @@ function replace(shader: string, hooks: ShaderProps, config: ShaderProps, custom
  * @param {ShaderConfig} config
  * @return {*}
  */
-export default function materialModifier(
-  shader: Shader,
-  config: ShaderConfig,
-  customHooks: Hooks = { vertex: {}, fragment: {} }
-) {
+export default function materialModifier(shader: Shader, config: ShaderConfig) {
   shader.uniforms = UniformsUtils.merge([shader.uniforms, config.uniforms]);
 
   shader.vertexShader = `
@@ -100,8 +93,11 @@ export default function materialModifier(
     ${shader.fragmentShader}
   `;
 
-  shader.vertexShader = replace(shader.vertexShader, hooks.vertex, config.vertexShader, customHooks);
-  shader.fragmentShader = replace(shader.fragmentShader, hooks.fragment, config.fragmentShader, customHooks);
+  const vertexHooks = { ...hooks.vertex, ...config.hooks?.vertex };
+  const fragmentHooks = { ...hooks.fragment, ...config.hooks?.fragment };
+
+  shader.vertexShader = replace(shader.vertexShader, vertexHooks, config.vertexShader);
+  shader.fragmentShader = replace(shader.fragmentShader, fragmentHooks, config.fragmentShader);
 
   return shader;
 }
