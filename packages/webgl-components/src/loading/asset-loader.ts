@@ -13,6 +13,7 @@ import { KTX2Loader } from 'three/examples/jsm/loaders/KTX2Loader';
 import ThreeSoundLoader from './three-sound-loader';
 import { AudioListener } from 'three';
 import ThreeVideoLoader from './three-video-loader';
+import ThreeExrTextureLoader from './three-exr-texture-loader';
 
 export default class AssetLoader extends ParallelLoader {
   dracoLoader?: DRACOLoader;
@@ -32,6 +33,7 @@ export default class AssetLoader extends ParallelLoader {
       [AssetType.GLTF]: ThreeGLTFLoader,
       [AssetType.RgbeTexture]: ThreeRgbeTexureLoader,
       [AssetType.Ktx2Texture]: ThreeKtx2TexureLoader,
+      [AssetType.ExrTexture]: ThreeExrTextureLoader,
       [AssetType.Sound]: ThreeSoundLoader,
       [AssetType.VideoTexture]: ThreeVideoLoader
     });

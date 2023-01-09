@@ -6,6 +6,7 @@ export class AssetType {
   static Texture = 'Texture';
   static RgbeTexture = 'RgbeTexture';
   static Ktx2Texture = 'Ktx2Texture';
+  static ExrTexture = 'ExrTexture';
   static Sound = 'Sound';
   static VideoTexture = 'VideoTexture';
 }
