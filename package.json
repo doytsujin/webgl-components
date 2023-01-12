@@ -67,8 +67,7 @@
     "worker-loader": "^3.0.8"
   },
   "dependencies": {
-    "gsap": "^3.10.3",
-    "three": "^0.148.0"
+    "gsap": "^3.10.3"
   },
   "lint-staged": {
     "./packages/**/*.ts": [
