@@ -2,6 +2,8 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import Loader, { LoaderSettings } from './loader';
 import LoaderManager from './loader-manager';
 
+const loader = new FBXLoader();
+
 /**
  * Threejs FBX Loader
  *
@@ -16,8 +18,6 @@ export default class ThreeFBXLoader extends Loader {
     }
 
     manager.add(this);
-
-    const loader = new FBXLoader();
 
     const onLoaded = (data: unknown) => {
       this.asset.data = data;
