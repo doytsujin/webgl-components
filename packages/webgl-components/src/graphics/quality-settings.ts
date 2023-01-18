@@ -3,6 +3,7 @@ import { Vector2, MathUtils } from 'three';
 export type GraphicsSettings = {
   pixelRatio: number;
   resolution: Vector2;
+  [key: string]: unknown;
 };
 
 export class Quality {
