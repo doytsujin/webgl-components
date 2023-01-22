@@ -7,6 +7,7 @@ import JSONLoader from './json-loader';
 import ThreeFBXLoader from './three-fbx-loader';
 import ThreeGLTFLoader from './three-gltf-loader';
 import ThreeTextureLoader from './three-texture-loader';
+import ThreeSoundLoader from './three-sound-loader';
 
 export {
   Loader,
@@ -18,5 +19,6 @@ export {
   JSONLoader,
   ThreeFBXLoader,
   ThreeGLTFLoader,
-  ThreeTextureLoader
+  ThreeTextureLoader,
+  ThreeSoundLoader
 };
