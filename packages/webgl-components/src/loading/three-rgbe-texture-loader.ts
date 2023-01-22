@@ -3,6 +3,8 @@ import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 import Loader, { LoaderSettings } from './loader';
 import LoaderManager from './loader-manager';
 
+const loader = new RGBELoader();
+
 /**
  * Threejs rgbe texture loader
  *
@@ -18,7 +20,6 @@ export default class ThreeRgbeTextureLoader extends Loader {
 
     manager.add(this);
 
-    const loader = new RGBELoader();
     const onLoaded = (texture: Texture) => {
       this.asset.data = texture;
       this.emit('loaded', this.asset);

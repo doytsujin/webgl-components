@@ -7,7 +7,7 @@
     "components",
     "best practices"
   ],
-  "version": "0.0.28",
+  "version": "0.0.32",
   "license": "MIT",
   "author": {
     "name": "Amelie Maia",
@@ -54,7 +54,7 @@
     "gsap": "^3.10.3",
     "lil-gui": "^0.16.1",
     "query-string": "^7.0.1",
-    "three": "^0.144.0"
+    "three": "^0.148.0"
   },
   "devDependencies": {
     "@types/three": "^0.133.1"

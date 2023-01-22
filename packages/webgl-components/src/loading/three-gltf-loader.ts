@@ -3,6 +3,9 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import Loader, { LoaderSettings } from './loader';
 import LoaderManager from './loader-manager';
 import { KTX2Loader } from 'three/examples/jsm/loaders/KTX2Loader';
+
+const loader = new GLTFLoader();
+
 /**
  * Threejs GLTF Loader
  *
@@ -11,20 +14,16 @@ import { KTX2Loader } from 'three/examples/jsm/loaders/KTX2Loader';
  * @extends {Loader}
  */
 export default class ThreeGLTFLoader extends Loader {
-  dracoLoader?: DRACOLoader;
-  ktx2Loader?: KTX2Loader;
-  meshoptDecoder?: unknown;
-
   setDracoLoader(dracoLoader: DRACOLoader) {
-    this.dracoLoader = dracoLoader;
+    loader.setDRACOLoader(dracoLoader);
   }
 
   setKtx2Loader(ktx2Loader: KTX2Loader) {
-    this.ktx2Loader = ktx2Loader;
+    loader.setKTX2Loader(ktx2Loader);
   }
 
   setMeshoptDecoder(decoder: unknown) {
-    this.meshoptDecoder = decoder;
+    loader.setMeshoptDecoder(decoder);
   }
 
   load = (settings?: LoaderSettings, manager: LoaderManager = new LoaderManager('three-gltf-loader')) => {
@@ -33,20 +32,6 @@ export default class ThreeGLTFLoader extends Loader {
     }
 
     manager.add(this);
-
-    const loader = new GLTFLoader();
-
-    if (this.dracoLoader != null) {
-      loader.setDRACOLoader(this.dracoLoader);
-    }
-
-    if (this.ktx2Loader != null) {
-      loader.setKTX2Loader(this.ktx2Loader);
-    }
-
-    if (this.meshoptDecoder != null) {
-      loader.setMeshoptDecoder(this.meshoptDecoder);
-    }
 
     const onLoaded = (gltf: unknown) => {
       this.asset.data = gltf;

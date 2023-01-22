@@ -11,6 +11,8 @@ function validateTextureSize(width: number, height: number, texture: Texture) {
   }
 }
 
+const textureLoader = new TextureLoader();
+
 /**
  * Threejs texture loader
  *
@@ -41,9 +43,9 @@ export default class ThreeTextureLoader extends Loader {
     // expensive work of uploading a texture to the GPU off the main thread.
 
     if (this.bitmapSupported()) {
-      const loader = new ImageBitmapLoader();
+      const imageBitmapLoader = new ImageBitmapLoader();
 
-      loader.setOptions({
+      imageBitmapLoader.setOptions({
         imageOrientation: 'flipY'
       });
 
@@ -54,16 +56,14 @@ export default class ThreeTextureLoader extends Loader {
         this.emit('loaded', this.asset);
       };
 
-      loader.load(this.asset.src, onLoaded, this.onProgress, this.onError);
+      imageBitmapLoader.load(this.asset.src, onLoaded, this.onProgress, this.onError);
     } else {
-      const loader = new TextureLoader();
-
       const onLoaded = (texture: Texture) => {
         this.asset.data = texture;
         this.emit('loaded', this.asset);
       };
 
-      loader.load(this.asset.src, onLoaded, this.onProgress, this.onError);
+      textureLoader.load(this.asset.src, onLoaded, this.onProgress, this.onError);
     }
   };
 }
