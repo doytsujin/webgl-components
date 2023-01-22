@@ -9,6 +9,7 @@ export class GUIWrapper {
   controllers: Array<unknown> = [];
   folders: Array<unknown> = [];
   _closed = false;
+  _disabled = false;
   _hidden = false;
   _title = '';
   domElement!: HTMLElement;
@@ -38,6 +39,12 @@ export class GUIWrapper {
     return this;
   }
   title(_arg0?: unknown) {
+    return this;
+  }
+  enable(_arg0?: unknown) {
+    return this;
+  }
+  disable(_arg0?: unknown) {
     return this;
   }
   show(_arg0?: unknown) {
